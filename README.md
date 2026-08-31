@@ -1,6 +1,6 @@
 # Dự Án Quản Lý Sinh Viên (Student Database System)
 
-Chương trình đọc và hiển thị danh sách sinh viên từ file **JSON** viết bằng ngôn ngữ **C++**, sử dụng thư viện `nlohmann/json`.
+Chương trình đọc và hiển thị danh sách sinh viên từ file **JSON** viết bằng ngôn ngữ **C++**, sử dụng thư viện `nlohmann/json` và tự động quản lý biên dịch bằng **Makefile**.
 
 ---
 
@@ -24,6 +24,7 @@ trang/
 │   └── json.hpp
 │
 ├── main.cpp                      # File chương trình chính
+├── Makefile                      # File cấu hình tự động biên dịch dự án
 ├── README.md                     # Tài liệu hướng dẫn dự án
 └── main.exe                      # File thực thi sau khi biên dịch
 ```
@@ -32,19 +33,30 @@ trang/
 
 ## 🛠️ Trách Nhiệm Của Từng Thư Mục & File
 
-1. **`interface/StudentDatabase.h`**: Khai báo duy nhất 1 phương thức:
-   `void displayStudentsFromJson(const std::string& filename);`
-2. **`src/StudentDatabase.cpp`**: Đọc file JSON, ép kiểu dữ liệu về danh sách `Student` và hiển thị danh sách sinh viên ra màn hình console.
-3. **`main.cpp`**: Khởi tạo và gọi hàm `displayStudentsFromJson("data/database.json")`.
+1. **`interface/StudentDatabase.h`**: Khai báo phương thức `displayStudentsFromJson(const string& filename);`.
+2. **`src/StudentDatabase.cpp`**: Đọc file JSON, dịch dữ liệu về mảng `vector<Student>` và hiển thị ra màn hình console.
+3. **`main.cpp`**: Gọi phương thức `displayStudentsFromJson("data/database.json")`.
+4. **`Makefile`**: Tự động gom tất cả các file nguồn (`main.cpp`, `src/StudentDatabase.cpp`) để biên dịch chỉ với 1 lệnh đơn giản.
 
 ---
 
 ## 🚀 Hướng Dẫn Biên Dịch & Chạy Chương Trình
 
-```bash
-# Biên dịch
-g++ main.cpp src/StudentDatabase.cpp -o main.exe
+Nhờ có `Makefile`, bạn không cần phải gõ đường dẫn thủ công từng file `.cpp` nữa.
 
-# Chạy chương trình
+### 1. Biên dịch dự án bằng Makefile
+Mở Terminal tại thư mục gốc và chạy lệnh:
+```bash
+make
+```
+*(Hoặc `mingw32-make` nếu bạn dùng MinGW trên Windows)*
+
+### 2. Chạy chương trình
+```bash
 .\main.exe
+```
+
+### 3. Dọn dẹp file thực thi (Clean)
+```bash
+make clean
 ```
