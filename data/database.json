@@ -1,0 +1,604 @@
+{
+    "students": [
+        {
+            "classId": "C02",
+            "gpa": 5.61,
+            "id": "25150001",
+            "name": "Nguyen Van An"
+        },
+        {
+            "classId": "C05",
+            "gpa": 6.55,
+            "id": "25150002",
+            "name": "Tran Thi Binh"
+        },
+        {
+            "classId": "C03",
+            "gpa": 8.67,
+            "id": "25150003",
+            "name": "Le Hoang Nam"
+        },
+        {
+            "classId": "C09",
+            "gpa": 5.87,
+            "id": "25150004",
+            "name": "Pham Minh Anh"
+        },
+        {
+            "classId": "C07",
+            "gpa": 5.64,
+            "id": "25150005",
+            "name": "Hoang Gia Bao"
+        },
+        {
+            "classId": "C02",
+            "gpa": 6.44,
+            "id": "25150006",
+            "name": "Vo Thi Ngoc"
+        },
+        {
+            "classId": "C09",
+            "gpa": 8.09,
+            "id": "25150007",
+            "name": "Dang Quoc Huy"
+        },
+        {
+            "classId": "C09",
+            "gpa": 6.36,
+            "id": "25150008",
+            "name": "Bui Thanh Tam"
+        },
+        {
+            "classId": "C09",
+            "gpa": 7.3,
+            "id": "25150009",
+            "name": "Doan Minh Khang"
+        },
+        {
+            "classId": "C08",
+            "gpa": 8.03,
+            "id": "25150010",
+            "name": "Huynh Thuy Tien"
+        },
+        {
+            "classId": "C01",
+            "gpa": 8.76,
+            "id": "25150011",
+            "name": "Phan Duc Long"
+        },
+        {
+            "classId": "C03",
+            "gpa": 8.5,
+            "id": "25150012",
+            "name": "Truong Khanh Linh"
+        },
+        {
+            "classId": "C06",
+            "gpa": 6.69,
+            "id": "25150013",
+            "name": "Mai Quang Hieu"
+        },
+        {
+            "classId": "C04",
+            "gpa": 9.62,
+            "id": "25150014",
+            "name": "Duong Thi My"
+        },
+        {
+            "classId": "C06",
+            "gpa": 5.94,
+            "id": "25150015",
+            "name": "Ngo Tuan Kiet"
+        },
+        {
+            "classId": "C07",
+            "gpa": 5.92,
+            "id": "25150016",
+            "name": "Ly Bao Chau"
+        },
+        {
+            "classId": "C06",
+            "gpa": 8.1,
+            "id": "25150017",
+            "name": "Cao Minh Quan"
+        },
+        {
+            "classId": "C01",
+            "gpa": 8.64,
+            "id": "25150018",
+            "name": "Vu Ngoc Han"
+        },
+        {
+            "classId": "C09",
+            "gpa": 6.04,
+            "id": "25150019",
+            "name": "Dinh Thanh Phong"
+        },
+        {
+            "classId": "C07",
+            "gpa": 5.84,
+            "id": "25150020",
+            "name": "Trinh Kim Ngan"
+        },
+        {
+            "classId": "C05",
+            "gpa": 9.07,
+            "id": "25150021",
+            "name": "Nguyen Van An 2"
+        },
+        {
+            "classId": "C10",
+            "gpa": 9.31,
+            "id": "25150022",
+            "name": "Tran Thi Binh 2"
+        },
+        {
+            "classId": "C06",
+            "gpa": 7.98,
+            "id": "25150023",
+            "name": "Le Hoang Nam 2"
+        },
+        {
+            "classId": "C02",
+            "gpa": 5.7,
+            "id": "25150024",
+            "name": "Pham Minh Anh 2"
+        },
+        {
+            "classId": "C04",
+            "gpa": 8.82,
+            "id": "25150025",
+            "name": "Hoang Gia Bao 2"
+        },
+        {
+            "classId": "C02",
+            "gpa": 9.18,
+            "id": "25150026",
+            "name": "Vo Thi Ngoc 2"
+        },
+        {
+            "classId": "C02",
+            "gpa": 7.13,
+            "id": "25150027",
+            "name": "Dang Quoc Huy 2"
+        },
+        {
+            "classId": "C08",
+            "gpa": 8.23,
+            "id": "25150028",
+            "name": "Bui Thanh Tam 2"
+        },
+        {
+            "classId": "C06",
+            "gpa": 6.2,
+            "id": "25150029",
+            "name": "Doan Minh Khang 2"
+        },
+        {
+            "classId": "C06",
+            "gpa": 6.4,
+            "id": "25150030",
+            "name": "Huynh Thuy Tien 2"
+        },
+        {
+            "classId": "C05",
+            "gpa": 8.52,
+            "id": "25150031",
+            "name": "Phan Duc Long 2"
+        },
+        {
+            "classId": "C02",
+            "gpa": 8.12,
+            "id": "25150032",
+            "name": "Truong Khanh Linh 2"
+        },
+        {
+            "classId": "C03",
+            "gpa": 7.8,
+            "id": "25150033",
+            "name": "Mai Quang Hieu 2"
+        },
+        {
+            "classId": "C04",
+            "gpa": 6.2,
+            "id": "25150034",
+            "name": "Duong Thi My 2"
+        },
+        {
+            "classId": "C07",
+            "gpa": 6.66,
+            "id": "25150035",
+            "name": "Ngo Tuan Kiet 2"
+        },
+        {
+            "classId": "C09",
+            "gpa": 6.44,
+            "id": "25150036",
+            "name": "Ly Bao Chau 2"
+        },
+        {
+            "classId": "C06",
+            "gpa": 9.12,
+            "id": "25150037",
+            "name": "Cao Minh Quan 2"
+        },
+        {
+            "classId": "C01",
+            "gpa": 6.48,
+            "id": "25150038",
+            "name": "Vu Ngoc Han 2"
+        },
+        {
+            "classId": "C01",
+            "gpa": 8.96,
+            "id": "25150039",
+            "name": "Dinh Thanh Phong 2"
+        },
+        {
+            "classId": "C07",
+            "gpa": 6.65,
+            "id": "25150040",
+            "name": "Trinh Kim Ngan 2"
+        },
+        {
+            "classId": "C04",
+            "gpa": 9.43,
+            "id": "25150041",
+            "name": "Nguyen Van An 3"
+        },
+        {
+            "classId": "C10",
+            "gpa": 9.27,
+            "id": "25150042",
+            "name": "Tran Thi Binh 3"
+        },
+        {
+            "classId": "C06",
+            "gpa": 6.41,
+            "id": "25150043",
+            "name": "Le Hoang Nam 3"
+        },
+        {
+            "classId": "C08",
+            "gpa": 7.2,
+            "id": "25150044",
+            "name": "Pham Minh Anh 3"
+        },
+        {
+            "classId": "C08",
+            "gpa": 6.11,
+            "id": "25150045",
+            "name": "Hoang Gia Bao 3"
+        },
+        {
+            "classId": "C03",
+            "gpa": 6.56,
+            "id": "25150046",
+            "name": "Vo Thi Ngoc 3"
+        },
+        {
+            "classId": "C09",
+            "gpa": 7.82,
+            "id": "25150047",
+            "name": "Dang Quoc Huy 3"
+        },
+        {
+            "classId": "C10",
+            "gpa": 7.34,
+            "id": "25150048",
+            "name": "Bui Thanh Tam 3"
+        },
+        {
+            "classId": "C10",
+            "gpa": 7.22,
+            "id": "25150049",
+            "name": "Doan Minh Khang 3"
+        },
+        {
+            "classId": "C04",
+            "gpa": 9.79,
+            "id": "25150050",
+            "name": "Huynh Thuy Tien 3"
+        },
+        {
+            "classId": "C03",
+            "gpa": 7.69,
+            "id": "25150051",
+            "name": "Phan Duc Long 3"
+        },
+        {
+            "classId": "C02",
+            "gpa": 8.75,
+            "id": "25150052",
+            "name": "Truong Khanh Linh 3"
+        },
+        {
+            "classId": "C02",
+            "gpa": 6.16,
+            "id": "25150053",
+            "name": "Mai Quang Hieu 3"
+        },
+        {
+            "classId": "C03",
+            "gpa": 8.91,
+            "id": "25150054",
+            "name": "Duong Thi My 3"
+        },
+        {
+            "classId": "C07",
+            "gpa": 8.06,
+            "id": "25150055",
+            "name": "Ngo Tuan Kiet 3"
+        },
+        {
+            "classId": "C07",
+            "gpa": 7.14,
+            "id": "25150056",
+            "name": "Ly Bao Chau 3"
+        },
+        {
+            "classId": "C08",
+            "gpa": 7.78,
+            "id": "25150057",
+            "name": "Cao Minh Quan 3"
+        },
+        {
+            "classId": "C09",
+            "gpa": 9.2,
+            "id": "25150058",
+            "name": "Vu Ngoc Han 3"
+        },
+        {
+            "classId": "C01",
+            "gpa": 8.43,
+            "id": "25150059",
+            "name": "Dinh Thanh Phong 3"
+        },
+        {
+            "classId": "C02",
+            "gpa": 8.43,
+            "id": "25150060",
+            "name": "Trinh Kim Ngan 3"
+        },
+        {
+            "classId": "C09",
+            "gpa": 8.73,
+            "id": "25150061",
+            "name": "Nguyen Van An 4"
+        },
+        {
+            "classId": "C06",
+            "gpa": 5.98,
+            "id": "25150062",
+            "name": "Tran Thi Binh 4"
+        },
+        {
+            "classId": "C07",
+            "gpa": 6.18,
+            "id": "25150063",
+            "name": "Le Hoang Nam 4"
+        },
+        {
+            "classId": "C01",
+            "gpa": 9.6,
+            "id": "25150064",
+            "name": "Pham Minh Anh 4"
+        },
+        {
+            "classId": "C05",
+            "gpa": 9.68,
+            "id": "25150065",
+            "name": "Hoang Gia Bao 4"
+        },
+        {
+            "classId": "C03",
+            "gpa": 7.68,
+            "id": "25150066",
+            "name": "Vo Thi Ngoc 4"
+        },
+        {
+            "classId": "C02",
+            "gpa": 9.24,
+            "id": "25150067",
+            "name": "Dang Quoc Huy 4"
+        },
+        {
+            "classId": "C05",
+            "gpa": 9.12,
+            "id": "25150068",
+            "name": "Bui Thanh Tam 4"
+        },
+        {
+            "classId": "C09",
+            "gpa": 8.12,
+            "id": "25150069",
+            "name": "Doan Minh Khang 4"
+        },
+        {
+            "classId": "C03",
+            "gpa": 7.11,
+            "id": "25150070",
+            "name": "Huynh Thuy Tien 4"
+        },
+        {
+            "classId": "C03",
+            "gpa": 7.82,
+            "id": "25150071",
+            "name": "Phan Duc Long 4"
+        },
+        {
+            "classId": "C09",
+            "gpa": 9.45,
+            "id": "25150072",
+            "name": "Truong Khanh Linh 4"
+        },
+        {
+            "classId": "C10",
+            "gpa": 6.89,
+            "id": "25150073",
+            "name": "Mai Quang Hieu 4"
+        },
+        {
+            "classId": "C01",
+            "gpa": 5.98,
+            "id": "25150074",
+            "name": "Duong Thi My 4"
+        },
+        {
+            "classId": "C06",
+            "gpa": 9.28,
+            "id": "25150075",
+            "name": "Ngo Tuan Kiet 4"
+        },
+        {
+            "classId": "C05",
+            "gpa": 6.53,
+            "id": "25150076",
+            "name": "Ly Bao Chau 4"
+        },
+        {
+            "classId": "C04",
+            "gpa": 9.28,
+            "id": "25150077",
+            "name": "Cao Minh Quan 4"
+        },
+        {
+            "classId": "C02",
+            "gpa": 5.87,
+            "id": "25150078",
+            "name": "Vu Ngoc Han 4"
+        },
+        {
+            "classId": "C08",
+            "gpa": 9.01,
+            "id": "25150079",
+            "name": "Dinh Thanh Phong 4"
+        },
+        {
+            "classId": "C09",
+            "gpa": 8.79,
+            "id": "25150080",
+            "name": "Trinh Kim Ngan 4"
+        },
+        {
+            "classId": "C03",
+            "gpa": 8.34,
+            "id": "25150081",
+            "name": "Nguyen Van An 5"
+        },
+        {
+            "classId": "C09",
+            "gpa": 6.21,
+            "id": "25150082",
+            "name": "Tran Thi Binh 5"
+        },
+        {
+            "classId": "C09",
+            "gpa": 9.25,
+            "id": "25150083",
+            "name": "Le Hoang Nam 5"
+        },
+        {
+            "classId": "C07",
+            "gpa": 9.65,
+            "id": "25150084",
+            "name": "Pham Minh Anh 5"
+        },
+        {
+            "classId": "C09",
+            "gpa": 8.75,
+            "id": "25150085",
+            "name": "Hoang Gia Bao 5"
+        },
+        {
+            "classId": "C04",
+            "gpa": 8.57,
+            "id": "25150086",
+            "name": "Vo Thi Ngoc 5"
+        },
+        {
+            "classId": "C07",
+            "gpa": 9.78,
+            "id": "25150087",
+            "name": "Dang Quoc Huy 5"
+        },
+        {
+            "classId": "C06",
+            "gpa": 7.38,
+            "id": "25150088",
+            "name": "Bui Thanh Tam 5"
+        },
+        {
+            "classId": "C09",
+            "gpa": 7.44,
+            "id": "25150089",
+            "name": "Doan Minh Khang 5"
+        },
+        {
+            "classId": "C04",
+            "gpa": 6.47,
+            "id": "25150090",
+            "name": "Huynh Thuy Tien 5"
+        },
+        {
+            "classId": "C06",
+            "gpa": 5.59,
+            "id": "25150091",
+            "name": "Phan Duc Long 5"
+        },
+        {
+            "classId": "C09",
+            "gpa": 6.49,
+            "id": "25150092",
+            "name": "Truong Khanh Linh 5"
+        },
+        {
+            "classId": "C04",
+            "gpa": 5.53,
+            "id": "25150093",
+            "name": "Mai Quang Hieu 5"
+        },
+        {
+            "classId": "C01",
+            "gpa": 6.48,
+            "id": "25150094",
+            "name": "Duong Thi My 5"
+        },
+        {
+            "classId": "C01",
+            "gpa": 9.2,
+            "id": "25150095",
+            "name": "Ngo Tuan Kiet 5"
+        },
+        {
+            "classId": "C02",
+            "gpa": 7.71,
+            "id": "25150096",
+            "name": "Ly Bao Chau 5"
+        },
+        {
+            "classId": "C05",
+            "gpa": 8.38,
+            "id": "25150097",
+            "name": "Cao Minh Quan 5"
+        },
+        {
+            "classId": "C04",
+            "gpa": 7.82,
+            "id": "25150098",
+            "name": "Vu Ngoc Han 5"
+        },
+        {
+            "classId": "C10",
+            "gpa": 7.98,
+            "id": "25150099",
+            "name": "Dinh Thanh Phong 5"
+        },
+        {
+            "classId": "C04",
+            "gpa": 8.87,
+            "id": "25150100",
+            "name": "Trinh Kim Ngan 5"
+        }
+    ]
+}
