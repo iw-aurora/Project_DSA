@@ -42,14 +42,14 @@ trang/
 
 ## 🚀 Hướng Dẫn Biên Dịch & Chạy Chương Trình
 
-Nhờ có `Makefile`, bạn không cần phải gõ đường dẫn thủ công từng file `.cpp` nữa.
+### 1. Biên dịch dự án bằng Makefile (Windows MinGW)
+Trên Windows, câu lệnh `make` có tên đầy đủ trong MinGW là **`mingw32-make`**:
 
-### 1. Biên dịch dự án bằng Makefile
-Mở Terminal tại thư mục gốc và chạy lệnh:
 ```bash
-make
+mingw32-make
 ```
-*(Hoặc `mingw32-make` nếu bạn dùng MinGW trên Windows)*
+
+*(Nếu muốn gõ tắt là `make` trên PowerShell, chạy lệnh: `Set-Alias make mingw32-make`)*
 
 ### 2. Chạy chương trình
 ```bash
@@ -58,5 +58,5 @@ make
 
 ### 3. Dọn dẹp file thực thi (Clean)
 ```bash
-make clean
+mingw32-make clean
 ```
