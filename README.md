@@ -1,6 +1,6 @@
 # Dự Án Quản Lý Sinh Viên (Student Database System)
 
-Chương trình đọc và hiển thị danh sách sinh viên từ file **JSON** viết bằng ngôn ngữ **C++**, sử dụng thư viện `nlohmann/json` và quản lý biên dịch bằng **Makefile**.
+Chương trình đọc và hiển thị danh sách sinh viên từ file **JSON** viết bằng ngôn ngữ **C++**, sử dụng thư viện `nlohmann/json`.
 
 ---
 
@@ -8,77 +8,46 @@ Chương trình đọc và hiển thị danh sách sinh viên từ file **JSON**
 
 ```text
 trang/
-├── data/                         # Thư mục chứa dữ liệu đầu vào
-│   └── database.json            # File dữ liệu sinh viên định dạng JSON
+├── data/                         # Thư mục chứa dữ liệu
+│   └── database.json            # File dữ liệu sinh viên JSON
 │
 ├── interface/                    # Thư mục chứa các file khai báo Header (.h)
-│   ├── student.h                # Định nghĩa cấu trúc Student
-│   └── StudentDatabase.h        # Khai báo lớp & phương thức displayStudentsFromJson
+│   ├── student.h                # Khai báo cấu trúc Student
+│   └── StudentDatabase.h        # Khai báo phương thức displayStudentsFromJson
 │
 ├── src/                          # Thư mục chứa các file cài đặt nguồn (.cpp)
-│   └── StudentDatabase.cpp      # Xử lý đọc file JSON và hiển thị danh sách
+│   └── StudentDatabase.cpp      # Cài đặt chi tiết phương thức đọc và hiển thị
 │
-├── nlohmann/                     # Thư viện JSON cho C++ (Header-only)
+├── nlohmann/                     # Thư viện ngoài xử lý JSON cho C++
 │   └── json.hpp
 │
-├── main.cpp                      # File chính khởi chạy ứng dụng
-├── Makefile                      # File cấu hình tự động biên dịch
+├── main.cpp                      # File chương trình chính
+├── run.bat                       # File script chạy nhanh dự án 1-click
 ├── README.md                     # Tài liệu hướng dẫn dự án
-└── main.exe                      # File thực thi chương trình
+└── main.exe                      # File thực thi sau khi biên dịch
 ```
 
 ---
 
-## 🛠️ Hướng Dẫn Cài Đặt Môi Trường Cho Đội Nhóm (Windows Setup Guide)
+## ⚡ Hướng Dẫn Chạy Chương Trình Siêu Đơn Giản
 
-Dành cho các thành viên trong nhóm chưa có trình biên dịch C++ (`g++`) và công cụ Make trên máy:
+Không cần nhớ câu lệnh phức tạp, bạn có 2 cách chạy siêu nhanh:
 
-### Bước 1: Tải trình biên dịch MinGW-w64 (GCC + Make)
-1. Truy cập trang web chính thức: **[WinLibs (winlibs.com)](https://winlibs.com/)**
-2. Tại mục **GCC release**, tải bản: **Win64 (64-bit)** ➡️ Chọn gói zip (ví dụ: `Release ... UCRT ... zip`).
-3. Giải nén file vừa tải về vào ổ `C:\` (Đường dẫn sau khi giải nén sẽ là `C:\mingw64`).
+### Cách 1: Nhấp đúp chuột (Siêu dễ - Khuyên dùng)
+* Mở thư mục dự án trên Windows và **nhấp đúp chuột vào file `run.bat`**.
+* File script sẽ **tự động biên dịch** và **tự động chạy chương trình** cho bạn!
 
-### Bước 2: Thêm MinGW vào biến môi trường (PATH) của Windows
-1. Nhấn phím `Windows` ➡️ Tìm từ khóa **Environment Variables** (Hoặc *Edit the system environment variables*).
-2. Nhấp vào nút **Environment Variables...** ở góc dưới.
-3. Trong ô **System variables** (hoặc **User variables**), tìm dòng **`Path`** và nhấp **Edit**.
-4. Nhấn nút **New** ➡️ Nhập đường dẫn: `C:\mingw64\bin`
-5. Nhấn **OK** ở tất cả các cửa sổ để lưu cài đặt.
-
-### Bước 3: Kiểm tra cài đặt trong Terminal
-Mở cửa sổ **PowerShell** hoặc **CMD** mới và kiểm tra:
+### Cách 2: Chạy từ Terminal / PowerShell
+Mở Terminal tại thư mục dự án và gõ:
 
 ```bash
-g++ --version
-mingw32-make --version
+.\run.bat
 ```
-*(Nếu màn hình in ra thông tin phiên bản là bạn đã cài đặt thành công!)*
 
 ---
 
-## 🚀 Hướng Dẫn Biên Dịch & Chạy Chương Trình
+## ⚙️ Yêu Cầu Môi Trường (Cho Đồng Đội Mới)
 
-### 1. Tạo Alias lệnh `make` (Tuỳ chọn cho PowerShell)
-Mặc định trên Windows, công cụ Make có tên là `mingw32-make`. Để gõ nhanh chữ `make`, bạn chạy lệnh này 1 lần trong PowerShell:
+Đồng đội chỉ cần cài đặt trình biên dịch C++ (`g++`) cơ bản trên Windows (Ví dụ từ **[WinLibs](https://winlibs.com/)** hoặc **MinGW-w64**) và thêm vào biến môi trường `PATH`. 
 
-```powershell
-Set-Alias make mingw32-make
-```
-
-### 2. Biên dịch dự án
-Mở Terminal tại thư mục dự án và chạy:
-
-```bash
-make
-```
-*(Hoặc gõ `mingw32-make` nếu chưa cài Alias)*
-
-### 3. Chạy chương trình
-```bash
-.\main.exe
-```
-
-### 4. Dọn dẹp file thực thi (Clean build)
-```bash
-mingw32-make clean
-```
+Sau khi có `g++`, chỉ cần chạy file `run.bat` là xong!
