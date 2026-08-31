@@ -3,7 +3,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 TARGET = main.exe
-SRCS = main.cpp src/StudentDatabase.cpp
+SRCS = main.cpp $(wildcard src/*.cpp)
 
 all: $(TARGET)
 

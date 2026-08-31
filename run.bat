@@ -1,8 +1,8 @@
 @echo off
 echo ====================================================
-echo        DANG BIEN DICH VÀ CHAY PROJECT_DSA
+echo        DANG BIEN DICH VA CHAY PROJECT_DSA
 echo ====================================================
-g++ main.cpp src/StudentDatabase.cpp -o main.exe
+g++ main.cpp src/*.cpp -o main.exe
 
 if %errorlevel% neq 0 (
     echo [LOI] Bien dich THAT BAI! Vui long kiem tra lai trinh bien dich g++.
