@@ -9,7 +9,7 @@ using namespace std;
 
 class StudentDatabase {
 private:
-    vector<Student> students; // Cấu trúc dữ liệu lưu trữ danh sách sinh viên trong bộ nhớ RAM
+    vector<Student> students; // Cấu trúc dữ liệu chính lưu trong bộ nhớ RAM
 
 public:
     // Nạp dữ liệu từ file JSON vào RAM
@@ -18,7 +18,7 @@ public:
     // Lấy tham chiếu danh sách sinh viên đang lưu trong RAM
     const vector<Student>& getStudents() const;
 
-    // Hiển thị danh sách sinh viên hiện có trong RAM
+    // Hiển thị danh sách sinh viên trong RAM
     void displayStudents() const;
 };
 

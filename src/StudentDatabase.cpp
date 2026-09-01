@@ -30,7 +30,7 @@ bool StudentDatabase::loadFromJson(const string& filename) {
 
         if (data.contains("students") && data["students"].is_array()) {
             students = data["students"].get<vector<Student>>();
-            cout << "[RAM Success] Da nap " << students.size() << " sinh vien vao bo nho RAM!\n\n";
+            cout << "[RAM Success] Da nap " << students.size() << " sinh vien vao bo nho RAM!\n";
             return true;
         } else {
             cerr << "[Loi] File JSON khong dung dinh dang (thieu mang 'students').\n";
