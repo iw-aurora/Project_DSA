@@ -10,23 +10,32 @@ using namespace std;
 
 // Cấu trúc lưu trữ kết quả tra cứu và chỉ số đo lường hiệu năng MC1
 struct SearchResult {
-    bool found = false;
+    bool found;
     Student student;
-    double buildTimeMs = 0.0;    // Thời gian xây dựng Index (ms)
-    double queryTimeMs = 0.0;    // Thời gian thực thi truy vấn (ms)
-    double totalTimeMs = 0.0;    // Tổng thời gian = Build + Query (ms)
-    long long comparisons = 0;   // Số phép so sánh mã sinh viên
+    double buildTimeMs;
+    double queryTimeMs;
+    double totalTimeMs;
+    long long comparisons;
+
+    // Constructor mặc định khởi tạo giá trị rõ ràng bằng con trỏ 'this->'
+    SearchResult() {
+        this->found = false;
+        this->buildTimeMs = 0.0;
+        this->queryTimeMs = 0.0;
+        this->totalTimeMs = 0.0;
+        this->comparisons = 0;
+    }
 };
 
 class MC1_Search {
 private:
-    const vector<Student>& studentsRef;         // Tham chiếu đến danh sách sinh viên trong RAM
-    unordered_map<string, size_t> idIndexMap;   // Bảng băm Index cho Final Solution (id -> index)
-    bool isIndexBuilt = false;                  // Cờ kiểm tra đã dựng index chưa
-    double indexBuildTimeMs = 0.0;              // Thời gian dựng index
+    const vector<Student>* studentsPtr;               // Con trỏ trỏ tới mảng sinh viên trong RAM
+    unordered_map<string, size_t> idIndexMap;         // Bảng băm Index (MSSV -> Vị trí)
+    bool isIndexBuilt;                                // Cờ kiểm tra đã dựng index chưa
+    double indexBuildTimeMs;                          // Thời gian dựng index
 
 public:
-    // Constructor nhận tham chiếu đến danh sách sinh viên trong RAM
+    // Constructor nhận tham chiếu mảng sinh viên
     explicit MC1_Search(const vector<Student>& students);
 
     // Xây dựng Hash Index cho Final Solution

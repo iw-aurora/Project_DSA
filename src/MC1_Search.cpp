@@ -6,38 +6,47 @@
 using namespace std;
 using namespace std::chrono;
 
-// Constructor
-MC1_Search::MC1_Search(const vector<Student>& students)
-    : studentsRef(students), isIndexBuilt(false), indexBuildTimeMs(0.0) {}
+// 1. Constructor khởi tạo rõ ràng bằng con trỏ 'this->' trong thân hàm {}
+MC1_Search::MC1_Search(const vector<Student>& students) {
+    this->studentsPtr = &students;
+    this->isIndexBuilt = false;
+    this->indexBuildTimeMs = 0.0;
+}
 
-// Xây dựng Hash Index cho Final Solution
+// 2. Xây dựng Hash Index cho Final Solution
 void MC1_Search::buildIndex() {
     auto start = high_resolution_clock::now();
     
-    idIndexMap.clear();
-    idIndexMap.reserve(studentsRef.size());
-    for (size_t i = 0; i < studentsRef.size(); ++i) {
-        idIndexMap[studentsRef[i].id] = i;
+    this->idIndexMap.clear();
+    if (this->studentsPtr != nullptr) {
+        this->idIndexMap.reserve(this->studentsPtr->size());
+        for (size_t i = 0; i < this->studentsPtr->size(); ++i) {
+            const Student& currentStudent = (*this->studentsPtr)[i];
+            this->idIndexMap[currentStudent.id] = i;
+        }
     }
     
     auto end = high_resolution_clock::now();
-    indexBuildTimeMs = duration<double, milli>(end - start).count();
-    isIndexBuilt = true;
+    this->indexBuildTimeMs = duration<double, milli>(end - start).count();
+    this->isIndexBuilt = true;
 }
 
-// 1. Baseline Solution: Linear Search O(N)
+// 3. Baseline Solution: Linear Search O(N)
 SearchResult MC1_Search::searchBaseline(const string& targetId) const {
     SearchResult result;
-    result.buildTimeMs = 0.0; // Baseline không tốn chi phí dựng index
+    result.buildTimeMs = 0.0;
     
     auto start = high_resolution_clock::now();
     
-    for (size_t i = 0; i < studentsRef.size(); ++i) {
-        result.comparisons++;
-        if (studentsRef[i].id == targetId) {
-            result.found = true;
-            result.student = studentsRef[i];
-            break;
+    if (this->studentsPtr != nullptr) {
+        for (size_t i = 0; i < this->studentsPtr->size(); ++i) {
+            result.comparisons = result.comparisons + 1;
+            const Student& currentStudent = (*this->studentsPtr)[i];
+            if (currentStudent.id == targetId) {
+                result.found = true;
+                result.student = currentStudent;
+                break;
+            }
         }
     }
     
@@ -48,22 +57,25 @@ SearchResult MC1_Search::searchBaseline(const string& targetId) const {
     return result;
 }
 
-// 2. Final Solution: Hash Map Index O(1) trung bình
+// 4. Final Solution: Hash Map Index O(1) trung bình
 SearchResult MC1_Search::searchFinal(const string& targetId) {
     SearchResult result;
     
-    if (!isIndexBuilt) {
-        buildIndex();
+    if (this->isIndexBuilt == false) {
+        this->buildIndex();
     }
-    result.buildTimeMs = indexBuildTimeMs;
+    result.buildTimeMs = this->indexBuildTimeMs;
     
     auto start = high_resolution_clock::now();
     
-    result.comparisons = 1; // Kiểm tra hash table 1 lần
-    auto it = idIndexMap.find(targetId);
-    if (it != idIndexMap.end()) {
+    result.comparisons = 1;
+    auto it = this->idIndexMap.find(targetId);
+    if (it != this->idIndexMap.end()) {
         result.found = true;
-        result.student = studentsRef[it->second];
+        size_t index = it->second;
+        if (this->studentsPtr != nullptr) {
+            result.student = (*this->studentsPtr)[index];
+        }
     }
     
     auto end = high_resolution_clock::now();
@@ -73,17 +85,17 @@ SearchResult MC1_Search::searchFinal(const string& targetId) {
     return result;
 }
 
-// 3. Chạy benchmark so sánh MC1 Baseline vs Final Solution
+// 5. Chạy benchmark so sánh MC1 Baseline vs Final Solution
 void MC1_Search::runBenchmark(const string& targetId) {
-    SearchResult baseRes = searchBaseline(targetId);
-    SearchResult finalRes = searchFinal(targetId);
+    SearchResult baseRes = this->searchBaseline(targetId);
+    SearchResult finalRes = this->searchFinal(targetId);
 
     cout << "\n======================================================================\n";
     cout << "          KET QUA PHAN TICH & BENCHMARK MC1 (TRA CUU MSSV)\n";
     cout << "======================================================================\n";
     cout << "MSSV Can Tim: " << targetId << "\n\n";
 
-    if (baseRes.found) {
+    if (baseRes.found == true) {
         cout << "[KET QUA THAY]:\n";
         cout << "  - MSSV: " << baseRes.student.id << "\n";
         cout << "  - Ho ten: " << baseRes.student.name << "\n";
