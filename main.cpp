@@ -1,4 +1,5 @@
-#include "interface/interface_minhanh/FindStudentByGpaRange.h"
+// #include "interface/interface_minhanh/FindStudentByGpaRange.h" // [Tạm khóa module Minh Anh]
+#include "interface/interface_mytra/FindStudentByClassId.h" // [Module Mỹ Trà]
 #include "interface/student.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
@@ -64,9 +65,17 @@ int main()
         return 1;
     }
 
-    // 2. Chạy module lọc sinh viên theo khoảng GPA (Minh Anh)
-    FindStudentByGpaRange finder(students);
-    finder.filterBaseline();
+    // ------------------------------------------------------------------------
+    // Module 1: Lọc sinh viên theo khoảng GPA (Minh Anh) - [Tạm khóa]
+    // ------------------------------------------------------------------------
+    // FindStudentByGpaRange finder(students);
+    // finder.filterBaseline();
+
+    // ------------------------------------------------------------------------
+    // Module 2: Lọc sinh viên theo Lớp (Mỹ Trà) - [Đang kích hoạt]
+    // ------------------------------------------------------------------------
+    FindStudentByClassId classFilter(students);
+    classFilter.filterBaseline();
 
     return 0;
 }
