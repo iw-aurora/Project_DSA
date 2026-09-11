@@ -12,6 +12,7 @@ RQ1_Filter::RQ1_Filter(const vector<Student> &students)
 {
     this->studentsPtr = &students;
 }
+
 // 2.Baseline Solution:Linear Filtering
 FilterResult RQ1_Filter::filterBaseline(const string &classId) const
 {
@@ -34,6 +35,9 @@ FilterResult RQ1_Filter::filterBaseline(const string &classId) const
     result.totalTimeMs = result.buildTimeMs + result.queryTimeMs;
     return result;
 }
+
+
+
 void RQ1_Filter::runBenchmark(const string &targetId, const FilterResult &result)
 {
     cout << "\n======================================================================\n";

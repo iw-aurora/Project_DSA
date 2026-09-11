@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eab3b823-cc26-4901-af40-34ccee1b0526" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/interface/StudentDatabase.h" beforeDir="false" afterPath="$PROJECT_DIR$/interface/StudentDatabase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/interface_minhanh/FindStudentByGpaRange.h" beforeDir="false" afterPath="$PROJECT_DIR$/interface/interface_minhanh/FindStudentByGpaRange.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/student.h" beforeDir="false" afterPath="$PROJECT_DIR$/interface/student.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FilterStudent/FindStudentByGpaRange.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StudentDatabase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentDatabase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/student.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/src_minhanh/FindStudentByGpaRange.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/src_minhanh/FindStudentByGpaRange.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="QKHrIeQE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3JCCAWDUZ7ZwbBob5kNJImIQtys" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "CidrDebugProfileConversion": "true",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "Minhanh",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Admin/Documents/Workspace/DSA_15/code_dsa",
+    "nodejs_package_manager_path": "npm",
+    "python.packages.toolwindow.project.migrated.to.right.top.v2": "true"
+  }
+}]]></component>
+  <component name="SelectedDebugProfileService"><![CDATA[{
+  "profileIdByStamp": [],
+  "modificationCount": 1
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eab3b823-cc26-4901-af40-34ccee1b0526" name="Changes" comment="" />
+      <created>1789155525046</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1789155525046</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
