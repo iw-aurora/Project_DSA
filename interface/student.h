@@ -4,7 +4,8 @@
 #include <string>
 using namespace std;
 
-struct Student {
+struct Student
+{
     string id;
     string name;
     string classId;

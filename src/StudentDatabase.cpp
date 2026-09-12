@@ -1,3 +1,8 @@
+// ============================================================================
+// FILE MẪU (DÙNG ĐỂ TEST ĐỌC FILE JSON THÔ RA CONSOLE)
+// Lưu ý: File này không dùng trong luồng chính của chương trình.
+// ============================================================================
+
 #include "../interface/StudentDatabase.h"
 #include "../interface/student.h"
 #include <fstream>

@@ -3,3 +3,7 @@ main.exe
 *.o
 *.obj
 .vscode/
+.idea/
+build/
+output/
+tempCodeRunnerFile.*
