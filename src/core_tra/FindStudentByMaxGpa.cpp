@@ -1,4 +1,4 @@
-#include "../interface/MC2_MaxGPA_Tra.h"
+#include "../../interface/interface_tra/FindStudentByMaxGpa.h"
 #include <chrono>
 #include <iomanip>
 #include <iostream>
