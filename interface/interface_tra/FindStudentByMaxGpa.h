@@ -1,40 +1,30 @@
-#ifndef MC2_MAXGPA_H
-#define MC2_MAXGPA_H
+#ifndef FIND_STUDENT_BY_MAX_GPA_H
+#define FIND_STUDENT_BY_MAX_GPA_H
 
 #include "../student.h"
+#include "BenchmarkMaxGpa.h"
+#include "CustomMaxHeapGpaFinder.h"
+#include "LinearMaxScanGpaFinder.h"
 #include <string>
 #include <vector>
 
-using namespace std;
-
-// Cấu trúc lưu trữ kết quả và số liệu benchmark của MC2
-struct MC2Result {
-  bool found;
-  Student student;
-  double queryTimeMs;
-  long long comparisons;
-
-  MC2Result() {
-    this->found = false;
-    this->queryTimeMs = 0.0;
-    this->comparisons = 0;
-  }
-};
-
-class MC2_MaxGPA {
+class FindStudentByMaxGpa {
 private:
-  const vector<Student>
-      *studentsPtr; // Con trỏ trỏ tới danh sách sinh viên trong RAM
+  std::vector<Student> studentsData;
+  std::string currentMode;
 
 public:
-  // Constructor nhận tham chiếu mảng sinh viên
-  explicit MC2_MaxGPA(const vector<Student> &students);
+  // Khởi tạo controller với tập dữ liệu truyền vào từ tầng Repository/RAM
+  explicit FindStudentByMaxGpa(const std::vector<Student> &students);
 
-  // Baseline & Final Solution: Quét tuyến tính O(N) tìm GPA cao nhất
-  MC2Result findMaxGPA() const;
+  // Thiết lập chế độ chạy cho hệ thống
+  void setExecutionMode(const std::string &mode);
 
-  // Chạy benchmark và hiển thị báo cáo thống kê chi tiết
-  void runBenchmark();
+  // Điều hướng thực thi nghiệp vụ dựa trên chế độ đã chọn
+  void executeQuery() const;
+
+  // Kích hoạt toàn bộ chu trình kiểm thử và báo cáo benchmark
+  void runCompleteBenchmarkSuite() const;
 };
 
 #endif

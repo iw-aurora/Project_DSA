@@ -1,80 +1,76 @@
 #include "../../interface/interface_tra/FindStudentByMaxGpa.h"
-#include <chrono>
-#include <iomanip>
+#include "../../interface/interface_tra/BenchmarkMaxGpa.h"
+#include "../../interface/interface_tra/CustomMaxHeapGpaFinder.h"
+#include "../../interface/interface_tra/LinearMaxScanGpaFinder.h"
 #include <iostream>
 
-using namespace std;
-using namespace std::chrono;
 
-MC2_MaxGPA::MC2_MaxGPA(const vector<Student> &students) {
-  this->studentsPtr = &students;
+using namespace std;
+
+FindStudentByMaxGpa::FindStudentByMaxGpa(const std::vector<Student> &students) {
+  this->studentsData = students;
+  this->currentMode = "BENCHMARK";
 }
 
-MC2Result MC2_MaxGPA::findMaxGPA() const {
-  MC2Result result;
+void FindStudentByMaxGpa::setExecutionMode(const std::string &mode) {
+  this->currentMode = mode;
+}
 
-  if (this->studentsPtr == nullptr || this->studentsPtr->empty()) {
-    result.found = false;
-    return result;
-  }
+void FindStudentByMaxGpa::executeQuery() const {
 
-  auto start = high_resolution_clock::now();
+  // =========================
+  // LINEAR / BASELINE
+  // =========================
+  if (this->currentMode == "LINEAR" || this->currentMode == "BASELINE") {
 
-  // Khởi tạo ứng cử viên ban đầu là sinh viên đầu tiên
-  const Student *bestStudent = &((*this->studentsPtr)[0]);
-  result.comparisons = 0;
+    cout << "\n[MC2] Dang chay o che do: LINEAR (Linear Max Scan O(N))\n";
 
-  for (size_t i = 1; i < this->studentsPtr->size(); ++i) {
-    result.comparisons++;
-    const Student &current = (*this->studentsPtr)[i];
+    LinearMaxScanGpaFinder baseline(
+        this->studentsData); // Sử dụng tên class mới
+    MC2Result res = baseline.findMaxGPA();
 
-    // Quy tắc Tie-break: GPA cao hơn hoặc (GPA bằng nhau và ID nhỏ hơn)
-    if (current.gpa > bestStudent->gpa) {
-      bestStudent = &current;
-    } else if (current.gpa == bestStudent->gpa) {
-      if (current.id < bestStudent->id) {
-        bestStudent = &current;
-      }
+    if (res.found) {
+      cout << "-> Tim thay sinh vien GPA cao nhat: " << res.student.id << " - "
+           << res.student.name << " (GPA: " << res.student.gpa << ")\n";
+      cout << "-> Thoi gian: " << res.queryTimeMs
+           << " ms | So phep so sanh: " << res.comparisons << "\n";
+    } else {
+      cout << "-> Khong co du lieu sinh vien.\n";
     }
   }
 
-  auto end = high_resolution_clock::now();
+  // =========================
+  // CUSTOM MAX HEAP / FINAL SOLUTION
+  // =========================
+  else if (this->currentMode == "OPTIMIZED" || this->currentMode == "FINAL" ||
+           this->currentMode == "CUSTOM_HEAP") {
 
-  result.found = true;
-  result.student = *bestStudent;
-  result.queryTimeMs = duration<double, milli>(end - start).count();
+    cout << "\n[MC2] Dang chay o che do: FINAL SOLUTION (Custom Max Heap)\n";
 
-  return result;
-}
+    CustomMaxHeapGpaFinder finalSol(this->studentsData);
+    MC2Result res = finalSol.findMaxGPA();
 
-void MC2_MaxGPA::runBenchmark() {
-  MC2Result res = this->findMaxGPA();
-
-  cout << "\n=================================================================="
-          "====\n";
-  cout << "          KET QUA PHAN TICH & BENCHMARK MC2 (GPA CAO NHAT)\n";
-  cout << "===================================================================="
-          "==\n";
-
-  if (res.found) {
-    cout << "[SINH VIEN DAT GPA CAO NHAT]:\n";
-    cout << "  - MSSV: " << res.student.id << "\n";
-    cout << "  - Ho ten: " << res.student.name << "\n";
-    cout << "  - Lop: " << res.student.classId << "\n";
-    cout << "  - GPA: " << fixed << setprecision(2) << res.student.gpa << "\n";
-  } else {
-    cout << "[KET QUA]: No student data available.\n";
+    if (res.found) {
+      cout << "-> Tim thay sinh vien GPA cao nhat: " << res.student.id << " - "
+           << res.student.name << " (GPA: " << res.student.gpa << ")\n";
+      cout << "-> Thoi gian: " << res.queryTimeMs
+           << " ms | So phep so sanh: " << res.comparisons << "\n";
+    } else {
+      cout << "-> Khong co du lieu sinh vien.\n";
+    }
   }
 
-  cout << "\n------------------------------------------------------------------"
-          "----\n";
-  cout << left << setw(32) << "CHI SO THONG KE" << "GIA TRI\n";
-  cout << "--------------------------------------------------------------------"
-          "--\n";
-  cout << left << setw(32)
-       << "1. Query Time (Thoi gian tim):" << res.queryTimeMs << " ms\n";
-  cout << left << setw(32) << "2. So phep so sanh (Comp):" << res.comparisons
-       << " phep\n";
-  cout << "===================================================================="
-          "==\n\n";
+  // =========================
+  // BENCHMARK
+  // =========================
+  else {
+    this->runCompleteBenchmarkSuite();
+  }
+}
+
+void FindStudentByMaxGpa::runCompleteBenchmarkSuite() const {
+  cout << "\n[MC2] Dang chay toan bo bo benchmark so sanh giua Linear Max Scan "
+          "va Custom Max Heap...\n";
+  BenchmarkMaxGpa benchmark(this->studentsData);
+  benchmark.runComparison();
 }
