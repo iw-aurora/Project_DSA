@@ -6,10 +6,24 @@
 using namespace std;
 using namespace std::chrono;
 
-// Thuật toán lọc GPA bằng Sắp xếp & Tìm kiếm nhị phân (Binary Search)
-// MỤC ĐÍCH: Tối ưu thời gian truy vấn từ O(N) xuống O(log N) bằng cách:
-// 1. Giai đoạn BUILD: Sắp xếp danh sách sinh viên theo thứ tự GPA tăng dần O(N log N).
-// 2. Giai đoạn QUERY: Dùng Binary Search tìm 2 mốc chỉ số [startIndex, endIndex) O(log N).
+// Thuật toán lọc GPA bằng Sắp xếp và Tìm kiếm nhị phân (Binary Search).
+//
+// MỤC ĐÍCH:
+// - Giai đoạn BUILD: Sắp xếp danh sách sinh viên theo GPA tăng dần.
+//   Độ phức tạp: O(N log N).
+//
+// - Giai đoạn QUERY:
+//   + Tìm startIndex bằng Binary Search: O(log N).
+//   + Tìm endIndex bằng Binary Search: O(log N).
+//   + Trích xuất K sinh viên: O(K).
+//
+// => Tổng độ phức tạp QUERY:
+//    O(log N) + O(log N) + O(K)
+//    = O(log N + K).
+//
+// => Tổng BUILD + QUERY:
+//    O(N log N + log N + K)
+//    = O(N log N + K).
 FilterGpaResult SortedGpaFilter::filter(const vector<Student> &students, double minGpa, double maxGpa)
 {
     FilterGpaResult result;
