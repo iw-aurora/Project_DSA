@@ -44,11 +44,13 @@ struct FilterGpaResult
 
 class FindStudentByGpaRange
 {
-private:
+protected:
     const vector<Student> *studentsPtr; // Con trỏ tham chiếu đến mảng dữ liệu sinh viên gốc
 
     // Hàm phụ trợ: Thống kê GPA nhỏ nhất và lớn nhất thực tế đang có trong CSDL
     pair<double, double> getGpaRangeInData() const;
+    // Hàm nhận khoảng GPA cần lọc từ người dùng
+    pair<double, double> getGpaRangeFromUser(double &minGpa, double &maxGpa);
 
 public:
     // Constructor: Nhận tham chiếu mảng sinh viên (explicit để chống ép kiểu ngầm định)
@@ -56,7 +58,8 @@ public:
 
     // Thực hiện toàn bộ quy trình lọc: Thống kê min/max -> Nhập khoảng GPA -> Đo hiệu năng Baseline -> Xuất bảng Benchmark
     FilterGpaResult filterBaseline();
-
+    FilterGpaResult filterFinalSolution();
+    
     // Hiển thị danh sách kết quả và bảng chỉ số benchmark chi tiết
     void runBenchmark(double minGpa, double maxGpa, const FilterGpaResult &result) const;
 };
