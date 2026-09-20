@@ -35,7 +35,8 @@ vector<string> FindStudentByClassId::getAvailableClassIds() const
     return classIds;
 }
 // HÀM: filter()
-// Quy trình:Hiển thị classId -> Nhập classId -> Baseline Linear Filter -> Optimized Linear Filter -> Benchmark -> Hiển thị kết quả
+// Quy trình:
+//Hiển thị danh sách classId -> Nhập classId -> chạy Baseline -> chạy Final Solution -> Benchmark -> hiển thị kết quả.
 
 void FindStudentByClassId::filterBaseline()
 {

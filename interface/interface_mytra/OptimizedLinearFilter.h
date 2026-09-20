@@ -44,11 +44,11 @@ struct OptimizedFilterResult
 // ============================================================================
 // Chức năng:
 // - Thực hiện Final Solution của RQ1.
-// - Vẫn sử dụng Linear Filter, tức là duyệt tuần tự toàn bộ dữ liệu.
+// - Vẫn sử dụng Linear Filter nên thời gian vẫn là O(N).
 // - Cải tiến cách lưu kết quả:
-//      Baseline  : lưu bản sao Student.
-//      Final     : chỉ lưu index của Student.
-//
+//      Baseline : lưu bản sao Student.
+//      Final    : chỉ lưu index của Student.
+// - Mục tiêu là giảm chi phí sao chép dữ liệu, không làm thay đổi thuật toán tìm kiếm.
 // Độ phức tạp:
 // - Time : O(N)
 // - Space: O(k)

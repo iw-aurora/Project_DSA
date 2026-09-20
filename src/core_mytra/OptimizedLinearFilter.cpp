@@ -1,5 +1,8 @@
 #include "../../interface/interface_mytra/OptimizedLinearFilter.h"
-// Nếu phù hợp, chỉ lưu index thay vì copy toàn bộ Student.
+// Final Solution lưu index của Student thay vì sao chép
+// toàn bộ đối tượng Student vào kết quả.
+// Điều này giảm chi phí sao chép dữ liệu nhưng không
+// làm thay đổi độ phức tạp của quá trình tìm kiếm.
 // Điểm cải tiến so với Baseline:
 // - Baseline:
 //      result.students.push_back(student);
@@ -7,15 +10,11 @@
 //      result.indexes.push_back(i);
 // Nhờ đó Final không cần tạo bản sao Student cho từng kết quả.
 OptimizedFilterResult OptimizedLinearFilter::filter(
-    const vector<Student>& students,
-    const string& classId
-)
+    const vector<Student> &students,
+    const string &classId)
 {
     // Tạo đối tượng lưu kết quả.
     OptimizedFilterResult result;
-    // reserve() giúp vector có sẵn vùng nhớ, hạn chế việc cấp phát lại khi thêm nhiều index.
-    // Giúp tối ưu về chi phí thực thi,không làm thay đổi độ phức tạp Big-O.
-    result.indexes.reserve(students.size());
     for (int i = 0; i < (int)students.size(); i++)
     {
         result.comparisons++;
