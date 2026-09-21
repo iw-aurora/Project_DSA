@@ -156,7 +156,7 @@ int main()
         case 1:
             clearScreen();
             // Chạy module Lọc theo khoảng GPA (Minh Anh)
-            gpaFilter.filterBaseline();
+            gpaFilter.runComparison();
             pauseScreen();
             clearScreen();
             break;
