@@ -1,4 +1,4 @@
-// ============================================================================
+﻿// ============================================================================
 // CHƯƠNG TRÌNH CHÍNH - HỆ THỐNG QUẢN LÝ SINH VIÊN (DASA230179)
 // ============================================================================
 
@@ -6,6 +6,7 @@
 #include "interface/interface_mytra/FindStudentByClassId.h"   // [Module Mỹ Trà: Lọc theo lớp]
 #include "interface/interface_phat/StudentCRUD.h"             // [Module Phát: Thêm - Sửa - Xóa]
 #include "interface/interface_tra/FindStudentByMaxGpa.h"      // [Module Thanh Tra: Tìm GPA cao nhất]
+#include "interface/interface_trang/FindStudentById.h"        // [Module Trang: Tìm kiếm MSSV tương tác]
 #include "interface/interface_trang/Benchmark.h"              // [Module Trang: Benchmark tìm kiếm MSSV]
 #include "interface/interface_trang/HashTable.h"              // [Module Trang: Hash Search]
 #include "interface/interface_trang/LinearSearch.h"           // [Module Trang: Linear Search]
@@ -17,6 +18,7 @@
 #include <string>
 #include <stdexcept>
 #include <limits>
+#include <iomanip>
 
 #ifdef _WIN32
 #include <conio.h>
@@ -80,48 +82,99 @@ void pauseScreen()
 #endif
 }
 
-void showMainMenu()
+// ============================================================================
+// MENU CHÍNH TƯƠNG TÁC BẰNG PHÍM MŨI TÊN (ARROW KEYS MAIN MENU)
+// ============================================================================
+int selectMainMenuInteractive()
 {
-    cout << "====================================================\n";
-    cout << "      HE THONG QUAN LY SINH VIEN - DASA230179       \n";
-    cout << "====================================================\n";
-    cout << "1. Module Minh Anh : Loc sinh vien theo khoang GPA  \n";
-    cout << "2. Module My Tra   : Loc sinh vien theo Lop         \n";
-    cout << "3. Module Phat     : Quan ly Them - Sua - Xoa       \n";
-    cout << "4. Module Trang    : Tim kiem sinh vien theo MSSV   \n";
-    cout << "5. Module Thanh Tra: Tim sinh vien co GPA cao nhat  \n";
-    cout << "0. Thoat chuong trinh                               \n";
-    cout << "----------------------------------------------------\n";
-    cout << "Chon chuc nang [0-5]: ";
-}
+    const vector<string> menuOptions = {
+        "Module 1: Loc sinh vien theo khoang GPA (Minh Anh)",
+        "Module 2: Loc sinh vien theo Lop        (My Tra)",
+        "Module 3: Quan ly Them - Sua - Xoa CRUD (Phat)",
+        "Module 4: Tim kiem sinh vien theo MSSV  (Trang)",
+        "Module 5: Tim sinh vien co GPA cao nhat (Thanh Tra)",
+        "Thoat chuong trinh"
+    };
 
-void showTrangMenu()
-{
-    cout << "====================================================\n";
-    cout << "          MODULE TRANG - TIM KIEM MSSV              \n";
-    cout << "====================================================\n";
-    cout << "1. Linear Search\n";
-    cout << "2. Hash Search\n";
-    cout << "3. Benchmark\n";
-    cout << "0. Quay lai\n";
-    cout << "----------------------------------------------------\n";
-    cout << "Chon chuc nang [0-3]: ";
+    int currentIndex = 0;
+    int totalOptions = static_cast<int>(menuOptions.size());
+
+    while (true)
+    {
+        clearScreen();
+        cout << "=========================================================================================\n";
+        cout << "                  HE THONG QUAN LY SINH VIEN - DASA230179                                \n";
+        cout << "=========================================================================================\n";
+        cout << " [HUONG DAN]: Dung phim Mui ten Len/Xuong de chon, Enter de thuc thi, Esc de thoat      \n";
+        cout << "-----------------------------------------------------------------------------------------\n";
+
+        for (int i = 0; i < totalOptions; i++)
+        {
+            if (i == currentIndex)
+            {
+                cout << "  -->  [ " << (i == totalOptions - 1 ? 0 : i + 1) << " ]  "
+                     << left << setw(60) << menuOptions[i]
+                     << "  <== [DANG CHON]\n";
+            }
+            else
+            {
+                cout << "       [ " << (i == totalOptions - 1 ? 0 : i + 1) << " ]  "
+                     << left << setw(60) << menuOptions[i] << "\n";
+            }
+        }
+
+        cout << "=========================================================================================\n";
+
+#ifdef _WIN32
+        int ch = _getch();
+        if (ch == 0 || ch == 224) // Phím mũi tên
+        {
+            int arrow = _getch();
+            if (arrow == 72) // Mũi tên LÊN (UP)
+            {
+                if (currentIndex > 0)
+                    currentIndex--;
+                else
+                    currentIndex = totalOptions - 1;
+            }
+            else if (arrow == 80) // Mũi tên XUỐNG (DOWN)
+            {
+                if (currentIndex < totalOptions - 1)
+                    currentIndex++;
+                else
+                    currentIndex = 0;
+            }
+        }
+        else if (ch == 13) // Phím ENTER
+        {
+            if (currentIndex == totalOptions - 1)
+                return 0; // Thoát
+            return currentIndex + 1;
+        }
+        else if (ch == 27 || ch == '0') // Phím ESC hoặc 0
+        {
+            return 0; // Thoát
+        }
+        else if (ch >= '1' && ch <= '5') // Phím tắt số 1 - 5
+        {
+            return ch - '0';
+        }
+#else
+        cout << "Chon chuc nang (0-5): ";
+        int choice;
+        if (cin >> choice)
+            return choice;
+        return 0;
+#endif
+    }
 }
 
 int main()
 {
-    // ========================================================================
-    // BƯỚC NẠP DỮ LIỆU DÙNG CHUNG CHO TOÀN DỰ ÁN (SHARED DATA LOADING)
-    // - Đọc dữ liệu sinh viên từ database.json vào mảng động vector<Student>.
-    // - Tất cả các thuật toán/module của các thành viên sẽ cùng tái sử dụng
-    //   mảng dữ liệu này để thực hiện tìm kiếm, sắp xếp, lọc, benchmark,...
-    // ========================================================================
     vector<Student> students;
     try
     {
         students = loadStudentsData("data/database.json");
-        cout << "[Thanh cong] Da tai " << students.size()
-             << " sinh vien tu data/database.json.\n\n";
     }
     catch (const exception &e)
     {
@@ -129,190 +182,60 @@ int main()
         return 1;
     }
 
-    // ========================================================================
-    // KHỞI TẠO CÁC MODULE DÙNG CHUNG MẢNG SINH VIÊN
-    // ========================================================================
-    FindStudentByGpaRange gpaFilter(students);      // Module Minh Anh
-    FindStudentByClassId classFilter(students);     // Module Mỹ Trà
-    StudentCRUD studentCrud(students);              // Module Phát
-    FindStudentByMaxGpa maxGpaFinder(students);     // Module Thanh Tra
+    FindStudentByGpaRange gpaFilter(students);  // Module Minh Anh
+    FindStudentByClassId classFilter(students); // Module Mỹ Trà
+    StudentCRUD studentCrud(students);          // Module Phát
+    FindStudentById studentFinder(students);    // Module Trang
+    FindStudentByMaxGpa maxGpaFinder(students); // Module Thanh Tra
 
-    int choice = -1;
-    while (choice != 0)
+    while (true)
     {
-        showMainMenu();
+        int choice = selectMainMenuInteractive();
 
-        if (!(cin >> choice))
+        if (choice == 0)
         {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             clearScreen();
-            cout << "[Loi] Vui long nhap so tu 0 den 5.\n\n";
-            continue;
+            cout << "\n=========================================================================================\n";
+            cout << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       \n";
+            cout << "=========================================================================================\n\n";
+            break;
         }
 
         switch (choice)
         {
         case 1:
             clearScreen();
-            // Chạy module Lọc theo khoảng GPA (Minh Anh)
             gpaFilter.runComparison();
             pauseScreen();
-            clearScreen();
             break;
 
         case 2:
             clearScreen();
-            // Chạy module Lọc theo lớp (Mỹ Trà)
             classFilter.filterBaseline();
             pauseScreen();
-            clearScreen();
             break;
 
         case 3:
             clearScreen();
-            // Chạy module Thêm - Sửa - Xóa (Phát)
             studentCrud.runCRUDMenu();
-            clearScreen();
             break;
 
         case 4:
-        {
-            int trangChoice = -1;
-
-            while (trangChoice != 0)
-            {
-                clearScreen();
-                showTrangMenu();
-
-                if (!(cin >> trangChoice))
-                {
-                    cin.clear();
-                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "[Loi] Vui long nhap so tu 0 den 3.\n";
-                    pauseScreen();
-                    continue;
-                }
-
-                switch (trangChoice)
-                {
-                case 1:
-                {
-                    string targetId;
-                    cout << "\nNhap MSSV can tim: ";
-                    cin >> targetId;
-
-                    LinearSearch linearSearch;
-                    const Student *result =
-                        linearSearch.search(students, targetId);
-
-                    cout << "\n--- Linear Search ---\n";
-
-                    if (result != nullptr)
-                    {
-                        cout << "Tim thay sinh vien:\n";
-                        cout << "MSSV : " << result->id << '\n';
-                        cout << "Ten  : " << result->name << '\n';
-                        cout << "Lop  : " << result->classId << '\n';
-                        cout << "GPA  : " << result->gpa << '\n';
-                    }
-                    else
-                    {
-                        cout << "Khong tim thay sinh vien co MSSV: "
-                             << targetId << '\n';
-                    }
-
-                    cout << "So phep so sanh: "
-                         << linearSearch.getComparisons() << '\n';
-
-                    pauseScreen();
-                    break;
-                }
-
-                case 2:
-                {
-                    string targetId;
-                    cout << "\nNhap MSSV can tim: ";
-                    cin >> targetId;
-
-                    HashTable hashTable;
-                    hashTable.build(students);
-
-                    const Student *result =
-                        hashTable.search(targetId);
-
-                    cout << "\n--- Hash Search ---\n";
-
-                    if (result != nullptr)
-                    {
-                        cout << "Tim thay sinh vien:\n";
-                        cout << "MSSV : " << result->id << '\n';
-                        cout << "Ten  : " << result->name << '\n';
-                        cout << "Lop  : " << result->classId << '\n';
-                        cout << "GPA  : " << result->gpa << '\n';
-                    }
-                    else
-                    {
-                        cout << "Khong tim thay sinh vien co MSSV: "
-                             << targetId << '\n';
-                    }
-
-                    cout << "So probe: "
-                         << hashTable.getProbes() << '\n';
-                    cout << "So collision: "
-                         << hashTable.getCollisions() << '\n';
-
-                    pauseScreen();
-                    break;
-                }
-
-                case 3:
-                {
-                    MC1::Benchmark benchmark;
-                    MC1::Benchmark::Result result =
-                        benchmark.run(students);
-
-                    cout << '\n';
-                    benchmark.printResult(result);
-
-                    pauseScreen();
-                    break;
-                }
-
-                case 0:
-                    break;
-
-                default:
-                    cout << "\n[Loi] Lua chon khong hop le.\n";
-                    pauseScreen();
-                    break;
-                }
-            }
-
             clearScreen();
+            studentFinder.runInteractiveSearch();
+            pauseScreen();
             break;
-        }
 
         case 5:
             clearScreen();
-            // Chạy module tìm sinh viên có GPA cao nhất (Thanh Tra)
             maxGpaFinder.runCompleteBenchmarkSuite();
             pauseScreen();
-            clearScreen();
-            break;
-
-        case 0:
-            clearScreen();
-            cout << "\nCam on ban da su dung chuong trinh!\n";
             break;
 
         default:
-            clearScreen();
-            cout << "[Loi] Lua chon khong hop le. Vui long chon lai!\n\n";
             break;
         }
     }
 
     return 0;
 }
-

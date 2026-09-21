@@ -16,6 +16,10 @@ private:
 public:
     explicit FindStudentByClassId(
         const vector<Student> &students);
+
+    // Giao diện chọn mã lớp tương tác bằng phím mũi tên Lên/Xuống, ESC để hủy
+    string selectClassIdInteractive() const;
+
     void filterBaseline();
 };
 #endif

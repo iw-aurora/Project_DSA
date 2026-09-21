@@ -112,7 +112,6 @@ MC1::Benchmark::Result MC1::Benchmark::run(
             buildEnd - buildStart
         ).count();
 
-
     auto hashStart = chrono::steady_clock::now();
 
     for (const string& query : queries)
@@ -123,6 +122,7 @@ MC1::Benchmark::Result MC1::Benchmark::run(
         const bool shouldExist =
             query.rfind("NOT_FOUND_", 0) != 0;
 
+        // Kiểm tra đúng cả kết quả tìm thấy và MSSV
         if (shouldExist)
         {
             if (found != nullptr && found->id == query)
@@ -156,40 +156,23 @@ MC1::Benchmark::Result MC1::Benchmark::run(
 }
 
 
-void MC1::Benchmark::printResult(
-    const Result& result) const
+void MC1::Benchmark::printResult(const Result& result) const
 {
     cout << "\n============================================================\n";
-    cout << "                 BENCHMARK MC1\n";
-    cout << "          LINEAR SEARCH VS HASH TABLE\n";
+    cout << "          BENCHMARK: LINEAR SEARCH VS HASH TABLE            \n";
     cout << "============================================================\n";
-
-    cout << "Dataset hien tai: "
-         << result.datasetSize
-         << " sinh vien\n";
-
-    cout << "So luong query: "
-         << result.queryCount
-         << "\n\n";
-
-    cout << left
-         << setw(28) << "CHI SO"
-         << right
-         << setw(18) << "LINEAR SEARCH"
-         << setw(18) << "HASH TABLE"
-         << '\n';
-
+    cout << "So luong sinh vien : " << result.datasetSize << '\n';
+    cout << "So luong truy van  : " << result.queryCount  << '\n';
     cout << "------------------------------------------------------------\n";
 
     cout << left
-         << setw(28) << "Build Time (ms)"
+         << setw(28) << "Chi so"
          << right
-         << setw(18) << "N/A"
-         << setw(18)
-         << fixed
-         << setprecision(4)
-         << result.hashBuildTimeMs
+         << setw(18) << "Linear Search"
+         << setw(18) << "Hash Table"
          << '\n';
+
+    cout << "------------------------------------------------------------\n";
 
     cout << left
          << setw(28) << "Query Time (ms)"
