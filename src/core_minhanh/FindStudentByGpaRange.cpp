@@ -23,6 +23,7 @@
 #include "../../interface/interface_minhanh/FindStudentByGpaRange.h"
 #include "../../interface/interface_minhanh/LinearGpaFilter.h"
 #include "../../interface/interface_minhanh/SortedGpaFilter.h"
+#include "../../interface/interface_minhanh/Benchmark.h"
 #include <iostream>
 #include <iomanip>
 
@@ -34,7 +35,7 @@ FindStudentByGpaRange::FindStudentByGpaRange(const vector<Student> &students)
 }
 
 // ----------------------------------------------------------------------------
-// 1. Thống kê GPA min và max thực tế trong toàn bộ danh sách sinh viên
+// 1. LẤY GPA MIN VÀ MAX TRONG CSDL
 // ----------------------------------------------------------------------------
 pair<double, double> FindStudentByGpaRange::getGpaRangeInData() const
 {
@@ -57,25 +58,25 @@ pair<double, double> FindStudentByGpaRange::getGpaRangeInData() const
     return {minVal, maxVal};
 }
 
-// CHỨC NĂNG: Nhập khoảng GPA cần lọc từ người dùng
-// MỤC ĐÍCH:
-// 1. Hiển thị thông số GPA [min, max] thực tế đang có trong CSDL làm gợi ý.
-// 2. Lấy dữ liệu minGpa và maxGpa từ bàn phím, có xử lý lỗi nhập liệu (Validation).
-// 3. Tự động sửa lỗi người dùng nhập ngược (min > max) bằng hàm swap().
 // ----------------------------------------------------------------------------
-pair<double, double> FindStudentByGpaRange::getGpaRangeFromUser( double &minGpa, double &maxGpa)
+// 2. NHẬP KHOẢNG GPA TỪ NGƯỜI DÙNG
+// MỤC ĐÍCH:
+// - Hiển thị thông số GPA [min, max] thực tế đang có trong CSDL làm gợi ý.
+// - Lấy dữ liệu minGpa và maxGpa từ bàn phím, có xử lý lỗi nhập liệu (Validation).
+// - Tự động sửa lỗi người dùng nhập ngược (min > max) bằng hàm swap().
+// ----------------------------------------------------------------------------
+
+void FindStudentByGpaRange::getGpaRangeFromUser( double &minGpa, double &maxGpa)
 {
     cout << "======================================================================\n";
     cout << "          CHUONG TRINH LOC SINH VIEN THEO KHOANG GPA (MINHANH)        \n";
     cout << "======================================================================\n";
 
-    // 1. Thống kê khoảng GPA thực tế đang có trong dữ liệu
     auto [actualMin, actualMax] = getGpaRangeInData();
     cout << "Thong ke du lieu CSDL: GPA thap nhat = " << fixed << setprecision(2) << actualMin
          << " | GPA cao nhat = " << actualMax << "\n";
     cout << "----------------------------------------------------------------------\n";
 
-    // 2. Nhập khoảng GPA cần lọc
     minGpa = actualMin;
     maxGpa = actualMax;
 
@@ -100,48 +101,69 @@ pair<double, double> FindStudentByGpaRange::getGpaRangeFromUser( double &minGpa,
         cout << "[Luu y] GPA toi thieu lon hon toi da, tu dong hoan doi: [" << maxGpa << " - " << minGpa << "]\n";
         swap(minGpa, maxGpa);
     }
-    return {minGpa, maxGpa};
 }
 
-// BASELINE: goi LinearGpaFilter,
-FilterGpaResult FindStudentByGpaRange::filterBaseline()
+// ----------------------------------------------------------------------------
+// 3. BASELINE - LINEAR SEARCH
+// ----------------------------------------------------------------------------
+
+FilterGpaResult FindStudentByGpaRange::filterBaseline(double minGpa, double maxGpa)
 {
-    double minGpa = 0.0, maxGpa = 0.0;
-    getGpaRangeFromUser(minGpa, maxGpa);
-
-    FilterGpaResult result = LinearGpaFilter::filter(*this->studentsPtr, minGpa, maxGpa);
-
-    runBenchmark(minGpa, maxGpa, result);
-    return result;
-}
-
-// FINAL SOLUTION: goi SortedGpaFilter (sort + binary search)
-FilterGpaResult FindStudentByGpaRange::filterFinalSolution()
-{
-    double minGpa = 0.0, maxGpa = 0.0;
-    
-    getGpaRangeFromUser(minGpa, maxGpa);
-
-    // Gọi hàm filter private với dữ liệu từ this->studentsPtr
-    FilterGpaResult result;
-    if (studentsPtr != nullptr)
+    if (studentsPtr == nullptr)
     {
-        const vector<Student> &students = *studentsPtr;
-        SortedGpaFilter sortedFilter;
-        result = sortedFilter.filter(students, minGpa, maxGpa);
+        return FilterGpaResult{};
+    }
+    const vector<Student> &students = *studentsPtr;
+    return LinearGpaFilter::filter(students, minGpa, maxGpa);
+    
+}
+
+// ----------------------------------------------------------------------------
+// 4. FINAL SOLUTION - SORT + BINARY SEARCH
+// ----------------------------------------------------------------------------
+
+FilterGpaResult FindStudentByGpaRange::filterFinalSolution(double minGpa, double maxGpa)
+{
+    if (studentsPtr == nullptr)
+    {
+        return FilterGpaResult{};
+    }
+    const vector<Student> &students = *studentsPtr;
+    SortedGpaFilter sortedFilter;
+    return sortedFilter.filter(students, minGpa, maxGpa);
+     
+}
+
+// ----------------------------------------------------------------------------
+// 5. CHẠY SO SÁNH BASELINE VS FINAL SOLUTION
+// ----------------------------------------------------------------------------
+void FindStudentByGpaRange::runComparison()
+{
+    if (studentsPtr == nullptr ||
+        studentsPtr->empty())
+    {
+        cout << "CSDL khong co sinh vien.\n";
+        return;
     }
 
-    // Xuất kết quả và benchmark ra màn hình
-    runBenchmark(minGpa, maxGpa, result);
+    double minGpa = 0.0;
+    double maxGpa = 0.0;
 
-    return result;
+    getGpaRangeFromUser(minGpa,maxGpa);
+
+    FilterGpaResult baseline =filterBaseline(minGpa, maxGpa);
+    FilterGpaResult optimized =filterFinalSolution(minGpa, maxGpa);
+
+    Benchmark::printComparison(minGpa, maxGpa, baseline, optimized
+    );
+
+    displayResult(minGpa, maxGpa, optimized);
 }
 
-// HIỂN THỊ DANH SÁCH SINH VIÊN VÀ CHỈ SỐ BENCHMARK ĐƠN LE
-void FindStudentByGpaRange::runBenchmark(double minGpa, double maxGpa, const FilterGpaResult &result) const
+void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const FilterGpaResult &result) const
 {
     cout << "\n======================================================================\n";
-    cout << "          KET QUA BENCHMARK (LOC SINH VIEN THEO KHOANG GPA)           \n";
+    cout << "          DANH SACH SINH VIEN THEO KHOANG GPA                          \n";
     cout << "======================================================================\n";
     cout << "Khoang GPA can loc: [" << fixed << setprecision(2) << minGpa << " - " << maxGpa << "]\n\n";
 
@@ -163,7 +185,9 @@ void FindStudentByGpaRange::runBenchmark(double minGpa, double maxGpa, const Fil
             cout << left << setw(12) << student.id
                  << setw(25) << student.name
                  << setw(15) << student.classId
-                 << setw(10) << fixed << setprecision(2) << student.gpa << endl;
+                 << setw(10) << fixed << setprecision(2) 
+                 << student.gpa 
+                 << endl;
         }
     }
     cout << "======================================================================\n";

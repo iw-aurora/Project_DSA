@@ -7,12 +7,10 @@ using namespace std::chrono;
 
 FilterGpaResult LinearGpaFilter::filter(const vector<Student> &students, double minGpa, double maxGpa)
 {
-
-    // 1. Thực hiện đo thời gian và lọc sinh viên (Baseline)
     FilterGpaResult result;
     result.buildTimeMs = 0.0;
 
-    auto start = high_resolution_clock::now();
+    auto start =std::chrono::high_resolution_clock::now();
 
     for (size_t i = 0; i < students.size(); i++)
     {
@@ -32,7 +30,7 @@ FilterGpaResult LinearGpaFilter::filter(const vector<Student> &students, double 
         }
     }
 
-    auto end = high_resolution_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
 
     result.queryTimeMs = duration_cast<microseconds>(end - start).count() / 1000.0;
     result.totalTimeMs = result.buildTimeMs + result.queryTimeMs;

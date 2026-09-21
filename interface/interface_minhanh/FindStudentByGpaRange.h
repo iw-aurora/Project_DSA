@@ -19,6 +19,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 #include "../student.h"
 
 using namespace std;
@@ -45,21 +46,25 @@ struct FilterGpaResult
 class FindStudentByGpaRange
 {
 private:
-    const vector<Student> *studentsPtr; // Con trỏ tham chiếu đến mảng dữ liệu sinh viên gốc
+    const vector<Student> *studentsPtr;
+
+public:
+    FindStudentByGpaRange(const vector<Student> &students);
 
     // Hàm phụ trợ: Thống kê GPA nhỏ nhất và lớn nhất thực tế đang có trong CSDL
     pair<double, double> getGpaRangeInData() const;
-    // Hàm nhận khoảng GPA cần lọc từ người dùng
-    pair<double, double> getGpaRangeFromUser(double &minGpa, double &maxGpa);
 
-public:
-    // Constructor: Nhận tham chiếu mảng sinh viên (explicit để chống ép kiểu ngầm định)
-    explicit FindStudentByGpaRange(const vector<Student> &students);
-    
-    FilterGpaResult filterBaseline();      
-    FilterGpaResult filterFinalSolution(); 
+    // Nhập khoảng GPA từ người dùng
+    void getGpaRangeFromUser(double& minGpa, double& maxGpa);
 
-    void runBenchmark(double minGpa, double maxGpa, const FilterGpaResult &result) const;
+    FilterGpaResult filterBaseline(double minGpa, double maxGpa);      
+    FilterGpaResult filterFinalSolution(double minGpa, double maxGpa); 
+
+    // Chạy và so sánh cả 2 thuật toán
+    void runComparison();
+
+    // Chỉ hiển thị danh sách sinh viên
+    void displayResult(double minGpa, double maxGpa, const FilterGpaResult& result) const;
 };
 
 #endif
