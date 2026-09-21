@@ -17,9 +17,6 @@ public:
   // Chạy thực nghiệm so sánh chi tiết giữa Linear và Custom Max Heap ở các mức
   // dữ liệu
   void runComparison(int numIterations = 1000) const;
-
-private:
-  void printReportRow(const std::string &method, const double avgTimeMs) const;
 };
 
 #endif

@@ -128,10 +128,14 @@ void CustomMaxHeapGpaFinder::updateOrInsert(const Student &student) {
   for (int i = 0; i < static_cast<int>(maxHeap.size()); i++) {
     if (maxHeap[i].id == student.id) {
       maxHeap[i] = student;
-      // Khôi phục lại tính chất của Max Heap sau khi cập nhật
-      heapifyUp(i);
-      heapifyDown(i);
-      return;
+      if (i > 0 && higherPriority(maxHeap[i], maxHeap[(i - 1) / 2])) {
+        // Nếu phần tử mới ưu tiên hơn cha, đẩy lên.
+        heapifyUp(i);
+      } else {
+        // Nếu không cần đẩy lên, kiểm tra và đẩy xuống nếu cần.
+        heapifyDown(i);
+      }
+    return;
     }
   }
 

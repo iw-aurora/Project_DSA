@@ -11,39 +11,63 @@ BenchmarkMaxGpa::BenchmarkMaxGpa(const std::vector<Student> &students) {
 }
 
 void BenchmarkMaxGpa::runComparison(int numIterations) const {
-  // Chạy đồng thời Linear và Custom Max Heap để đối chứng số liệu
-  LinearMaxScanGpaFinder baseline(*studentsPtr);
-  CustomMaxHeapGpaFinder finalSol(*studentsPtr);
-  auto resBase = baseline.findMaxGPA();
-  auto resFinal = finalSol.findMaxGPA();
-
-  cout << "\n=================================================================="
-          "==\n";
-  cout << "          KET QUA PHAN TICH & BENCHMARK (GPA CAO NHAT)\n";
-  cout << "===================================================================="
-          "\n";
-
-  if (resBase.found) {
-    cout << "[SINH VIEN DAT GPA CAO NHAT (Baseline Result)]:\n";
-    cout << "  - MSSV: " << resBase.student.id << "\n";
-    cout << "  - Ho ten: " << resBase.student.name << "\n";
-    cout << "  - Lop: " << resBase.student.classId << "\n";
-    cout << "  - GPA: " << fixed << setprecision(2) << resBase.student.gpa
-         << "\n";
-  } else {
-    cout << "[KET QUA]: No student data available.\n";
+  if (studentsPtr == nullptr || studentsPtr->empty()) {
+    std::cout << "\n[Benchmark] Khong co du lieu de benchmark.\n";
+    return;
   }
 
-  cout << "\n------------------------------------------------------------------"
-          "--\n";
-  cout << left << setw(32) << "CHI SO THONG KE" << setw(15) << "BASELINE"
-       << setw(15) << "FINAL SOLUTION\n";
-  cout << "--------------------------------------------------------------------"
-          "\n";
-  cout << left << setw(32) << "1. Query Time (ms):" << setw(15)
-       << resBase.queryTimeMs << setw(15) << resFinal.queryTimeMs << "\n";
-  cout << left << setw(32) << "2. So phep so sanh (Comp):" << setw(15)
-       << resBase.comparisons << setw(15) << resFinal.comparisons << "\n";
-  cout << "===================================================================="
-          "\n\n";
+  if (numIterations <= 0) {
+    std::cout << "\n[Benchmark] So lan lap phai lon hon 0.\n";
+    return;
+  }
+
+  LinearMaxScanGpaFinder linear(*studentsPtr);
+  CustomMaxHeapGpaFinder heap(*studentsPtr);
+
+  double totalLinearTime = 0.0;
+  double totalHeapTime = 0.0;
+
+  long long totalLinearComparisons = 0;
+  long long totalHeapComparisons = 0;
+
+  MC2Result linearResult;
+  MC2Result heapResult;
+
+  for (int i = 0; i < numIterations; ++i) {
+    linearResult = linear.findMaxGPA();
+    heapResult = heap.findMaxGPA();
+
+    totalLinearTime += linearResult.queryTimeMs;
+    totalHeapTime += heapResult.queryTimeMs;
+
+    totalLinearComparisons += linearResult.comparisons;
+    totalHeapComparisons += heapResult.comparisons;
+  }
+
+  const double avgLinearTime = totalLinearTime / numIterations;
+  const double avgHeapTime = totalHeapTime / numIterations;
+
+  const double avgLinearComparisons =
+      static_cast<double>(totalLinearComparisons) / numIterations;
+
+  const double avgHeapComparisons =
+      static_cast<double>(totalHeapComparisons) / numIterations;
+
+  std::cout << "\n========== BENCHMARK MAX GPA ==========\n";
+  std::cout << "So lan lap: " << numIterations << "\n";
+  std::cout << "So sinh vien: " << studentsPtr->size() << "\n\n";
+
+  std::cout << "Baseline - Linear Scan\n";
+  std::cout << "  Query Time trung binh: "
+            << avgLinearTime << " ms\n";
+  std::cout << "  Comparisons trung binh: "
+            << avgLinearComparisons << "\n";
+
+  std::cout << "\nOptimized - Custom Max Heap\n";
+  std::cout << "  Query Time trung binh: "
+            << avgHeapTime << " ms\n";
+  std::cout << "  Comparisons trung binh: "
+            << avgHeapComparisons << "\n";
+
+  std::cout << "=======================================\n";
 }
