@@ -9,11 +9,7 @@ class Benchmark
 {
 public:
     // In kết quả benchmark của Baseline và Final Solution
-    static void printComparison(
-        double minGpa,
-        double maxGpa,
-        const FilterGpaResult &baseline,
-        const FilterGpaResult &optimized);
+    static void printComparison( double minGpa, double maxGpa, const FilterGpaResult &baseline, const FilterGpaResult &optimized);
 };
 
 #endif

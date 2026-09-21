@@ -21,49 +21,28 @@
 #include <vector>
 #include <utility>
 #include "../student.h"
+#include "FilterGpaResult.h"     
+#include "SortedGpaFilter.h"     
 
 using namespace std;
-
-// Cấu trúc lưu trữ kết quả lọc và các chỉ số đo lường hiệu năng (Benchmark)
-struct FilterGpaResult
-{
-    vector<Student> students; // Danh sách sinh viên thỏa điều kiện
-    double buildTimeMs;       // Thời gian xây dựng cấu trúc (nếu có)
-    double queryTimeMs;       // Thời gian thực thi truy vấn lọc (ms)
-    double totalTimeMs;       // Tổng thời gian (ms)
-    long long comparisons;    // Số phép so sánh GPA đã thực hiện
-
-    FilterGpaResult()
-    {
-        this->students = vector<Student>();
-        this->buildTimeMs = 0.0;
-        this->queryTimeMs = 0.0;
-        this->totalTimeMs = 0.0;
-        this->comparisons = 0;
-    }
-};
 
 class FindStudentByGpaRange
 {
 private:
     const vector<Student> *studentsPtr;
+    SortedGpaFilter sortedFilter;
+    bool isBuilt;
 
 public:
     FindStudentByGpaRange(const vector<Student> &students);
 
-    // Hàm phụ trợ: Thống kê GPA nhỏ nhất và lớn nhất thực tế đang có trong CSDL
     pair<double, double> getGpaRangeInData() const;
-
-    // Nhập khoảng GPA từ người dùng
     void getGpaRangeFromUser(double& minGpa, double& maxGpa);
 
-    FilterGpaResult filterBaseline(double minGpa, double maxGpa);      
-    FilterGpaResult filterFinalSolution(double minGpa, double maxGpa); 
+    FilterGpaResult filterBaseline(double minGpa, double maxGpa);
+    FilterGpaResult filterFinalSolution(double minGpa, double maxGpa);
 
-    // Chạy và so sánh cả 2 thuật toán
     void runComparison();
-
-    // Chỉ hiển thị danh sách sinh viên
     void displayResult(double minGpa, double maxGpa, const FilterGpaResult& result) const;
 };
 

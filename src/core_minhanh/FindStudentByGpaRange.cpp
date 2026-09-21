@@ -26,12 +26,15 @@
 #include "../../interface/interface_minhanh/Benchmark.h"
 #include <iostream>
 #include <iomanip>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 FindStudentByGpaRange::FindStudentByGpaRange(const vector<Student> &students)
 {
     this->studentsPtr = &students;
+    this->isBuilt = false;
 }
 
 // ----------------------------------------------------------------------------
@@ -129,22 +132,30 @@ FilterGpaResult FindStudentByGpaRange::filterFinalSolution(double minGpa, double
         return FilterGpaResult{};
     }
     const vector<Student> &students = *studentsPtr;
-    SortedGpaFilter sortedFilter;
-    return sortedFilter.filter(students, minGpa, maxGpa);
-     
+    if (!isBuilt)
+    {
+        sortedFilter.build(students);
+        isBuilt = true;
+    }
+    return sortedFilter.filter(minGpa, maxGpa);
 }
-
 // ----------------------------------------------------------------------------
 // 5. CHẠY SO SÁNH BASELINE VS FINAL SOLUTION
 // ----------------------------------------------------------------------------
 void FindStudentByGpaRange::runComparison()
 {
-    if (studentsPtr == nullptr ||
-        studentsPtr->empty())
+    if (studentsPtr == nullptr || studentsPtr->empty())
     {
         cout << "CSDL khong co sinh vien.\n";
         return;
     }
+
+    auto buildStart = high_resolution_clock::now();
+    sortedFilter.build(*studentsPtr);
+    auto buildEnd = high_resolution_clock::now();
+
+    double buildTime = duration_cast<microseconds>(buildEnd - buildStart).count() / 1000.0;
+    isBuilt = true;
 
     double minGpa = 0.0;
     double maxGpa = 0.0;
@@ -153,9 +164,10 @@ void FindStudentByGpaRange::runComparison()
 
     FilterGpaResult baseline =filterBaseline(minGpa, maxGpa);
     FilterGpaResult optimized =filterFinalSolution(minGpa, maxGpa);
-
-    Benchmark::printComparison(minGpa, maxGpa, baseline, optimized
-    );
+    
+    optimized.buildTimeMs = buildTime;  
+    optimized.totalTimeMs = buildTime + optimized.queryTimeMs;
+    Benchmark::printComparison(minGpa, maxGpa, baseline, optimized);
 
     displayResult(minGpa, maxGpa, optimized);
 }

@@ -16,24 +16,25 @@ using namespace std::chrono;
 // - Binary Search tìm endIndex: O(log N).
 // - Lấy K sinh viên: O(K).
 //
+// => BUILD: O(N log N)
 // => QUERY: O(log N + K)
-// => BUILD + QUERY: O(N log N + K).
 
-FilterGpaResult SortedGpaFilter::filter(const vector<Student> &students, double minGpa, double maxGpa)
+// BUILD: Copy dữ liệu và sort GPA 1 lần
+void SortedGpaFilter::build(const vector<Student>& students)
+{
+    sortedStudents = students;
+
+    sort(sortedStudents.begin(), sortedStudents.end(),
+        [](const Student& a, const Student& b)
+        {
+            return a.gpa < b.gpa;
+        });
+}
+
+// QUERY: Tìm kiếm nhị phân (Binary Search)
+FilterGpaResult SortedGpaFilter::filter(double minGpa, double maxGpa)
 {
     FilterGpaResult result;
-
-    // BUILD: Tạo bản sao và Sắp xếp danh sách sinh viên theo GPA tăng dần
-    auto buildStart = high_resolution_clock::now();
-    vector<Student> sortedStudents = students;
-    sort(sortedStudents.begin(), sortedStudents.end(), [](const Student &a, const Student &b) {
-        return a.gpa < b.gpa;
-    });
-
-    auto buildEnd = high_resolution_clock::now();
-    result.buildTimeMs = duration_cast<microseconds>(buildEnd - buildStart).count() / 1000.0;
-
-    // QUERY: Tìm kiếm nhị phân (Binary Search)
     auto start = high_resolution_clock::now();
 
     int left = 0;
@@ -74,7 +75,5 @@ FilterGpaResult SortedGpaFilter::filter(const vector<Student> &students, double 
     auto end = high_resolution_clock::now();
 
     result.queryTimeMs = duration_cast<microseconds>(end - start).count() / 1000.0;
-    result.totalTimeMs = result.buildTimeMs + result.queryTimeMs;
-
     return result;
 }
