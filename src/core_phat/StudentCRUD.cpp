@@ -714,6 +714,7 @@ void StudentCRUD::runCRUDMenu()
         clearScreen();
         cout << "====================================================\n";
         cout << "     CHUONG TRINH QUAN LY SINH VIEN (PHAT)          \n";
+        cout << "         HE THONG QUAN LY SINH VIEN (CRUD)          \n";
         cout << "====================================================\n";
         cout << "1. Them sinh vien moi (Create - Auto MSSV)\n";
         cout << "2. Cap nhat thong tin sinh vien (Update)\n";

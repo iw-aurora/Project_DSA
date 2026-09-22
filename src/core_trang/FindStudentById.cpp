@@ -249,3 +249,49 @@ void FindStudentById::runInteractiveSearch()
          << setw(25) << hashTable.getCollisions() << "\n";
     cout << "=========================================================================================\n";
 }
+
+// ----------------------------------------------------------------------------
+// THỰC THI TÌM KIẾM CHỈ BẰNG GIẢI THUẬT TỐI ƯU (HASH TABLE O(1) - FINAL SOLUTION)
+// ----------------------------------------------------------------------------
+void FindStudentById::runFinalSearch()
+{
+    int selectedIdx = selectStudentInteractive();
+    if (selectedIdx < 0 || selectedIdx >= static_cast<int>(this->studentsPtr->size()))
+    {
+        cout << "\n[Thong bao] Da huy thao tac tim kiem.\n";
+        return;
+    }
+
+    clearScreen();
+    string targetId = (*this->studentsPtr)[selectedIdx].id;
+
+    // 1. Khởi tạo Hash Table và tìm kiếm
+    HashTable hashTable;
+    hashTable.build(*this->studentsPtr);
+
+    auto hashStart = high_resolution_clock::now();
+    const Student *hashResult = hashTable.search(targetId);
+    auto hashEnd = high_resolution_clock::now();
+    double hashSingleTimeMs = duration<double, milli>(hashEnd - hashStart).count();
+
+    // 2. Hiển thị thông tin sinh viên tìm thấy
+    cout << "=========================================================================================\n";
+    cout << "          KET QUA TIM KIEM SINH VIEN THEO MSSV (GIAI THUAT TOI UU: HASH TABLE)           \n";
+    cout << "=========================================================================================\n";
+    if (hashResult != nullptr)
+    {
+        cout << "  - MSSV                : " << hashResult->id << '\n';
+        cout << "  - Ho va Ten           : " << hashResult->name << '\n';
+        cout << "  - Lop                 : " << hashResult->classId << '\n';
+        cout << "  - Diem GPA            : " << fixed << setprecision(2) << hashResult->gpa << '\n';
+        cout << "-----------------------------------------------------------------------------------------\n";
+        cout << "  - Do phuc tap ly thuyet: O(1) average\n";
+        cout << "  - Thoi gian truy van  : " << fixed << setprecision(4) << hashSingleTimeMs << " ms\n";
+        cout << "  - So lan tham do probe: " << hashTable.getProbes() << " lan\n";
+    }
+    else
+    {
+        cout << "  [!] Khong tim thay sinh vien co MSSV: " << targetId << '\n';
+    }
+    cout << "=========================================================================================\n";
+}

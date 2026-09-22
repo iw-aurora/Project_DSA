@@ -25,6 +25,9 @@ public:
 
   // Kích hoạt toàn bộ chu trình kiểm thử và báo cáo benchmark
   void runCompleteBenchmarkSuite() const;
+
+  // Thực thi trực tiếp giải thuật tối ưu (Custom Max Heap O(1) peek)
+  void runFinalSolution() const;
 };
 
 #endif

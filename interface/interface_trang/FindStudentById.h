@@ -27,6 +27,9 @@ public:
 
     // Thực thi tìm kiếm tương tác: Chọn SV -> Chạy Linear Search & Hash Search -> Xuất kết quả + Benchmark
     void runInteractiveSearch();
+
+    // Thực thi tìm kiếm chỉ bằng giải thuật tối ưu (Hash Table O(1))
+    void runFinalSearch();
 };
 
 #endif

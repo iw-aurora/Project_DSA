@@ -21,5 +21,6 @@ public:
     string selectClassIdInteractive() const;
 
     void filterBaseline();
+    void filterFinalSolution();
 };
 #endif

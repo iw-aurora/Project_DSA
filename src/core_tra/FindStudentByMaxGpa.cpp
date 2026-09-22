@@ -3,6 +3,7 @@
 #include "../../interface/interface_tra/CustomMaxHeapGpaFinder.h"
 #include "../../interface/interface_tra/LinearMaxScanGpaFinder.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -72,4 +73,26 @@ void FindStudentByMaxGpa::runCompleteBenchmarkSuite() const {
           "va Custom Max Heap...\n";
   BenchmarkMaxGpa benchmark(this->studentsData);
   benchmark.runComparison();
+}
+
+void FindStudentByMaxGpa::runFinalSolution() const {
+  CustomMaxHeapGpaFinder finalSol(this->studentsData);
+  MC2Result res = finalSol.findMaxGPA();
+
+  cout << "=========================================================================================\n";
+  cout << "         TIM SINH VIEN CO GPA CAO NHAT (GIAI THUAT TOI UU: CUSTOM MAX HEAP)              \n";
+  cout << "=========================================================================================\n";
+  if (res.found) {
+    cout << "  - MSSV                : " << res.student.id << "\n";
+    cout << "  - Ho va Ten           : " << res.student.name << "\n";
+    cout << "  - Lop                 : " << res.student.classId << "\n";
+    cout << "  - Diem GPA            : " << fixed << setprecision(2) << res.student.gpa << "\n";
+    cout << "-----------------------------------------------------------------------------------------\n";
+    cout << "  - Do phuc tap ly thuyet: O(1) peek / O(N) heapify\n";
+    cout << "  - Thoi gian truy van  : " << fixed << setprecision(4) << res.queryTimeMs << " ms\n";
+    cout << "  - So phep so sanh     : " << res.comparisons << " phep so sanh\n";
+  } else {
+    cout << "  [!] Khong tim thay sinh vien nao trong CSDL.\n";
+  }
+  cout << "=========================================================================================\n";
 }

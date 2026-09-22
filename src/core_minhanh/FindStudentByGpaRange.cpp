@@ -397,3 +397,41 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
 
     cout << "=========================================================================================\n";
 }
+
+// ----------------------------------------------------------------------------
+// 6. CHẠY GIẢI THUẬT TỐI ƯU (FINAL SOLUTION MODE - KHÔNG HIỂN THỊ BENCHMARK)
+// ----------------------------------------------------------------------------
+void FindStudentByGpaRange::runFinalSolution()
+{
+    if (studentsPtr == nullptr || studentsPtr->empty())
+    {
+        cout << "CSDL khong co sinh vien.\n";
+        return;
+    }
+
+    double minGpa = 0.0;
+    double maxGpa = 0.0;
+
+    getGpaRangeFromUser(minGpa, maxGpa);
+
+    if (minGpa < 0.0 || maxGpa < 0.0)
+    {
+        cout << "\n[Thong bao] Da huy thao tac loc theo khoang GPA.\n";
+        return;
+    }
+
+    clearScreen();
+
+    FilterGpaResult result = filterFinalSolution(minGpa, maxGpa);
+
+    cout << "=========================================================================================\n";
+    cout << "          KET QUA LOC SINH VIEN THEO KHOANG GPA (GIAI THUAT TOI UU: BINARY SEARCH)       \n";
+    cout << "=========================================================================================\n";
+    cout << "  - Khoang GPA can loc    : [" << fixed << setprecision(2) << minGpa << " - " << maxGpa << "]\n";
+    cout << "  - So sinh vien tim thay : " << result.students.size() << " sinh vien\n";
+    cout << "  - Thoi gian thuc thi    : " << fixed << setprecision(4) << result.queryTimeMs << " ms\n";
+    cout << "  - So phep so sanh       : " << result.comparisons << " phep so sanh (O(log N + K))\n";
+    cout << "=========================================================================================\n";
+
+    displayResult(minGpa, maxGpa, result);
+}

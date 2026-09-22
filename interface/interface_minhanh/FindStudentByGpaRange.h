@@ -43,6 +43,7 @@ public:
     FilterGpaResult filterFinalSolution(double minGpa, double maxGpa);
 
     void runComparison();
+    void runFinalSolution();
     void displayResult(double minGpa, double maxGpa, const FilterGpaResult& result) const;
 };
 

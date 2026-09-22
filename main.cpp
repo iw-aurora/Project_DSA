@@ -1,15 +1,12 @@
-﻿// ============================================================================
-// CHƯƠNG TRÌNH CHÍNH - HỆ THỐNG QUẢN LÝ SINH VIÊN (DASA230179)
+// ============================================================================
+// CHUONG TRINH CHINH - HE THONG QUAN LY SINH VIEN (DASA230179)
 // ============================================================================
 
-#include "interface/interface_minhanh/FindStudentByGpaRange.h" // [Module Minh Anh: Lọc theo GPA]
-#include "interface/interface_mytra/FindStudentByClassId.h"   // [Module Mỹ Trà: Lọc theo lớp]
-#include "interface/interface_phat/StudentCRUD.h"             // [Module Phát: Thêm - Sửa - Xóa]
-#include "interface/interface_tra/FindStudentByMaxGpa.h"      // [Module Thanh Tra: Tìm GPA cao nhất]
-#include "interface/interface_trang/FindStudentById.h"        // [Module Trang: Tìm kiếm MSSV tương tác]
-#include "interface/interface_trang/Benchmark.h"              // [Module Trang: Benchmark tìm kiếm MSSV]
-#include "interface/interface_trang/HashTable.h"              // [Module Trang: Hash Search]
-#include "interface/interface_trang/LinearSearch.h"           // [Module Trang: Linear Search]
+#include "interface/interface_minhanh/FindStudentByGpaRange.h"
+#include "interface/interface_mytra/FindStudentByClassId.h"
+#include "interface/interface_phat/StudentCRUD.h"
+#include "interface/interface_trang/FindStudentById.h"
+#include "interface/interface_tra/FindStudentByMaxGpa.h"
 #include "interface/student.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
@@ -27,7 +24,6 @@
 using namespace std;
 using json = nlohmann::json;
 
-// Hàm riêng nạp dữ liệu từ file JSON và trả về mảng dynamic array (vector<Student>)
 vector<Student> loadStudentsData(const string &filePath)
 {
     ifstream file(filePath);
@@ -41,7 +37,7 @@ vector<Student> loadStudentsData(const string &filePath)
 
     if (!data.contains("students") || !data["students"].is_array())
     {
-        throw runtime_error("File JSON khong dung dinh dang (thieu mang 'students').");
+        throw runtime_error("File JSON khong dung dinh dang (thieu mang students).");
     }
 
     vector<Student> students;
@@ -82,44 +78,33 @@ void pauseScreen()
 #endif
 }
 
-// ============================================================================
-// MENU CHÍNH TƯƠNG TÁC BẰNG PHÍM MŨI TÊN (ARROW KEYS MAIN MENU)
-// ============================================================================
-int selectMainMenuInteractive()
+static int selectMenuInteractive(const string &title, const vector<string> &options)
 {
-    const vector<string> menuOptions = {
-        "Module 1: Loc sinh vien theo khoang GPA (Minh Anh)",
-        "Module 2: Loc sinh vien theo Lop        (My Tra)",
-        "Module 3: Quan ly Them - Sua - Xoa CRUD (Phat)",
-        "Module 4: Tim kiem sinh vien theo MSSV  (Trang)",
-        "Module 5: Tim sinh vien co GPA cao nhat (Thanh Tra)",
-        "Thoat chuong trinh"
-    };
-
     int currentIndex = 0;
-    int totalOptions = static_cast<int>(menuOptions.size());
+    int totalOptions = static_cast<int>(options.size());
 
     while (true)
     {
         clearScreen();
         cout << "=========================================================================================\n";
-        cout << "                  HE THONG QUAN LY SINH VIEN - DASA230179                                \n";
+        cout << "                  " << title << "\n";
         cout << "=========================================================================================\n";
         cout << " [HUONG DAN]: Dung phim Mui ten Len/Xuong de chon, Enter de thuc thi, Esc de thoat      \n";
         cout << "-----------------------------------------------------------------------------------------\n";
 
         for (int i = 0; i < totalOptions; i++)
         {
+            int displayNum = (i == totalOptions - 1) ? 0 : (i + 1);
             if (i == currentIndex)
             {
-                cout << "  -->  [ " << (i == totalOptions - 1 ? 0 : i + 1) << " ]  "
-                     << left << setw(60) << menuOptions[i]
+                cout << "  -->  [ " << displayNum << " ]  "
+                     << left << setw(65) << options[i]
                      << "  <== [DANG CHON]\n";
             }
             else
             {
-                cout << "       [ " << (i == totalOptions - 1 ? 0 : i + 1) << " ]  "
-                     << left << setw(60) << menuOptions[i] << "\n";
+                cout << "       [ " << displayNum << " ]  "
+                     << left << setw(65) << options[i] << "\n";
             }
         }
 
@@ -127,17 +112,17 @@ int selectMainMenuInteractive()
 
 #ifdef _WIN32
         int ch = _getch();
-        if (ch == 0 || ch == 224) // Phím mũi tên
+        if (ch == 0 || ch == 224)
         {
             int arrow = _getch();
-            if (arrow == 72) // Mũi tên LÊN (UP)
+            if (arrow == 72)
             {
                 if (currentIndex > 0)
                     currentIndex--;
                 else
                     currentIndex = totalOptions - 1;
             }
-            else if (arrow == 80) // Mũi tên XUỐNG (DOWN)
+            else if (arrow == 80)
             {
                 if (currentIndex < totalOptions - 1)
                     currentIndex++;
@@ -145,22 +130,22 @@ int selectMainMenuInteractive()
                     currentIndex = 0;
             }
         }
-        else if (ch == 13) // Phím ENTER
+        else if (ch == 13)
         {
             if (currentIndex == totalOptions - 1)
-                return 0; // Thoát
+                return 0;
             return currentIndex + 1;
         }
-        else if (ch == 27 || ch == '0') // Phím ESC hoặc 0
+        else if (ch == 27 || ch == '0')
         {
-            return 0; // Thoát
+            return 0;
         }
-        else if (ch >= '1' && ch <= '5') // Phím tắt số 1 - 5
+        else if (ch >= '1' && ch <= '0' + totalOptions - 1)
         {
             return ch - '0';
         }
 #else
-        cout << "Chon chuc nang (0-5): ";
+        cout << "Chon chuc nang: ";
         int choice;
         if (cin >> choice)
             return choice;
@@ -169,37 +154,54 @@ int selectMainMenuInteractive()
     }
 }
 
-int main()
+int selectMainMenuInteractive()
 {
-    vector<Student> students;
-    try
-    {
-        students = loadStudentsData("data/database.json");
-    }
-    catch (const exception &e)
-    {
-        cerr << "[Loi] Khong the nap du lieu: " << e.what() << '\n';
-        return 1;
-    }
+    const vector<string> menuOptions = {
+        "MODE 1: SO SANH THUAT TOAN (BENCHMARK SUITE)",
+        "MODE 2: GIAI THUAT TOI UU   (FINAL SOLUTION / PRODUCTION)",
+        "MODE 3: HE THONG QUAN LY SINH VIEN (CRUD)",
+        "Thoat chuong trinh"
+    };
 
-    FindStudentByGpaRange gpaFilter(students);  // Module Minh Anh
-    FindStudentByClassId classFilter(students); // Module Mỹ Trà
-    StudentCRUD studentCrud(students);          // Module Phát
-    FindStudentById studentFinder(students);    // Module Trang
-    FindStudentByMaxGpa maxGpaFinder(students); // Module Thanh Tra
+    return selectMenuInteractive("HE THONG QUAN LY SINH VIEN - DASA230179", menuOptions);
+}
 
+int selectBenchmarkMenuInteractive()
+{
+    const vector<string> benchmarkOptions = {
+        "Module 1: So sanh Loc GPA      (Linear Scan vs Binary Search)",
+        "Module 2: So sanh Loc theo Lop (Linear Filter vs Optimized Index)",
+        "Module 4: So sanh Tim MSSV     (Linear Search vs Hash Table)",
+        "Module 5: So sanh Tim GPA Max  (Linear Max Scan vs Custom Max Heap)",
+        "Quay lai Menu Chinh"
+    };
+
+    return selectMenuInteractive("MODE 1: SO SANH THUAT TOAN (BENCHMARK SUITE)", benchmarkOptions);
+}
+
+int selectFinalSolutionMenuInteractive()
+{
+    const vector<string> finalOptions = {
+        "Module 1: Loc sinh vien theo khoang GPA (Sorted + Binary Search)",
+        "Module 2: Loc sinh vien theo Lop        (Optimized Index Filter)",
+        "Module 4: Tim kiem sinh vien theo MSSV  (Hash Table O(1))",
+        "Module 5: Tim sinh vien co GPA cao nhat (Custom Max Heap O(1))",
+        "Quay lai Menu Chinh"
+    };
+
+    return selectMenuInteractive("MODE 2: GIAI THUAT TOI UU (FINAL SOLUTION)", finalOptions);
+}
+
+void runBenchmarkSuite(FindStudentByGpaRange &gpaFilter,
+                       FindStudentByClassId &classFilter,
+                       FindStudentById &studentFinder,
+                       FindStudentByMaxGpa &maxGpaFinder)
+{
     while (true)
     {
-        int choice = selectMainMenuInteractive();
-
+        int choice = selectBenchmarkMenuInteractive();
         if (choice == 0)
-        {
-            clearScreen();
-            cout << "\n=========================================================================================\n";
-            cout << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       \n";
-            cout << "=========================================================================================\n\n";
             break;
-        }
 
         switch (choice)
         {
@@ -217,19 +219,110 @@ int main()
 
         case 3:
             clearScreen();
-            studentCrud.runCRUDMenu();
-            break;
-
-        case 4:
-            clearScreen();
             studentFinder.runInteractiveSearch();
             pauseScreen();
             break;
 
-        case 5:
+        case 4:
             clearScreen();
             maxGpaFinder.runCompleteBenchmarkSuite();
             pauseScreen();
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
+void runFinalSolutionSuite(FindStudentByGpaRange &gpaFilter,
+                          FindStudentByClassId &classFilter,
+                          FindStudentById &studentFinder,
+                          FindStudentByMaxGpa &maxGpaFinder)
+{
+    while (true)
+    {
+        int choice = selectFinalSolutionMenuInteractive();
+        if (choice == 0)
+            break;
+
+        switch (choice)
+        {
+        case 1:
+            clearScreen();
+            gpaFilter.runFinalSolution();
+            pauseScreen();
+            break;
+
+        case 2:
+            clearScreen();
+            classFilter.filterFinalSolution();
+            pauseScreen();
+            break;
+
+        case 3:
+            clearScreen();
+            studentFinder.runFinalSearch();
+            pauseScreen();
+            break;
+
+        case 4:
+            clearScreen();
+            maxGpaFinder.runFinalSolution();
+            pauseScreen();
+            break;
+
+        default:
+            break;
+        }
+    }
+}
+
+int main()
+{
+    vector<Student> students;
+    try
+    {
+        students = loadStudentsData("data/database.json");
+    }
+    catch (const exception &e)
+    {
+        cerr << "[Loi] Khong the nap du lieu: " << e.what() << '\n';
+        return 1;
+    }
+
+    FindStudentByGpaRange gpaFilter(students);
+    FindStudentByClassId classFilter(students);
+    StudentCRUD studentCrud(students);
+    FindStudentById studentFinder(students);
+    FindStudentByMaxGpa maxGpaFinder(students);
+
+    while (true)
+    {
+        int modeChoice = selectMainMenuInteractive();
+
+        if (modeChoice == 0)
+        {
+            clearScreen();
+            cout << "\n=========================================================================================\n";
+            cout << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       \n";
+            cout << "=========================================================================================\n\n";
+            break;
+        }
+
+        switch (modeChoice)
+        {
+        case 1:
+            runBenchmarkSuite(gpaFilter, classFilter, studentFinder, maxGpaFinder);
+            break;
+
+        case 2:
+            runFinalSolutionSuite(gpaFilter, classFilter, studentFinder, maxGpaFinder);
+            break;
+
+        case 3:
+            clearScreen();
+            studentCrud.runCRUDMenu();
             break;
 
         default:

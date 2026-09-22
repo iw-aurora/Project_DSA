@@ -1,4 +1,4 @@
-﻿#include "../../interface/interface_mytra/FindStudentByClassId.h"
+#include "../../interface/interface_mytra/FindStudentByClassId.h"
 #include <iostream>
 #include <iomanip>
 #include <chrono>
@@ -244,6 +244,52 @@ void FindStudentByClassId::filterBaseline()
         optimizedBenchmark);
 
     // 5. HIỂN THỊ DANH SÁCH SINH VIÊN TRONG LỚP
+    Benchmark::printStudents(
+        *studentsPtr,
+        optimizedResult.indexes);
+}
+
+// HÀM: filterFinalSolution()
+// Chạy trực tiếp thuật toán tối ưu (Optimized Linear Filter) và hiển thị kết quả
+void FindStudentByClassId::filterFinalSolution()
+{
+    // 1. CHỌN MÃ LỚP QUA MENU TƯƠNG TÁC PHÍM MŨI TÊN
+    string classId = selectClassIdInteractive();
+
+    if (classId.empty())
+    {
+        cout << "\n[Thong bao] Da huy thao tac loc theo lop.\n";
+        return;
+    }
+
+    clearScreen();
+
+    // 2. CHẠY FINAL SOLUTION (Optimized Linear Filter)
+    auto startOptimized = high_resolution_clock::now();
+
+    OptimizedFilterResult optimizedResult =
+        OptimizedLinearFilter::filter(
+            *studentsPtr,
+            classId);
+
+    auto endOptimized = high_resolution_clock::now();
+
+    double optimizedTime =
+        duration<double, milli>(
+            endOptimized - startOptimized)
+            .count();
+
+    // 3. HIỂN THỊ THÔNG TIN KẾT QUẢ
+    cout << "=========================================================================================\n";
+    cout << "             KET QUA LOC SINH VIEN THEO LOP (GIAI THUAT TOI UU: OPTIMIZED INDEX)         \n";
+    cout << "=========================================================================================\n";
+    cout << "  - Ma lop can loc        : " << classId << "\n";
+    cout << "  - So sinh vien tim thay : " << optimizedResult.indexes.size() << " sinh vien\n";
+    cout << "  - Thoi gian thuc thi    : " << fixed << setprecision(4) << optimizedTime << " ms\n";
+    cout << "  - So phep so sanh       : " << optimizedResult.comparisons << " phep so sanh (O(N))\n";
+    cout << "=========================================================================================\n";
+
+    // 4. HIỂN THỊ DANH SÁCH SINH VIÊN TRONG LỚP
     Benchmark::printStudents(
         *studentsPtr,
         optimizedResult.indexes);
