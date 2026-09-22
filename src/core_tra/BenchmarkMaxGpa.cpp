@@ -24,6 +24,8 @@ void BenchmarkMaxGpa::runComparison(int numIterations) const {
   LinearMaxScanGpaFinder linear(*studentsPtr);
   CustomMaxHeapGpaFinder heap(*studentsPtr);
 
+  MC2Result sampleResult = heap.findMaxGPA();
+
   double totalLinearTime = 0.0;
   double totalHeapTime = 0.0;
 
@@ -54,20 +56,26 @@ void BenchmarkMaxGpa::runComparison(int numIterations) const {
       static_cast<double>(totalHeapComparisons) / numIterations;
 
   std::cout << "\n========== BENCHMARK MAX GPA ==========\n";
+
+  if (sampleResult.found) {
+    std::cout << "[SINH VIEN DAT GPA CAO NHAT]:\n";
+    std::cout << "  - MSSV: " << sampleResult.student.id << "\n";
+    std::cout << "  - Ho ten: " << sampleResult.student.name << "\n";
+    std::cout << "  - Lop: " << sampleResult.student.classId << "\n";
+    std::cout << "  - GPA: " << std::fixed << std::setprecision(2)
+              << sampleResult.student.gpa << "\n\n";
+  }
+
   std::cout << "So lan lap: " << numIterations << "\n";
   std::cout << "So sinh vien: " << studentsPtr->size() << "\n\n";
 
   std::cout << "Baseline - Linear Scan\n";
-  std::cout << "  Query Time trung binh: "
-            << avgLinearTime << " ms\n";
-  std::cout << "  Comparisons trung binh: "
-            << avgLinearComparisons << "\n";
+  std::cout << "  Query Time trung binh: " << avgLinearTime << " ms\n";
+  std::cout << "  Comparisons trung binh: " << avgLinearComparisons << "\n";
 
   std::cout << "\nOptimized - Custom Max Heap\n";
-  std::cout << "  Query Time trung binh: "
-            << avgHeapTime << " ms\n";
-  std::cout << "  Comparisons trung binh: "
-            << avgHeapComparisons << "\n";
+  std::cout << "  Query Time trung binh: " << avgHeapTime << " ms\n";
+  std::cout << "  Comparisons trung binh: " << avgHeapComparisons << "\n";
 
   std::cout << "=======================================\n";
 }
