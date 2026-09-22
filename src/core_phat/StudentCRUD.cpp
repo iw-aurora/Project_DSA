@@ -254,12 +254,12 @@ int StudentCRUD::selectStudentInteractive(const string &title) const
         cout << "=========================================================================================\n";
         cout << "               " << title << " (Trang " << (currentPage + 1) << "/" << totalPages << ")\n";
         cout << "=========================================================================================\n";
-        cout << left << setw(6)  << " CHON"
-             << " | " << setw(5)  << "STT"
+        cout << left << setw(6) << " CHON"
+             << " | " << setw(5) << "STT"
              << " | " << setw(10) << "MSSV"
              << " | " << setw(26) << "HO VA TEN"
              << " | " << setw(10) << "LOP"
-             << " | " << setw(6)  << "GPA" << "\n";
+             << " | " << setw(6) << "GPA" << "\n";
         cout << "-----------------------------------------------------------------------------------------\n";
 
         for (int i = startIdx; i < endIdx; i++)
@@ -778,4 +778,3 @@ void StudentCRUD::runCRUDMenu()
         }
     }
 }
-

@@ -58,12 +58,12 @@ int FindStudentById::selectStudentInteractive() const
         cout << "=========================================================================================\n";
         cout << "           TIM KIEM SINH VIEN THEO MSSV - TRANG (Trang " << (currentPage + 1) << "/" << totalPages << ")\n";
         cout << "=========================================================================================\n";
-        cout << left << setw(6)  << " CHON"
-             << " | " << setw(5)  << "STT"
+        cout << left << setw(6) << " CHON"
+             << " | " << setw(5) << "STT"
              << " | " << setw(12) << "MSSV"
              << " | " << setw(26) << "HO VA TEN"
              << " | " << setw(10) << "LOP"
-             << " | " << setw(6)  << "GPA" << "\n";
+             << " | " << setw(6) << "GPA" << "\n";
         cout << "-----------------------------------------------------------------------------------------\n";
 
         for (int i = startIdx; i < endIdx; i++)
@@ -177,7 +177,7 @@ void FindStudentById::runInteractiveSearch()
 
     // 4. Chạy Benchmark khối lượng lớn (Workload 1000 queries) để có góc nhìn tổng quát
     const int BENCHMARK_QUERIES = 1000;
-    
+
     // Test 1000 truy vấn trên Linear Search
     auto linearMultiStart = high_resolution_clock::now();
     size_t totalLinearComparisons = 0;

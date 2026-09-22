@@ -36,7 +36,8 @@ vector<string> FindStudentByClassId::getAvailableClassIds() const
 
     for (const Student &student : *studentsPtr)
     {
-        if (student.classId.empty()) continue;
+        if (student.classId.empty())
+            continue;
 
         bool exists = false;
         for (const string &id : classIds)
@@ -86,8 +87,8 @@ string FindStudentByClassId::selectClassIdInteractive() const
         cout << "=========================================================================================\n";
         cout << "                  CHON LOP HOC CAN LOC (Trang " << (currentPage + 1) << "/" << totalPages << ")\n";
         cout << "=========================================================================================\n";
-        cout << left << setw(6)  << " CHON"
-             << " | " << setw(5)  << "STT"
+        cout << left << setw(6) << " CHON"
+             << " | " << setw(5) << "STT"
              << " | " << setw(20) << "MA LOP (CLASS ID)"
              << " | " << "SO LUONG SINH VIEN" << "\n";
         cout << "-----------------------------------------------------------------------------------------\n";
@@ -102,7 +103,8 @@ string FindStudentByClassId::selectClassIdInteractive() const
             {
                 for (const auto &st : *studentsPtr)
                 {
-                    if (st.classId == cId) countInClass++;
+                    if (st.classId == cId)
+                        countInClass++;
                 }
             }
 

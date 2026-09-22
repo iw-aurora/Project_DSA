@@ -69,11 +69,14 @@ void clearScreen()
 void pauseScreen()
 {
 #ifdef _WIN32
-    cout << "\nNhan phim bat ky de tiep tuc...";
-    _getch();
+    cout << "
+        Nhan phim bat ky de tiep tuc... ";
+        _getch();
 #else
-    cout << "\nNhan Enter de tiep tuc...";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "
+Nhan Enter de tiep tuc...";
+    cin.ignore(numeric_limits<streamsize>::max(), '
+');
     cin.get();
 #endif
 }
@@ -86,32 +89,44 @@ static int selectMenuInteractive(const string &title, const vector<string> &opti
     while (true)
     {
         clearScreen();
-        cout << "=========================================================================================\n";
-        cout << "                  " << title << "\n";
-        cout << "=========================================================================================\n";
-        cout << " [HUONG DAN]: Dung phim Mui ten Len/Xuong de chon, Enter de thuc thi, Esc de thoat      \n";
-        cout << "-----------------------------------------------------------------------------------------\n";
+        cout << "=========================================================================================
+                ";
+            cout
+             << "                  " << title << "
+                                                 ";
+            cout
+             << "=========================================================================================
+                ";
+            cout
+             << " [HUONG DAN]: Dung phim Mui ten Len/Xuong de chon, Enter de thuc thi, Esc de thoat      
+                ";
+            cout
+             << "-----------------------------------------------------------------------------------------
+                ";
 
-        for (int i = 0; i < totalOptions; i++)
+            for (int i = 0; i < totalOptions; i++)
         {
             int displayNum = (i == totalOptions - 1) ? 0 : (i + 1);
             if (i == currentIndex)
             {
                 cout << "  -->  [ " << displayNum << " ]  "
                      << left << setw(65) << options[i]
-                     << "  <== [DANG CHON]\n";
+                     << "  <== [DANG CHON]
+                        ";
             }
             else
             {
                 cout << "       [ " << displayNum << " ]  "
-                     << left << setw(65) << options[i] << "\n";
+                     << left << setw(65) << options[i] << "
+                                                          ";
             }
         }
 
-        cout << "=========================================================================================\n";
+        cout << "=========================================================================================
+                ";
 
 #ifdef _WIN32
-        int ch = _getch();
+            int ch = _getch();
         if (ch == 0 || ch == 224)
         {
             int arrow = _getch();
@@ -145,7 +160,8 @@ static int selectMenuInteractive(const string &title, const vector<string> &opti
             return ch - '0';
         }
 #else
-        cout << "Chon chuc nang: ";
+            cout
+             << "Chon chuc nang (0-" << totalOptions - 1 << "): ";
         int choice;
         if (cin >> choice)
             return choice;
@@ -160,8 +176,7 @@ int selectMainMenuInteractive()
         "MODE 1: SO SANH THUAT TOAN (BENCHMARK SUITE)",
         "MODE 2: GIAI THUAT TOI UU   (FINAL SOLUTION / PRODUCTION)",
         "MODE 3: HE THONG QUAN LY SINH VIEN (CRUD)",
-        "Thoat chuong trinh"
-    };
+        "Thoat chuong trinh"};
 
     return selectMenuInteractive("HE THONG QUAN LY SINH VIEN - DASA230179", menuOptions);
 }
@@ -173,8 +188,7 @@ int selectBenchmarkMenuInteractive()
         "Module 2: So sanh Loc theo Lop (Linear Filter vs Optimized Index)",
         "Module 4: So sanh Tim MSSV     (Linear Search vs Hash Table)",
         "Module 5: So sanh Tim GPA Max  (Linear Max Scan vs Custom Max Heap)",
-        "Quay lai Menu Chinh"
-    };
+        "Quay lai Menu Chinh"};
 
     return selectMenuInteractive("MODE 1: SO SANH THUAT TOAN (BENCHMARK SUITE)", benchmarkOptions);
 }
@@ -186,8 +200,7 @@ int selectFinalSolutionMenuInteractive()
         "Module 2: Loc sinh vien theo Lop        (Optimized Index Filter)",
         "Module 4: Tim kiem sinh vien theo MSSV  (Hash Table O(1))",
         "Module 5: Tim sinh vien co GPA cao nhat (Custom Max Heap O(1))",
-        "Quay lai Menu Chinh"
-    };
+        "Quay lai Menu Chinh"};
 
     return selectMenuInteractive("MODE 2: GIAI THUAT TOI UU (FINAL SOLUTION)", finalOptions);
 }
@@ -236,9 +249,9 @@ void runBenchmarkSuite(FindStudentByGpaRange &gpaFilter,
 }
 
 void runFinalSolutionSuite(FindStudentByGpaRange &gpaFilter,
-                          FindStudentByClassId &classFilter,
-                          FindStudentById &studentFinder,
-                          FindStudentByMaxGpa &maxGpaFinder)
+                           FindStudentByClassId &classFilter,
+                           FindStudentById &studentFinder,
+                           FindStudentByMaxGpa &maxGpaFinder)
 {
     while (true)
     {
@@ -287,8 +300,8 @@ int main()
     }
     catch (const exception &e)
     {
-        cerr << "[Loi] Khong the nap du lieu: " << e.what() << '\n';
-        return 1;
+        cerr << "[Loi] Khong the nap du lieu: " << e.what() << '
+'; return 1;
     }
 
     FindStudentByGpaRange gpaFilter(students);
@@ -304,10 +317,18 @@ int main()
         if (modeChoice == 0)
         {
             clearScreen();
-            cout << "\n=========================================================================================\n";
-            cout << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       \n";
-            cout << "=========================================================================================\n\n";
-            break;
+            cout << "
+                == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
+                =
+                    ";
+                    cout
+                    << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       
+                       ";
+                    cout
+                    << "=========================================================================================
+
+                       ";
+                    break;
         }
 
         switch (modeChoice)

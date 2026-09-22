@@ -21,8 +21,8 @@
 #include <vector>
 #include <utility>
 #include "../student.h"
-#include "FilterGpaResult.h"     
-#include "SortedGpaFilter.h"     
+#include "FilterGpaResult.h"
+#include "SortedGpaFilter.h"
 
 using namespace std;
 
@@ -37,14 +37,14 @@ public:
     FindStudentByGpaRange(const vector<Student> &students);
 
     pair<double, double> getGpaRangeInData() const;
-    void getGpaRangeFromUser(double& minGpa, double& maxGpa);
+    void getGpaRangeFromUser(double &minGpa, double &maxGpa);
 
     FilterGpaResult filterBaseline(double minGpa, double maxGpa);
     FilterGpaResult filterFinalSolution(double minGpa, double maxGpa);
 
     void runComparison();
     void runFinalSolution();
-    void displayResult(double minGpa, double maxGpa, const FilterGpaResult& result) const;
+    void displayResult(double minGpa, double maxGpa, const FilterGpaResult &result) const;
 };
 
 #endif

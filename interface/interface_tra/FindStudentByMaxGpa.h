@@ -8,7 +8,8 @@
 #include <string>
 #include <vector>
 
-class FindStudentByMaxGpa {
+class FindStudentByMaxGpa
+{
 private:
   std::vector<Student> studentsData;
   std::string currentMode;

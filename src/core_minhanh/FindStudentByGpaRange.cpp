@@ -113,7 +113,8 @@ void FindStudentByGpaRange::getGpaRangeFromUser(double &minGpa, double &maxGpa)
                 if (focusField == 0)
                 {
                     currentMin = min(actualMax, currentMin + step);
-                    if (currentMin > currentMax) currentMax = currentMin;
+                    if (currentMin > currentMax)
+                        currentMax = currentMin;
                     if (currentMin > currentMax)
                         currentMax = currentMin;
                 }
@@ -131,7 +132,8 @@ void FindStudentByGpaRange::getGpaRangeFromUser(double &minGpa, double &maxGpa)
                 else
                 {
                     currentMax = max(actualMin, currentMax - step);
-                    if (currentMax < currentMin) currentMin = currentMax;
+                    if (currentMax < currentMin)
+                        currentMin = currentMax;
                     if (currentMax < currentMin)
                         currentMin = currentMax;
                 }
@@ -141,7 +143,8 @@ void FindStudentByGpaRange::getGpaRangeFromUser(double &minGpa, double &maxGpa)
                 if (focusField == 0)
                 {
                     currentMin = min(actualMax, currentMin + 1.0);
-                    if (currentMin > currentMax) currentMax = currentMin;
+                    if (currentMin > currentMax)
+                        currentMax = currentMin;
                     if (currentMin > currentMax)
                         currentMax = currentMin;
                 }
@@ -159,7 +162,8 @@ void FindStudentByGpaRange::getGpaRangeFromUser(double &minGpa, double &maxGpa)
                 else
                 {
                     currentMax = max(actualMin, currentMax - 1.0);
-                    if (currentMax < currentMin) currentMin = currentMax;
+                    if (currentMax < currentMin)
+                        currentMin = currentMax;
                     if (currentMax < currentMin)
                         currentMin = currentMax;
                 }
@@ -200,7 +204,8 @@ void FindStudentByGpaRange::getGpaRangeFromUser(double &minGpa, double &maxGpa)
         }
 #else
         cout << "Nhap GPA min va max: ";
-        if (cin >> minGpa >> maxGpa) return;
+        if (cin >> minGpa >> maxGpa)
+            return;
         if (cin >> minGpa >> maxGpa)
             return;
         minGpa = actualMin;
@@ -277,7 +282,6 @@ void FindStudentByGpaRange::runComparison()
     // 2. Chạy 1 lần trên khoảng GPA vừa chọn
     FilterGpaResult baseline = filterBaseline(minGpa, maxGpa);
     FilterGpaResult optimized = filterFinalSolution(minGpa, maxGpa);
-    
 
     // 3. Lặp workload để đo thời gian tổng quát ổn định (tự động điều chỉnh theo kích thước CSDL)
     const int TEST_LOOPS = (studentsPtr->size() > 50000) ? 50 : 1000;
@@ -346,11 +350,11 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
         return;
     }
 
-    cout << left << setw(6)  << "STT"
+    cout << left << setw(6) << "STT"
          << " | " << setw(12) << "MSSV"
          << " | " << setw(26) << "HO VA TEN"
          << " | " << setw(10) << "LOP"
-         << " | " << setw(6)  << "GPA" << "\n";
+         << " | " << setw(6) << "GPA" << "\n";
     cout << "-----------------------------------------------------------------------------------------\n";
 
     size_t total = result.students.size();
@@ -359,7 +363,7 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
         int stt = 1;
         for (const auto &student : result.students)
         {
-            cout << left << setw(6)  << stt++
+            cout << left << setw(6) << stt++
                  << " | " << setw(12) << student.id
                  << " | " << setw(26) << student.name
                  << " | " << setw(10) << student.classId
@@ -372,7 +376,7 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
         for (size_t i = 0; i < 9; ++i)
         {
             const auto &student = result.students[i];
-            cout << left << setw(6)  << (i + 1)
+            cout << left << setw(6) << (i + 1)
                  << " | " << setw(12) << student.id
                  << " | " << setw(26) << student.name
                  << " | " << setw(10) << student.classId
@@ -380,7 +384,7 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
         }
 
         // 2. Dòng dấu chấm rút gọn hiển thị số lượng sinh viên được ẩn
-        cout << left << setw(6)  << "..."
+        cout << left << setw(6) << "..."
              << " | " << setw(12) << "..."
              << " | " << setw(26) << ("... (an " + to_string(total - 10) + " SV) ...")
              << " | " << setw(10) << "..."
@@ -388,7 +392,7 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
 
         // 3. In sinh viên cuối cùng
         const auto &lastStudent = result.students.back();
-        cout << left << setw(6)  << total
+        cout << left << setw(6) << total
              << " | " << setw(12) << lastStudent.id
              << " | " << setw(26) << lastStudent.name
              << " | " << setw(10) << lastStudent.classId
