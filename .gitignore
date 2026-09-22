@@ -7,3 +7,9 @@ main.exe
 build/
 output/
 tempCodeRunnerFile.*
+node_modules/
+web_dsa/node_modules/
+web_dsa/dist/
+.next/
+web_dsa/.next/
+*.tsbuildinfo

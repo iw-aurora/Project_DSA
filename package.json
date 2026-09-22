@@ -1,0 +1,35 @@
+{
+  "name": "code_dsa",
+  "version": "1.0.0",
+  "description": "Chương trình đọc và hiển thị danh sách sinh viên từ file JSON viết bằng ngôn ngữ C++, tích hợp Resident C++ Daemon và Web UI.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "server": "nodemon server.js",
+    "build:core": "g++ -O3 -march=native -funroll-loops -flto -DNDEBUG -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_minhanh/*.cpp src/core_mytra/*.cpp src/core_phat/*.cpp src/core_trang/*.cpp src/core_tra/*.cpp",
+    "test:speed": "node test_speed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iw-aurora/Project_DSA.git"
+  },
+  "keywords": [
+    "dsa",
+    "cpp",
+    "react",
+    "benchmark",
+    "in-memory"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^2.3.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
