@@ -10,12 +10,12 @@ using namespace std;
 class SortedGpaFilter
 {
 private:
-    vector<Student> sortedStudents;
+    vector<const Student *> sortedStudents;
 
 public:
     void build(const vector<Student>& students);
 
-    FilterGpaResult filter(double minGpa, double maxGpa);
+    GpaRangeViewResult filter(double minGpa, double maxGpa);
 };
 
 #endif

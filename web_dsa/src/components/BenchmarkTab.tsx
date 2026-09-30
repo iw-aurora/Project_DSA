@@ -141,7 +141,7 @@ export const BenchmarkTab: React.FC<BenchmarkTabProps> = ({ totalStudents = 5000
               <Option value="mc1">[BẮT BUỘC] MC1: Tra cứu theo MSSV (Hash Table O(1))</Option>
               <Option value="mc2">[BẮT BUỘC] MC2: Sinh viên GPA cao nhất (Max-Heap O(1))</Option>
               <Option value="rq1">[TỰ CHỌN] RQ1: Lọc theo Mã Lớp (Optimized Index)</Option>
-              <Option value="rq2">[TỰ CHỌN] RQ2: Lọc khoảng GPA (Binary Search O(log N + K))</Option>
+              <Option value="rq2">[TỰ CHỌN] RQ2: Lọc khoảng GPA (Binary Search O(log N) View)</Option>
             </Select>
 
             <Button 

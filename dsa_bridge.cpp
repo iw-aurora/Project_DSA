@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
 
                 // Final Solution Single
                 auto ft1 = chrono::high_resolution_clock::now();
-                FilterGpaResult optRes = prebuiltGpaFinder.filterFinalSolution(minGpa, maxGpa);
+                GpaRangeViewResult optRes = prebuiltGpaFinder.filterFinalSolution(minGpa, maxGpa);
                 auto ft2 = chrono::high_resolution_clock::now();
                 double optSingleMs = chrono::duration<double, milli>(ft2 - ft1).count();
 
@@ -253,12 +253,12 @@ int main(int argc, char *argv[])
                 res["module"] = "RQ2: Sinh viên theo khoảng GPA (Range Query)";
                 res["minGpa"] = minGpa;
                 res["maxGpa"] = maxGpa;
-                res["matchCount"] = optRes.students.size();
+                res["matchCount"] = optRes.size();
 
                 json bTable = json::array();
                 bTable.push_back({{"metric", "Độ phức tạp lý thuyết (Theoretical Complexity)"},
                                   {"baseline", "O(N)"},
-                                  {"final", "O(log N + K)"}});
+                                  {"final", "O(log N) boundary + O(1) range view"}});
                 bTable.push_back({{"metric", "Thời gian truy vấn đơn lẻ (Single Query Time)"},
                                   {"baseline", to_string(baseSingleMs) + " ms"},
                                   {"final", to_string(optSingleMs) + " ms"}});
@@ -270,17 +270,17 @@ int main(int argc, char *argv[])
                                   {"final", to_string(optRes.comparisons)}});
                 bTable.push_back({{"metric", "Bộ nhớ tiêu thụ thêm (Extra Memory)"},
                                   {"baseline", "0 MB (O(1))"},
-                                  {"final", "O(N) sorted index"}});
+                                  {"final", "O(N) sorted pointer index, O(1) result view"}});
                 bTable.push_back({{"metric", "Số kết quả tìm thấy (Results Count)"},
                                   {"baseline", to_string(baseRes.students.size()) + " SV"},
-                                  {"final", to_string(optRes.students.size()) + " SV"}});
+                                  {"final", to_string(optRes.size()) + " SV"}});
                 res["benchmark"] = bTable;
 
                 json studentsJson = json::array();
-                size_t maxPreview = min(optRes.students.size(), (size_t)100);
+                size_t maxPreview = min(optRes.size(), (size_t)100);
                 for (size_t i = 0; i < maxPreview; ++i)
                 {
-                    const auto &s = optRes.students[i];
+                    const auto &s = optRes.at(i);
                     json item;
                     item["id"] = s.id;
                     item["name"] = s.name;

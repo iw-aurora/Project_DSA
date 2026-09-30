@@ -24,4 +24,41 @@ struct FilterGpaResult
     }
 };
 
+struct GpaRangeViewResult
+{
+    const vector<const Student *> *sortedStudents;
+    size_t startIndex;
+    size_t endIndex;
+    double buildTimeMs;
+    double queryTimeMs;
+    double totalTimeMs;
+    long long comparisons;
+
+    GpaRangeViewResult()
+    {
+        this->sortedStudents = nullptr;
+        this->startIndex = 0;
+        this->endIndex = 0;
+        this->buildTimeMs = 0.0;
+        this->queryTimeMs = 0.0;
+        this->totalTimeMs = 0.0;
+        this->comparisons = 0;
+    }
+
+    size_t size() const
+    {
+        return endIndex >= startIndex ? endIndex - startIndex : 0;
+    }
+
+    bool empty() const
+    {
+        return size() == 0;
+    }
+
+    const Student &at(size_t index) const
+    {
+        return *(*sortedStudents)[startIndex + index];
+    }
+};
+
 #endif

@@ -1,0 +1,1305 @@
+\documentclass[14pt,a4paper]{extarticle}
+
+% ==============================================================================
+% 1. CẤU HÌNH GÓI VÀ BẢNG MÃ TIẾNG VIỆT
+% ==============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[vietnamese]{babel}
+\usepackage[T5]{fontenc}
+
+% ==============================================================================
+% 2. CẤU HÌNH FONT TIMES NEW ROMAN VÀ CỠ CHỮ 14PT (TUYỆT ĐỐI KHÔNG CÓ NGOẠI LỆ)
+% ==============================================================================
+\usepackage{amsmath}
+\usepackage{txfonts}
+
+% Ép toàn bộ các họ font (Roman, Sans-Serif, Monospace) sang Times New Roman
+\renewcommand{\rmdefault}{ptm}
+\renewcommand{\sfdefault}{ptm}
+\renewcommand{\ttdefault}{ptm}
+
+% Ép tất cả các lệnh điều chỉnh kích thước font về đúng 14pt (normalsize)
+% Đảm bảo 100% toàn bộ tài liệu không có bất kỳ ngoại lệ nào về cỡ chữ
+\let\tiny\normalsize
+\let\scriptsize\normalsize
+\let\footnotesize\normalsize
+\let\small\normalsize
+\let\large\normalsize
+\let\Large\normalsize
+\let\LARGE\normalsize
+\let\huge\normalsize
+\let\Huge\normalsize
+
+% ==============================================================================
+% 3. CĂN LỀ, GIÃN DÒNG 1.5 VÀ KHÔNG GIÃN CÁCH ĐOẠN (BEFORE=0PT, AFTER=0PT)
+% ==============================================================================
+% Căn lề chuẩn: Trái 3.0cm, Phải 2.0cm, Trên 2.0cm, Dưới 2.0cm
+\usepackage[top=2cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+
+% Giãn cách dòng 1.5 cho toàn bộ văn bản (100% không có ngoại lệ)
+\usepackage{setspace}
+\setstretch{1.5}
+
+% Thụt lề đầu dòng chuẩn 1.27cm (0.5 inch), tự động thụt lề cho cả đoạn đầu tiên
+\usepackage{indentfirst}
+\setlength{\parindent}{1.27cm}
+
+% KHÔNG GIÃN CÁCH TRƯỚC / SAU ĐOẠN (Before = 0pt, After = 0pt, parskip = 0pt)
+\setlength{\parskip}{0pt}
+\emergencystretch=3em
+\sloppy
+
+% Bảng biểu nâng cao với giãn cách dòng 1.5
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{float}
+\usepackage{graphicx}
+\graphicspath{{image/}}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage[font=normalsize,labelfont=bf,labelsep=period,justification=centering,skip=4pt]{caption}
+
+% Điều chỉnh thu gọn khoảng cách quanh hình ảnh và caption (loại bỏ khoảng trống thừa)
+\setlength{\intextsep}{6pt plus 1pt minus 1pt}
+\setlength{\textfloatsep}{6pt plus 1pt minus 1pt}
+\setlength{\floatsep}{6pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{0pt}
+
+% ==============================================================================
+% 4. ĐỊNH DẠNG TIÊU ĐỀ (ĐỒNG NHẤT FONT TIMES NEW ROMAN, CỠ 14PT, CĂN TRÁI, GIÃN DÒNG 1.5)
+% ==============================================================================
+\usepackage{titlesec}
+\titleformat{\section}[block]
+  {\normalfont\normalsize\bfseries\centering}
+  {}{0pt}{}
+\titlespacing*{\section}{0pt}{14pt}{6pt}
+
+\titleformat{\subsection}[block]
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}{1em}{\normalsize\bfseries}
+\titlespacing*{\subsection}{0pt}{10pt}{4pt}
+
+\titleformat{\subsubsection}[block]
+  {\normalfont\normalsize\bfseries}
+  {\thesubsubsection}{1em}{\normalsize\bfseries}
+\titlespacing*{\subsubsection}{0pt}{8pt}{3pt}
+
+% ==============================================================================
+% 5. CẤU HÌNH MỤC LỤC VÀ DANH MỤC HÌNH ẢNH (TOC & LOF)
+% ==============================================================================
+\usepackage{tocloft}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\renewcommand{\cfttoctitlefont}{\hfill\normalfont\normalsize\bfseries\MakeUppercase}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+% Cấu hình chấm dẫn đường và font chữ đồng nhất 14pt cho tất cả các cấp
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\renewcommand{\cftsecfont}{\normalfont\normalsize\bfseries}
+\renewcommand{\cftsubsecfont}{\normalfont\normalsize}
+\renewcommand{\cftsubsubsecfont}{\normalfont\normalsize}
+
+\renewcommand{\cftsecpagefont}{\normalfont\normalsize}
+\renewcommand{\cftsubsecpagefont}{\normalfont\normalsize}
+\renewcommand{\cftsubsubsecpagefont}{\normalfont\normalsize}
+
+\setlength{\cftbeforesecskip}{4pt}
+\setlength{\cftbeforesubsecskip}{1pt}
+\setlength{\cftbeforesubsubsecskip}{0pt}
+
+% Cấu hình Danh mục hình ảnh
+\renewcommand{\listfigurename}{DANH MỤC HÌNH ẢNH}
+\renewcommand{\cftloftitlefont}{\hfill\normalfont\normalsize\bfseries\MakeUppercase}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftfigleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftfigfont}{\normalfont\normalsize}
+\renewcommand{\cftfigpagefont}{\normalfont\normalsize}
+\renewcommand{\cftfigpresnum}{Hình }
+\renewcommand{\cftfigaftersnum}{:}
+\setlength{\cftfignumwidth}{2.2cm}
+\setlength{\cftbeforefigskip}{4pt}
+
+% ==============================================================================
+% 6. CẤU HÌNH HEADER / FOOTER
+% ==============================================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[R]{\normalfont\normalsize\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyfoot[R]{\normalfont\normalsize\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+}
+
+% ==============================================================================
+% 7. THÔNG TIN TÀI LIỆU
+% ==============================================================================
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    hypertexnames=false,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    pdftitle={Báo cáo Tiểu luận - Cấu trúc Dữ liệu và Giải thuật},
+    pdfauthor={Nhóm 12}
+}
+\usepackage{bookmark}
+\bookmarksetup{
+    open=true,
+    depth=3,
+    numbered=false
+}
+
+% ==============================================================================
+% BẮT ĐẦU TÀI LIỆU
+% ==============================================================================
+\begin{document}
+\pagenumbering{gobble}
+\pagestyle{empty}
+\thispagestyle{empty}
+
+% ==============================================================================
+% 1. TRANG BÌA CHÍNH (BÌA NGOÀI)
+% ==============================================================================
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width=1.5pt] 
+            ($(current page.north west) + (2.0cm,-1.8cm)$) 
+            rectangle 
+            ($(current page.south east) + (-1.5cm,1.8cm)$);
+        \draw[line width=0.5pt] 
+            ($(current page.north west) + (2.12cm,-1.92cm)$) 
+            rectangle 
+            ($(current page.south east) + (-1.62cm,1.92cm)$);
+    \end{tikzpicture}
+    \centering
+    \fontsize{14pt}{17pt}\selectfont
+    \textbf{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ KỸ THUẬT TP. HỒ CHÍ MINH}\\
+    \textbf{KHOA CÔNG NGHỆ THÔNG TIN}\\[0.5cm]
+
+    \includegraphics[width=3.2cm]{logo_hcmute.png}\\[0.5cm]
+
+    \textbf{TIỂU LUẬN HỌC PHẦN CẤU TRÚC DỮ LIỆU VÀ GIẢI THUẬT}\\[0.6cm]
+
+    \fontsize{14pt}{18pt}\selectfont
+    \textbf{HỆ THỐNG QUẢN LÝ HỒ SƠ SINH VIÊN VÀ ENGINE ĐỐI SÁNH HIỆU NĂNG THUẬT TOÁN (DSA) -- RECORDS-AND-DECISION ENGINE}\\[1.0cm]
+
+    \fontsize{14pt}{17pt}\selectfont
+    \begin{flushleft}
+        \hspace{1.5cm}\textbf{Giảng viên hướng dẫn:} ThS. Bảo Vũ Đình (T-Bao)\\[0.2cm]
+        \hspace{1.5cm}\textbf{Mã lớp học phần:} DASA230179\_03\\[0.2cm]
+        \hspace{1.5cm}\textbf{Nhóm thực hiện:} Nhóm 12\\[0.2cm]
+        \hspace{1.5cm}\textbf{Sinh viên thực hiện:}\\[0.15cm]
+        \hspace{2.0cm}\begin{tabular}{ll}
+            \textbf{Họ và tên} & \textbf{MSSV} \\
+            Bùi Tấn Phát & 25110289 \\
+            Nguyễn Phan Thành Tiến & 25110361 \\
+            Ngô Đức Thành & 25110335 \\
+            Đặng Đoàn Minh Khang & 25110227 \\
+        \end{tabular}
+    \end{flushleft}
+
+    \vfill
+    \fontsize{14pt}{17pt}\selectfont
+    \textit{TP. Hồ Chí Minh, tháng 09 năm 2026}
+\end{titlepage}
+
+% ==============================================================================
+% 2. TRANG BÌA PHỤ (BÌA LÓT TRONG KHOA HỌC)
+% ==============================================================================
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+        \draw[line width=1.5pt] 
+            ($(current page.north west) + (2.0cm,-1.8cm)$) 
+            rectangle 
+            ($(current page.south east) + (-1.5cm,1.8cm)$);
+        \draw[line width=0.5pt] 
+            ($(current page.north west) + (2.12cm,-1.92cm)$) 
+            rectangle 
+            ($(current page.south east) + (-1.62cm,1.92cm)$);
+    \end{tikzpicture}
+    \centering
+    \fontsize{14pt}{17pt}\selectfont
+    \textbf{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ KỸ THUẬT TP. HỒ CHÍ MINH}\\
+    \textbf{KHOA CÔNG NGHỆ THÔNG TIN}\\
+    \textbf{BỘ MÔN CÔNG NGHỆ PHẦN MỀM}\\[0.4cm]
+
+    \includegraphics[width=3.0cm]{logo_hcmute.png}\\[0.4cm]
+
+    \fontsize{14pt}{17pt}\selectfont
+    \textbf{TIỂU LUẬN HỌC PHẦN CẤU TRÚC DỮ LIỆU VÀ GIẢI THUẬT}\\[0.5cm]
+
+    \fontsize{14pt}{18pt}\selectfont
+    \textbf{HỆ THỐNG QUẢN LÝ HỒ SƠ SINH VIÊN VÀ ENGINE ĐỐI SÁNH HIỆU NĂNG THUẬT TOÁN (DSA) -- RECORDS-AND-DECISION ENGINE}\\[0.8cm]
+
+    \fontsize{14pt}{17pt}\selectfont
+    \begin{flushleft}
+        \hspace{1.5cm}\textbf{Giảng viên hướng dẫn:} ThS. Bảo Vũ Đình (T-Bao)\\[0.15cm]
+        \hspace{1.5cm}\textbf{Mã lớp học phần:} DASA230179\_03\\[0.15cm]
+        \hspace{1.5cm}\textbf{Nhóm thực hiện:} Nhóm 12\\[0.15cm]
+        \hspace{1.5cm}\textbf{Sinh viên thực hiện:}\\[0.1cm]
+        \hspace{2.0cm}\begin{tabular}{ll}
+            \textbf{Họ và tên} & \textbf{MSSV} \\
+            Bùi Tấn Phát & 25110289 \\
+            Nguyễn Phan Thành Tiến & 25110361 \\
+            Ngô Đức Thành & 25110335 \\
+            Đặng Đoàn Minh Khang & 25110227 \\
+        \end{tabular}
+    \end{flushleft}
+
+    \vfill
+    \fontsize{14pt}{17pt}\selectfont
+    \textit{TP. Hồ Chí Minh, tháng 09 năm 2026}
+\end{titlepage}
+
+% ------------------------------------------------------------------------------
+% TRANG: LỜI CẢM ƠN
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+\section*{LỜI CẢM ƠN}
+
+Lời đầu tiên, Nhóm 12 chúng em xin chân thành gửi lời cảm ơn sâu sắc nhất đến Ban Giám hiệu Trường Đại học Công nghệ Kỹ thuật TP. Hồ Chí Minh cùng toàn thể quý Thầy Cô đã tạo điều kiện học tập thuận lợi và trang bị cho chúng em những nền tảng tri thức quý báu.
+
+Đặc biệt, chúng em xin gửi lời tri ân chân thành đến Thầy ThS. Bảo Vũ Đình (T-Bao) --- giảng viên phụ trách học phần Cấu trúc Dữ liệu và Giải thuật (Mã lớp học phần: DASA230179\_03). Trong suốt 14 tuần học tập vừa qua, Thầy đã luôn mang đến cho chúng em những bài giảng tâm huyết, sinh động và giàu tính thực tiễn. Sự đồng hành, tận tình hướng dẫn, lắng nghe và giải đáp mọi vướng mắc từ Thầy đã giúp chúng em thấu hiểu sâu sắc bản chất môn học cũng như định hướng rõ ràng trong suốt quá trình xây dựng đồ án.
+
+Chúng em xin trân trọng tiếp thu mọi lời nhận xét, đóng góp quý giá từ Thầy để không ngừng hoàn thiện đồ án, trau dồi tư duy giải thuật và phát triển vững chắc các kỹ năng chuyên môn cho chặng đường phía trước. Kính chúc Thầy luôn dồi dào sức khỏe, tràn đầy niềm vui và luôn gặt hái được nhiều thành công trong sự nghiệp giảng dạy!
+
+Một lần nữa, Nhóm 12 chúng em xin chân thành cảm ơn Thầy!
+
+\vspace{1.0cm}
+\begin{flushright}
+    TP. Hồ Chí Minh, ngày 28 tháng 09 năm 2026\\[0.2cm]
+    \textbf{Sinh viên thực hiện}\\[0.2cm]
+    \textbf{Nhóm 12}
+\end{flushright}
+
+% ------------------------------------------------------------------------------
+% TRANG 2: BẢNG ĐÁNH GIÁ PHÂN CÔNG NHIỆM VỤ (4 THÀNH VIÊN)
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+
+\section*{BẢNG ĐÁNH GIÁ VÀ PHÂN CÔNG NHIỆM VỤ}
+
+\noindent
+\textbf{Mã lớp học phần:} DASA230179\_03\\[0.1cm]
+\textbf{Nhóm thực hiện:} Nhóm 12\\[0.1cm]
+\textbf{Giảng viên hướng dẫn:} ThS. Bảo Vũ Đình (T-Bao)\\[0.1cm]
+
+\begin{table}[H]
+\centering
+\vspace{-0.25cm}
+\begingroup
+\setstretch{1.15}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{3.5cm}|X|c|}
+\hline
+\textbf{STT} & \textbf{Họ và tên / MSSV} & \textbf{Nhiệm vụ phân công} & \textbf{Mức độ hoàn thành} \\ \hline
+1 & \textbf{Bùi Tấn Phát} \newline MSSV: 25110289 & Cài đặt cấu trúc dữ liệu cốt lõi (Module 1), phân tích độ phức tạp thuật toán & 100\% \\ \hline
+2 & \textbf{Nguyễn Phan Thành Tiến} \newline MSSV: 25110361 & Cài đặt cấu trúc dữ liệu cốt lõi (Module 2), thực hiện đo đạc benchmark hiệu năng & 100\% \\ \hline
+3 & \textbf{Ngô Đức Thành} \newline MSSV: 25110335 & Thiết kế các giải thuật tìm kiếm, lọc và xử lý dữ liệu quy mô lớn & 100\% \\ \hline
+4 & \textbf{Đặng Đoàn Minh Khang} \newline MSSV: 25110227 & Thiết kế kiến trúc tổng thể hệ thống, đồng bộ dữ liệu và tổng hợp báo cáo & 100\% \\ \hline
+\end{tabularx}
+\endgroup
+\end{table}
+
+\vspace{-0.2cm}
+\noindent
+\textbf{Đánh giá kết quả:} Các thành viên hoàn thành các nhiệm vụ đúng thời hạn, hoàn thành nhiệm vụ tốt. Mặc dù có chút khó khăn trong quá trình tìm hiểu các kiến thức nhưng được sự hỗ trợ từ các bạn trong nhóm, cùng lớp đã hoàn thành đồ án đúng thời hạn.
+
+% ------------------------------------------------------------------------------
+% TRANG 3: TUYÊN BỐ QUYỀN SỞ HỮU THÀNH PHẦN (COMPONENT OWNERSHIP - D3)
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+
+\section*{TUYÊN BỐ QUYỀN SỞ HỮU THÀNH PHẦN (COMPONENT OWNERSHIP - D3)}
+
+\noindent
+Tuân thủ quy định về Đánh giá năng lực cá nhân (\textit{Individual Accountability} --- Mục 10, 11 và 19 của Đề bài), từng thành viên xác nhận quyền sở hữu kỹ thuật, trách nhiệm cài đặt và lập luận thiết kế độc lập như sau:
+
+\begin{table}[H]
+\centering
+\begingroup
+\setstretch{1.05}
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Thành viên \& MSSV} & \textbf{Thành phần sở hữu} & \textbf{Đóng góp Kỹ thuật \& Biện minh Thiết kế} \\ \hline
+\textbf{Bùi Tấn Phát} \newline MSSV: 25110289 & \textbf{Module 1: Closed Hash} \newline \textit{(Phục vụ yêu cầu MC1)} & Tự cài đặt FNV-1a 64-bit, Linear Probing và cấu trúc ô nhớ 2 trạng thái (\texttt{OCCUPIED}/\texttt{EMPTY}) tĩnh sau Bulk Load. Chứng minh số bước dò kỳ vọng xấp xỉ 1.5 probe với hệ số tải $\alpha \approx 0.50$ và dung lượng bảng $M = 21.000.001$. \\ \hline
+\textbf{Nguyễn Phan Thành Tiến} \newline MSSV: 25110361 & \textbf{Module 2: Custom Heap} \newline \textit{(Phục vụ yêu cầu MC2)} & Tự cài đặt Max-Heap mảng 1D, Floyd Build Heap $O(N)$ từ dưới lên, \texttt{heapifyDown} dạng lặp và xử lý quy tắc Tie-break theo MSSV. Chứng minh toán học độ phức tạp $O(N)$ qua chuỗi hội tụ. \\ \hline
+\textbf{Ngô Đức Thành} \newline MSSV: 25110335 & \textbf{Module 3: Sorted GPA \& Class Filter} \newline \textit{(Phục vụ RQ1, RQ2)} & Xây dựng mảng con trỏ sắp xếp GPA bằng \texttt{std::sort}, tự cài đặt thuật toán Tìm kiếm Nhị phân 2 đầu biên (\textit{Lower/Upper Bound}) tạo range view trong thời gian $O(\log N)$, và triển khai thuật toán quét tuyến tính \texttt{OptimizedLinearFilter} $O(N)$ lọc theo lớp. \\ \hline
+\textbf{Đặng Đoàn Minh Khang} \newline MSSV: 25110227 & \textbf{Module 4: 3-Tier \& Core} \newline \textit{(Giải quyết xung đột)} & Thiết kế kiến trúc module hóa kết hợp đa cấu trúc, quy trình Bulk Load, cấp phát \texttt{reserve(10500000)} chống phân mảnh vùng nhớ, cầu nối API Bridge C++ và Web Dashboard trực quan hóa. \\ \hline
+\end{tabularx}
+\endgroup
+\end{table}
+
+\noindent
+\textbf{Cam kết cá nhân:} Toàn bộ các thành viên cam kết hiểu sâu sắc mã nguồn thành phần do mình sở hữu, nắm vững lý thuyết độ phức tạp và sẵn sàng giải thích, trace code độc lập trong buổi vấn đáp (D8).
+
+% ------------------------------------------------------------------------------
+% MỤC LỤC
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+
+\tableofcontents
+
+% ------------------------------------------------------------------------------
+% DANH MỤC HÌNH ẢNH
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+\listoffigures
+
+% ------------------------------------------------------------------------------
+% DANH MỤC TỪ VIẾT TẮT
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+\section*{DANH MỤC TỪ VIẾT TẮT}
+
+\begin{table}[H]
+\centering
+\begingroup
+\setstretch{1.15}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{2.3cm}|p{5.5cm}|X|}
+\hline
+\textbf{Ký hiệu} & \textbf{Thuật ngữ tiếng Anh} & \textbf{Ý nghĩa tiếng Việt} \\ \hline
+DSA & Data Structures and Algorithms & Cấu trúc Dữ liệu và Giải thuật \\ \hline
+MSSV & Student Identifier & Mã số sinh viên (Khóa chính định danh) \\ \hline
+GPA & Grade Point Average & Điểm trung bình tích lũy học tập \\ \hline
+MC & Mandatory Criteria & Yêu cầu nghiệp vụ bắt buộc cốt lõi \\ \hline
+MC1 & Mandatory Criteria 1 & Tra cứu chính xác sinh viên theo MSSV \\ \hline
+MC2 & Mandatory Criteria 2 & Truy xuất sinh viên có GPA cao nhất \\ \hline
+RQ & Required Query & Yêu cầu truy vấn mở rộng tự phát hiện \\ \hline
+RQ1 & Requirement 1 & Truy xuất danh sách sinh viên theo Lớp \\ \hline
+RQ2 & Requirement 2 & Truy xuất sinh viên theo khoảng GPA \\ \hline
+FNV-1a & Fowler--Noll--Vo (Version 1a) & Giải thuật hàm băm phi mã hóa tốc độ cao \\ \hline
+RAM & Random Access Memory & Bộ nhớ truy xuất ngẫu nhiên khả biến \\ \hline
+CPU & Central Processing Unit & Bộ vi xử lý trung tâm \\ \hline
+JSON & JavaScript Object Notation & Định dạng dữ liệu hoán đổi văn bản chuẩn \\ \hline
+STL & Standard Template Library & Thư viện mẫu chuẩn trong ngôn ngữ C++ \\ \hline
+CLO & Course Learning Outcomes & Chuẩn đầu ra tích hợp của học phần \\ \hline
+CRUD & Create, Read, Update, Delete & Bốn thao tác dữ liệu cơ bản \\ \hline
+\end{tabularx}
+\endgroup
+\end{table}
+
+% ==============================================================================
+% PHẦN MỞ ĐẦU
+% ==============================================================================
+\newpage
+\pagestyle{fancy}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\section*{PHẦN MỞ ĐẦU}
+\addcontentsline{toc}{section}{PHẦN MỞ ĐẦU}
+
+\subsection*{1. Lý do chọn đề tài và bối cảnh thực tiễn của bài toán}
+\addcontentsline{toc}{subsection}{1. Lý do chọn đề tài và bối cảnh thực tiễn của bài toán}
+
+Trong công tác quản lý và khai thác thông tin học tập tại các cơ sở giáo dục đại học quy mô lớn, việc lưu trữ, tra cứu và xử lý nhanh chóng khối lượng hồ sơ sinh viên ngày càng trở nên cấp thiết. Hệ thống thông tin quản lý không chỉ dừng lại ở chức năng lưu trữ dữ liệu tĩnh, mà còn cần hoạt động như một hệ thống xử lý hồ sơ và hỗ trợ ra quyết định (\textit{Records-and-Decision Engine}) có khả năng phản hồi tức thì các tác vụ vận hành cốt lõi: tra cứu thông tin sinh viên theo mã định danh duy nhất, xếp hạng và truy xuất sinh viên có kết quả học tập cao nhất để xét duyệt học bổng, cũng như phân loại và thống kê danh sách sinh viên theo các tiêu chí điểm số hoặc lớp học.
+
+Khi quy mô dữ liệu mở rộng lên mức thực nghiệm lớn gồm $10.500.000$ sinh viên, các phương pháp duyệt tuần tự tuyến tính ($O(N)$) bộc lộ hạn chế rõ rệt về độ trễ, gây chiếm dụng tài nguyên CPU và làm giảm tốc độ phản hồi. Việc nghiên cứu và ứng dụng các cấu trúc dữ liệu chuyên sâu trong bộ nhớ chính (In-memory Data Structures) như Bảng băm đóng (Closed Hash Table) và Cây đống cực đại (Max-Heap) là giải pháp quan trọng nhằm tối ưu thời gian xử lý một số tác vụ trọng yếu xuống mức $O(1)$ hoặc $O(\log N)$ tùy theo loại thao tác và cấu trúc dữ liệu được sử dụng. Xuất phát từ yêu cầu thực tiễn đó, Nhóm 12 lựa chọn đề tài: \textbf{''Hệ thống Quản lý Hồ sơ Sinh viên và Engine Đối sánh Hiệu năng Thuật toán (DSA)''} nhằm xây dựng giải pháp kỹ thuật hoàn chỉnh, đáp ứng cân bằng giữa hiệu năng thời gian và không gian bộ nhớ trên tập dữ liệu $10.500.000$ bản ghi.
+
+\subsection*{2. Mục tiêu nghiên cứu và chuẩn đầu ra học phần (CLO Alignment)}
+\addcontentsline{toc}{subsection}{2. Mục tiêu nghiên cứu và chuẩn đầu ra học phần (CLO Alignment)}
+
+Đồ án được xây dựng bám sát theo các chuẩn đầu ra tích hợp của học phần Cấu trúc Dữ liệu và Giải thuật (Mã lớp học phần: DASA230179\_03):
+
+Thứ nhất, đối với chuẩn đầu ra CLO1 (Mô hình hóa bài toán và lập luận tính đúng đắn), nhóm tiến hành phân tích bối cảnh bài toán thực tế, xác định chính xác tập dữ liệu đầu vào (Input), đầu ra (Output), ràng buộc dữ liệu (Constraints) và bao phủ các trường hợp biên đặc biệt (Edge Cases).
+
+Thứ hai, đối với chuẩn đầu ra CLO3 (Cài đặt và kiểm thử cấu trúc dữ liệu cốt lõi), nhóm tự tay cài đặt hoàn chỉnh từ đầu (\textit{from scratch}) trên ngôn ngữ C++ hai cấu trúc dữ liệu trọng tâm: Bảng băm đóng sử dụng hàm băm FNV-1a với kỹ thuật dò tuyến tính (Linear Probing) và Cây đống cực đại (Custom Binary Max-Heap) với giải thuật vun đống Floyd $O(N)$, không sử dụng các thư viện cấu trúc dựng sẵn của STL C++.
+
+Thứ ba, đối với chuẩn đầu ra CLO7 (Phân tích cấu trúc phân cấp và đánh giá suy giảm hiệu năng), nhóm cài đặt cấu trúc cây phân cấp (Binary Heap), phân tích cơ chế duy trì bất biến đống và đánh giá các điều kiện suy giảm hiệu năng trong quá trình vận hành thực tế.
+
+Thứ tư, đối với chuẩn đầu ra CLO8 (Capstone -- Lựa chọn, đánh giá và bảo vệ cấu trúc dữ liệu), nhóm phân tích sâu các mô thức truy cập dữ liệu (Access Patterns), áp dụng khung 7 tiêu chí so sánh và quy trình 4 câu hỏi quyết định Q1--Q4 để giải trình phương án lựa chọn cấu trúc, làm rõ các đánh đổi kỹ thuật (\textit{trade-offs}) và các giải pháp bị loại bỏ.
+
+\subsection*{3. Đối tượng, phạm vi nghiên cứu và tập dữ liệu thử nghiệm}
+\addcontentsline{toc}{subsection}{3. Đối tượng, phạm vi nghiên cứu và tập dữ liệu thử nghiệm}
+
+Về đối tượng nghiên cứu, đề tài tập trung vào các cấu trúc dữ liệu cơ bản và nâng cao (Mảng động, Bảng băm đóng, Cây đống nhị phân, Mảng sắp xếp) cùng các giải thuật tìm kiếm, sắp xếp và tối ưu hóa truy vấn trong bộ nhớ RAM.
+
+Về phạm vi nghiên cứu, hệ thống tập trung xử lý các thao tác gồm: tra cứu chính xác theo MSSV (MC1), tìm sinh viên có GPA cao nhất (MC2), lọc sinh viên theo Mã Lớp (RQ1) và lọc danh sách sinh viên theo khoảng GPA (RQ2).
+
+Về tập dữ liệu thử nghiệm, phiên bản \texttt{data/database.json} dùng cho lần đo C++ Core hiện tại gồm $500.000$ bản ghi sinh viên (dải MSSV từ $25000001$ đến $25500000$, điểm GPA từ $4.0$ đến $10.0$ trên thang điểm 10 phân bổ trên 25 lớp học phần). Đây là quy mô đủ lớn để quan sát rõ rệt sự khác biệt giữa các đường đi thuật toán; các đoạn phân tích lý thuyết trong báo cáo vẫn dùng mốc thiết kế $10.500.000$ bản ghi để đánh giá khả năng mở rộng.
+
+\subsection*{4. Phương pháp tiếp cận, công cụ thực hiện và bố cục báo cáo}
+\addcontentsline{toc}{subsection}{4. Phương pháp tiếp cận, công cụ thực hiện và bố cục báo cáo}
+
+Về phương pháp tiếp cận, nghiên cứu kết hợp giữa lý thuyết phân tích độ phức tạp thời gian/không gian ($O, \Omega, \Theta$) với phương pháp thực nghiệm đo đạc Benchmark bằng bộ định thời phần cứng độ chính xác cao (\texttt{std::chrono::high\_resolution\_clock}).
+
+Về công cụ và môi trường phát triển, tầng xử lý thuật toán cốt lõi được xây dựng bằng ngôn ngữ C++ (chuẩn C++20). Tầng giao diện và trực quan hóa dữ liệu được xây dựng bằng React/Next.js kết hợp Ant Design, giao tiếp với C++ Engine thông qua giao thức API cầu nối (DSA Bridge).
+
+Về bố cục báo cáo, tài liệu được tổ chức thành 2 chương trọng tâm cùng danh mục tài liệu tham khảo: Chương 1 trình bày tổng quan bài toán, mô hình hóa dữ liệu, phân tích xung đột yêu cầu và áp dụng quy trình Q1--Q4 để biện minh cấu trúc. Chương 2 trình bày chi tiết hiện thực mã nguồn C++ của hai cấu trúc cốt lõi từ đầu, kiến trúc phân tầng, kiểm thử trường hợp biên và toàn bộ số liệu Benchmark thực nghiệm đối sánh trên tập dữ liệu hiện tại $500.000$ sinh viên, kèm nhật ký gỡ lỗi và danh mục tài liệu tham khảo chuyên ngành.
+
+% ==============================================================================
+% CHƯƠNG 1: TỔNG QUAN BÀI TOÁN VÀ THIẾT KẾ CẤU TRÚC DỮ LIỆU
+% ==============================================================================
+\newpage
+\section*{CHƯƠNG 1: TỔNG QUAN BÀI TOÁN\\VÀ THIẾT KẾ CẤU TRÚC DỮ LIỆU}
+\addcontentsline{toc}{section}{CHƯƠNG 1: TỔNG QUAN BÀI TOÁN VÀ THIẾT KẾ CẤU TRÚC DỮ LIỆU}
+
+\subsection*{1.1. Mô tả bài toán và phân tích nghiệp vụ hệ thống}
+\addcontentsline{toc}{subsection}{1.1. Mô tả bài toán và phân tích nghiệp vụ hệ thống}
+
+\subsubsection*{1.1.1. Bối cảnh bài toán Records-and-Decision Engine}
+\addcontentsline{toc}{subsubsection}{1.1.1. Bối cảnh bài toán Records-and-Decision Engine}
+
+Trong công tác quản lý đào tạo đại học, các hệ thống thông tin phải tiếp nhận và xử lý khối lượng lớn dữ liệu phát sinh theo từng học kỳ. Hệ thống quản lý hồ sơ sinh viên cần đáp ứng vai trò của một hệ thống xử lý hồ sơ và hỗ trợ ra quyết định (\textit{Records-and-Decision Engine}) trong thời gian thực. Hệ thống này trực tiếp giải quyết các bài toán nghiệp vụ thường gặp: tra cứu nhanh hồ sơ cá nhân của sinh viên theo mã số, trích xuất danh sách sinh viên có thành tích học tập cao nhất để xét khen thưởng, cũng như phân loại học lực sinh viên theo các dải điểm phục vụ công tác theo dõi kết quả học tập.
+
+Khi dung lượng dữ liệu sinh viên đạt mức $10.500.000$ bản ghi, các phương pháp duyệt tuần tự tuyến tính ($O(N)$) bộc lộ rõ sự suy giảm hiệu năng, gây lãng phí chu kỳ CPU và kéo dài thời gian phản hồi. Vì vậy, việc thiết kế và cài đặt các cấu trúc dữ liệu phù hợp trong bộ nhớ chính (In-memory Data Structures) đóng vai trò quan trọng nhằm tối ưu thời gian xử lý một số truy vấn trọng yếu, có thể đạt mức $O(1)$ hoặc $O(\log N)$ tùy theo loại thao tác và cấu trúc dữ liệu được sử dụng.
+
+\subsubsection*{1.1.2. Mô hình hóa thực thể dữ liệu và các trường thuộc tính}
+\addcontentsline{toc}{subsubsection}{1.1.2. Mô hình hóa thực thể dữ liệu và các trường thuộc tính}
+
+Mỗi hồ sơ sinh viên trong hệ thống được chuẩn hóa chặt chẽ thông qua cấu trúc thực thể \texttt{Student} gồm 4 trường thuộc tính cơ bản nhằm mô phỏng sát thực tế quản lý đào tạo. 
+
+Thứ nhất, trường \texttt{id} (Mã số sinh viên -- MSSV) là chuỗi ký tự số gồm 8 chữ số, đóng vai trò là khóa chính duy nhất (\textit{Unique Primary Key}) phân biệt giữa các sinh viên, nằm trong dải giá trị từ $25150001$ đến $35650000$. 
+
+Thứ hai, trường \texttt{name} lưu trữ họ và tên đầy đủ của sinh viên dưới dạng chuỗi ký tự chuẩn. 
+
+Thứ ba, trường \texttt{classId} lưu trữ mã định danh lớp học phần trực thuộc, gồm 25 lớp học phần được phân bổ đều từ $C01$ đến $C25$. 
+
+Thứ tư, trường \texttt{gpa} lưu trữ điểm trung bình tích lũy của sinh viên dưới dạng số thực dấu phẩy động độ chính xác kép (\texttt{double}) trong thang điểm từ $0.0$ đến $10.0$ (phân bố thực nghiệm trong dải từ $4.0$ đến $10.0$). Cấu trúc thực thể này được đóng gói tối ưu để giảm thiểu dung lượng chiếm dụng bộ nhớ đệm khi nạp số lượng lớn bản ghi vào RAM.
+
+\subsubsection*{1.1.3. Phân tích các mô thức truy cập dữ liệu và thao tác chủ đạo}
+\addcontentsline{toc}{subsubsection}{1.1.3. Phân tích các mô thức truy cập dữ liệu và thao tác chủ đạo}
+
+Dựa trên phân tích hành vi vận hành thực tế, mô thức truy cập dữ liệu (Access Patterns) của hệ thống được chia thành hai nhóm thao tác rõ rệt: thao tác ghi (\textit{Write Path}) và thao tác đọc (\textit{Read Path}).
+
+Thao tác ghi trong phạm vi benchmark diễn ra tập trung ở giai đoạn nạp dữ liệu ban đầu (\textit{Bulk Loading}) với khối lượng $10.500.000$ bản ghi từ tệp lưu trữ bền vững vào bộ nhớ chính. Các phép đo MC1, MC2, RQ1 và RQ2 được thực hiện trên ảnh chụp dữ liệu đã nạp xong; phần CRUD của Web Dashboard là chức năng minh họa quản lý dữ liệu và được tách khỏi tập số liệu hiệu năng.
+
+Ngược lại, hệ thống được thiết kế theo mô hình read-heavy, trong đó các thao tác đọc chiếm tỷ trọng chủ yếu trong quá trình vận hành, diễn ra liên tục với tần suất cao và đòi hỏi phản hồi tức thì. Các thao tác đọc chủ đạo bao gồm: tra cứu chính xác thông tin một sinh viên theo MSSV (MC1), truy xuất ngay lập tức sinh viên có điểm GPA cao nhất (MC2), lọc sinh viên theo mã lớp (RQ1) và trích xuất danh sách sinh viên theo khoảng điểm GPA (RQ2). Do đó, mục tiêu thiết kế là tối ưu hóa đường đi truy vấn của các thao tác đọc.
+
+\subsection*{1.2. Xác định và mô hình hóa các yêu cầu bắt buộc chung}
+\addcontentsline{toc}{subsection}{1.2. Xác định và mô hình hóa các yêu cầu bắt buộc chung}
+
+\subsubsection*{1.2.1. Yêu cầu MC1: Tra cứu chính xác theo định danh ở quy mô lớn}
+\addcontentsline{toc}{subsubsection}{1.2.1. Yêu cầu MC1: Tra cứu chính xác theo định danh ở quy mô lớn}
+
+Yêu cầu bắt buộc thứ nhất (MC1 -- \textit{Exact Match Lookup}) đòi hỏi hệ thống phải tiếp nhận một khóa tìm kiếm là MSSV và trả về chính xác, toàn vẹn toàn bộ hồ sơ sinh viên tương ứng, hoặc thông báo không tìm thấy nếu khóa không tồn tại trong cơ sở dữ liệu.
+
+Đặc tả kỹ thuật của yêu cầu MC1 xác định: Đầu vào là chuỗi \texttt{id} cần tra cứu; Đầu ra là con trỏ hoặc tham chiếu đến đối tượng \texttt{Student} thỏa mãn; Ràng buộc hiệu năng bắt buộc là thời gian thực thi phải đạt mức tiệm cận trung bình $O(1)$ độc lập với kích thước dữ liệu $N = 10.500.000$. Các trường hợp biên (Edge Cases) cần xử lý triệt để bao gồm việc tra cứu khóa nằm ở đầu dải dữ liệu ($25150001$), giữa dải dữ liệu ($30400000$), cuối dải dữ liệu ($35650000$) và các trường hợp tra cứu khóa hoàn toàn không tồn tại trong hệ thống.
+
+\subsubsection*{1.2.2. Yêu cầu MC2: Truy xuất phần tử theo thứ tự và mức ưu tiên cực trị}
+\addcontentsline{toc}{subsubsection}{1.2.2. Yêu cầu MC2: Truy xuất phần tử theo thứ tự và mức ưu tiên cực trị}
+
+Yêu cầu bắt buộc thứ hai (MC2 -- \textit{Extreme Priority Retrieval}) đòi hỏi hệ thống phải trích xuất ngay lập tức thông tin của sinh viên đạt điểm trung bình tích lũy (\texttt{gpa}) cao nhất toàn trường nhằm phục vụ hội đồng thi đua khen thưởng và xét cấp học bổng.
+
+Đặc tả kỹ thuật của yêu cầu MC2 xác định: Đầu vào là yêu cầu trích xuất cực đại toàn cục; Đầu ra là đối tượng sinh viên có \texttt{gpa} lớn nhất; Quy tắc giải quyết đồng hạng (\textit{Tie-breaking Rule}) được nhóm quy định nghiêm ngặt: nếu có nhiều sinh viên cùng đạt mức điểm GPA cao nhất (ví dụ cùng đạt $10.0$), hệ thống sẽ ưu tiên chọn sinh viên có MSSV nhỏ hơn theo thứ tự từ điển; Ràng buộc hiệu năng là thao tác lấy phần tử cực trị phải đạt thời gian $O(1)$ mà không được phép duyệt lại toàn bộ $10.500.000$ phần tử hay thực hiện thao tác sắp xếp lại toàn bộ tập dữ liệu với chi phí $O(N \log N)$.
+
+\subsection*{1.3. Phân tích và phát hiện các yêu cầu đặc thù của lĩnh vực}
+\addcontentsline{toc}{subsection}{1.3. Phân tích và phát hiện các yêu cầu đặc thù của lĩnh vực}
+
+\subsubsection*{1.3.1. Yêu cầu tự phát hiện 1: Lọc dữ liệu theo điều kiện chỉ mục}
+\addcontentsline{toc}{subsubsection}{1.3.1. Yêu cầu tự phát hiện 1: Lọc dữ liệu theo điều kiện chỉ mục}
+
+Từ góc độ nghiệp vụ quản lý đào tạo thực tế, ban chủ nhiệm khoa và cố vấn học tập luôn cần truy xuất danh sách toàn bộ sinh viên thuộc một lớp học cụ thể (Yêu cầu RQ1 -- \textit{Filter by Class ID}).
+
+Đặc thù của yêu cầu này là trường khóa lọc \texttt{classId} có tính phân nhóm cao nhưng số lượng nhóm hữu hạn (toàn bộ $10.500.000$ sinh viên được phân chia đều vào 25 mã lớp từ $C01$ đến $C25$, tương đương khoảng $420.000$ sinh viên mỗi lớp). Trong code hiện tại, RQ1 vẫn duyệt tuyến tính toàn bộ danh sách nhưng chỉ lưu chỉ số kết quả thay vì sao chép toàn bộ \texttt{Student}, nhờ đó giảm chi phí bộ nhớ tạm khi trả danh sách sinh viên theo lớp.
+
+\subsubsection*{1.3.2. Yêu cầu tự phát hiện 2: Truy vấn dữ liệu theo khoảng giá trị}
+\addcontentsline{toc}{subsubsection}{1.3.2. Yêu cầu tự phát hiện 2: Truy vấn dữ liệu theo khoảng giá trị}
+
+Hội đồng xét học bổng, phòng đào tạo và các đơn vị kiểm định thường xuyên cần trích xuất danh sách sinh viên theo các dải điểm học lực biến động (Yêu cầu RQ2 -- \textit{Range Query by GPA}), ví dụ dải điểm Xuất sắc $[9.0, 10.0]$, Giỏi $[8.0, 8.9]$, hoặc Khá $[6.5, 7.9]$.
+
+Đây là bài toán truy vấn theo khoảng trên trường giá trị liên tục \texttt{gpa}. Cấu trúc dữ liệu phục vụ yêu cầu này bắt buộc phải duy trì được thứ tự tự nhiên của điểm số, cho phép xác định vị trí biên dưới (\texttt{minGPA}) và biên trên (\texttt{maxGPA}) trong thời gian logarit $O(\log N)$. Nếu chỉ cần tạo range view thì truy vấn dừng tại $O(\log N)$; nếu cần duyệt/hiển thị toàn bộ $K$ sinh viên thỏa mãn thì tổng chi phí trở thành $O(\log N + K)$.
+
+\subsection*{1.4. Phân tích xung đột yêu cầu và giải pháp xử lý kỹ thuật}
+\addcontentsline{toc}{subsection}{1.4. Phân tích xung đột yêu cầu và giải pháp xử lý kỹ thuật}
+
+\subsubsection*{1.4.1. Xác định cặp yêu cầu xung đột cốt lõi trong hệ thống}
+\addcontentsline{toc}{subsubsection}{1.4.1. Xác định cặp yêu cầu xung đột cốt lõi trong hệ thống}
+
+Trong quá trình thiết kế hệ thống, nhóm nhận diện một xung đột kỹ thuật nền tảng giữa hai nhóm yêu cầu: Yêu cầu tra cứu chính xác theo khóa ngẫu nhiên (MC1) và Yêu cầu truy xuất theo thứ tự ưu tiên hoặc theo khoảng giá trị liên tục (MC2 và RQ2).
+
+Bản chất của Bảng băm (Hash Table) là sử dụng hàm băm để phân tán ngẫu nhiên các khóa vào các ô nhớ nhằm giảm thiểu đụng độ và đạt tốc độ tra cứu $O(1)$ trung bình. Tuy nhiên, chính cơ chế này phá hủy hoàn toàn thứ tự tự nhiên của dữ liệu, khiến Bảng băm hoàn toàn không thể thực hiện các thao tác tìm kiếm giá trị lớn nhất hay truy vấn theo khoảng nếu không duyệt qua toàn bộ $M$ ô nhớ ($O(N)$). Ngược lại, các cấu trúc duy trì thứ tự như Cây nhị phân tìm kiếm cân bằng (AVL, Red-Black) hoặc Mảng sắp xếp (Sorted Array) cho phép giải quyết tốt bài toán cực trị và truy vấn khoảng ($O(\log N + K)$), nhưng lại không đồng thời bảo đảm tra cứu MSSV ở mức $O(1)$ và chi phí chèn/xóa lên $O(N)$ đối với mảng.
+
+\subsubsection*{1.4.2. So sánh hướng Kết hợp cấu trúc và Đánh đổi có chủ đích}
+\addcontentsline{toc}{subsubsection}{1.4.2. So sánh hướng Kết hợp cấu trúc và Đánh đổi có chủ đích}
+
+Nhóm đã tiến hành phân tích và so sánh hai hướng tiếp cận giải quyết xung đột theo chuẩn kiến trúc:
+
+Hướng tiếp cận 1 (Đánh đổi có chủ đích -- \textit{Deliberate Trade-off}): Chỉ lựa chọn duy nhất một cấu trúc dữ liệu (chẳng hạn mảng sắp xếp toàn bộ) để phục vụ mọi yêu cầu. Hướng đi này giúp tiết kiệm bộ nhớ do chỉ duy trì một bản sao dữ liệu, nhưng buộc hệ thống phải chấp nhận đánh đổi hiệu năng tra cứu khi tìm kiếm trên thuộc tính không phải là khóa sắp xếp chính, gây suy giảm hiệu năng khi số lượng truy vấn MC1 tăng cao.
+
+Hướng tiếp cận 2 (Kết hợp cấu trúc -- \textit{Composition Approach}): Thiết kế hệ thống đa cấu trúc đồng bộ, trong đó mỗi cấu trúc dữ liệu chuyên biệt đảm nhận đúng bài toán sở trường của mình. Trong cài đặt hiện tại, \texttt{HashTable} lưu con trỏ \texttt{const Student*} trỏ về vùng dữ liệu gốc để trả lại bản ghi nhanh; \texttt{SortedGpaFilter} cũng lưu mảng con trỏ đã sắp xếp theo GPA và trả về range view, nhờ đó tránh sao chép \texttt{Student} khi lọc khoảng; riêng \texttt{CustomMaxHeapGpaFinder} duy trì bản sao \texttt{vector<Student>} nội bộ để đơn giản hóa quá trình vun đống.
+
+\subsubsection*{1.4.3. Biện minh phương án kỹ thuật giải quyết xung đột của nhóm}
+\addcontentsline{toc}{subsubsection}{1.4.3. Biện minh phương án kỹ thuật giải quyết xung đột của nhóm}
+
+Nhóm 12 quyết định lựa chọn giải pháp \textbf{Kết hợp cấu trúc chuyên biệt (Composition Approach)}. Cụ thể, hệ thống tích hợp ba thành phần bổ trợ trong bộ nhớ: Bảng băm đóng (Closed Hash Table) phục vụ MC1 đạt $O(1)$ trung bình; Cây đống cực đại (Custom Binary Max-Heap) phục vụ MC2 đạt $O(1)$ khi đọc nút gốc sau khi đã build; và Mảng con trỏ sắp xếp theo GPA (Sorted Pointer Array) phục vụ RQ2 đạt $O(\log N)$ cho pha tìm biên và $O(1)$ để tạo view kết quả. Thiết kế này chấp nhận đánh đổi bộ nhớ: HashTable và SortedGPA tiết kiệm bằng cách lưu con trỏ về dữ liệu gốc, trong khi Heap sao chép \texttt{Student} để cài đặt thao tác vun đống rõ ràng hơn.
+
+\subsection*{1.5. Áp dụng khung đánh giá 7 tiêu chí và quy trình lựa chọn Q1--Q4}
+\addcontentsline{toc}{subsection}{1.5. Áp dụng khung đánh giá 7 tiêu chí và quy trình lựa chọn Q1--Q4}
+
+\subsubsection*{1.5.1. Ma trận so sánh 7 tiêu chí kỹ thuật trên các cấu trúc ứng viên}
+\addcontentsline{toc}{subsubsection}{1.5.1. Ma trận so sánh 7 tiêu chí kỹ thuật trên các cấu trúc ứng viên}
+
+Nhóm tiến hành so sánh bốn cấu trúc dữ liệu ứng viên theo 7 tiêu chí kỹ thuật liên quan trực tiếp đến các yêu cầu của hệ thống: Mảng thô tuần tự (\textit{Raw Dynamic Array}), Bảng băm đóng (\textit{Closed Hash Table}), Cây đống cực đại (\textit{Binary Max-Heap}) và Mảng dữ liệu đã sắp xếp (\textit{Sorted Array}).
+
+Ý nghĩa và vai trò của từng tiêu chí kỹ thuật trong hệ thống được xác định cụ thể như sau:
+
+Tiêu chí thứ nhất (Truy xuất theo khóa định danh -- \textit{Key Lookup}): Đánh giá khả năng tìm kiếm chính xác một hồ sơ sinh viên khi biết trước mã số sinh viên (MSSV). Đây là thao tác trọng yếu của yêu cầu MC1, đòi hỏi độ phức tạp tiệm cận lý tưởng đạt $O(1)$ trung bình.
+
+Tiêu chí thứ hai (Truy xuất theo vị trí -- \textit{Positional Access}): Đánh giá tốc độ truy cập một phần tử khi biết trước chỉ số ô nhớ trong mảng. Các cấu trúc dựa trên mảng phẳng liên tục luôn đạt ưu thế tuyệt đối $O(1)$ nhờ cơ chế tính toán địa chỉ offset trực tiếp trên thanh ghi phần cứng.
+
+Tiêu chí thứ ba (Chi phí chèn và xóa -- \textit{Insertion and Deletion}): Đo lường chi phí tái cấu trúc dữ liệu khi hệ thống tiếp nhận thêm hồ sơ sinh viên mới hoặc xóa bỏ bản ghi. Các cấu trúc như Đống hoặc Bảng băm có chi phí biến động từ $O(1)$ đến $O(\log N)$, trong khi mảng sắp xếp đòi hỏi chi phí dịch chuyển $O(N)$.
+
+Tiêu chí thứ tư (Duy trì thứ tự toàn phần -- \textit{Total Order}): Đánh giá mức độ bảo toàn trật tự sắp xếp tự nhiên giữa các phần tử theo một trường thuộc tính (như điểm GPA hoặc MSSV) mà không cần phải thực hiện lại thuật toán sắp xếp toàn bộ tập dữ liệu với chi phí $O(N \log N)$.
+
+Tiêu chí thứ năm (Truy vấn theo khoảng giá trị -- \textit{Range Query}): Đánh giá khả năng trích xuất nhanh chóng tập hợp $K$ phần tử thỏa mãn điều kiện nằm trong một dải giá trị $[\text{min}, \text{max}]$. Đây là tiêu chí quyết định năng lực phục vụ yêu cầu lọc theo dải điểm RQ2.
+
+Tiêu chí thứ sáu (Trích xuất phần tử cực trị -- \textit{Extreme Priority Retrieval}): Đo lường độ trễ khi hệ thống cần lấy ra phần tử có giá trị lớn nhất hoặc nhỏ nhất toàn cục. Cây đống chiếm ưu thế khi luôn duy trì phần tử cực trị tại nút gốc với chi phí $O(1)$.
+
+Tiêu chí thứ bảy (Độ ổn định và hành vi tiệm cận -- \textit{Asymptotic Stability}): Đánh giá mức độ sai khác giữa chi phí trong trường hợp trung bình và trường hợp xấu nhất nhằm loại trừ các điểm nghẽn nghiêm trọng có thể làm tê liệt hệ thống.
+
+Ma trận so sánh tổng hợp chi tiết 7 tiêu chí kỹ thuật trên 4 cấu trúc ứng viên được trình bày trong bảng dưới đây:
+
+\begin{table}[H]
+\centering
+\begingroup
+\setstretch{1.1}
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.0cm}|>{\centering\arraybackslash}p{2.3cm}|>{\centering\arraybackslash}p{2.3cm}|>{\centering\arraybackslash}p{2.3cm}|>{\centering\arraybackslash}p{2.5cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Tiêu chí} & \textbf{Mảng thô} & \textbf{Closed Hash} & \textbf{Max-Heap} & \textbf{Mảng Sort (GPA)} & \textbf{Cấu trúc tối ưu} \\ \hline
+1. Khóa (Key) & $O(N)$ & $O(1)$ tb & $O(N)$ & $O(N)$ & Bảng băm (MC1) \\ \hline
+2. Vị trí & $O(1)$ & --- & $O(1)$ & $O(1)$ & Mảng thô / Sort \\ \hline
+3. Chèn / Xóa & $O(1)$ / $O(N)$ & $O(1)$ tb & $O(\log N)$ & $O(N)$ & Heap / Hash \\ \hline
+4. Thứ tự & $O(N \log N)$ & --- & $O(N \log N)$ & $O(N)$ & Mảng sắp xếp \\ \hline
+5. Khoảng & $O(N)$ & --- & --- & $O(\log N)$ view / $O(\log N + K)$ liệt kê & Mảng con trỏ sắp xếp (RQ2) \\ \hline
+6. Cực trị & $O(N)$ & $O(N)$ & $O(1)$ đỉnh & $O(1)$ biên & Max-Heap (MC2) \\ \hline
+7. Độ ổn định & $O(N)$ & $O(1) / O(N)$ & $O(\log N)$ & $O(\log N)$ & Phối hợp đa cấu trúc \\ \hline
+\end{tabularx}
+\endgroup
+\caption{Ma trận so sánh 7 tiêu chí kỹ thuật trên 4 cấu trúc dữ liệu ứng viên}
+\label{tab:criteria_matrix}
+\end{table}
+
+\subsubsection*{1.5.2. Áp dụng quy trình Q1--Q4 cho yêu cầu tra cứu chính xác MC1}
+\addcontentsline{toc}{subsubsection}{1.5.2. Áp dụng quy trình Q1--Q4 cho yêu cầu tra cứu chính xác MC1}
+
+Quy trình 4 câu hỏi quyết định (Q1--Q4 Decision Framework) cho yêu cầu MC1 được áp dụng có hệ thống như sau:
+
+Thứ nhất, đối với câu hỏi Q1 (Thao tác có cần duy trì thứ tự dữ liệu hay không?): Yêu cầu tra cứu chính xác theo MSSV hoàn toàn không cần duy trì bất kỳ thứ tự nào giữa các phần tử, chỉ cần tìm kiếm khớp khóa chính xác.
+
+Thứ hai, đối với câu hỏi Q2 (Khóa tra cứu thuộc loại gì và mô hình khối lượng công việc ra sao?): Khóa là chuỗi ký tự số 8 chữ số phân bố đều. Khối lượng công việc thuộc dạng đọc chiếm ưu thế sau giai đoạn nạp ban đầu.
+
+Thứ ba, đối với câu hỏi Q3 (Hệ thống có chấp nhận rủi ro trường hợp xấu nhất $O(N)$ hay không?): Rủi ro đụng độ băm và suy giảm hiệu năng được giảm đáng kể nhờ hàm băm FNV-1a và duy trì hệ số tải thấp ($\alpha \approx 0.50$).
+
+Thứ tư, đối với câu hỏi Q4 (Các yếu tố phi tiệm cận và phần cứng ảnh hưởng thế nào?): Bảng băm đóng dạng mảng phẳng liên tục tối ưu hóa hiệu quả bộ đệm CPU Cache Line, giúp tăng tính định vị không gian và có khả năng giảm Cache Miss so với danh sách liên kết.
+
+\subsubsection*{1.5.3. Áp dụng quy trình Q1--Q4 cho yêu cầu trích xuất cực trị MC2}
+\addcontentsline{toc}{subsubsection}{1.5.3. Áp dụng quy trình Q1--Q4 cho yêu cầu trích xuất cực trị MC2}
+
+Quy trình 4 câu hỏi quyết định cho yêu cầu MC2 được áp dụng như sau:
+
+Thứ nhất, đối với câu hỏi Q1: Nghiệp vụ trích xuất sinh viên có GPA cao nhất chỉ cần duy trì thứ tự cục bộ tại nút gốc (phần tử cực đại), hoàn toàn không cần sắp xếp toàn phần cả tập dữ liệu $10.500.000$ bản ghi.
+
+Thứ hai, đối với câu hỏi Q2: Tần suất truy vấn cực trị diễn ra liên tục, trong khi việc xây dựng đống chỉ cần thực hiện đúng một lần lúc khởi động hệ thống.
+
+Thứ ba, đối với câu hỏi Q3: Hệ thống yêu cầu tốc độ phản hồi đạt $O(1)$ cho thao tác truy xuất phần tử cực đại tại nút gốc, chi phí cập nhật lại đống khi có biến động là $O(\log N)$ đảm bảo tính ổn định cao.
+
+Thứ tư, đối với câu hỏi Q4: Cấu trúc Cây đống nhị phân được biểu diễn trực tiếp trên mảng 1 chiều, không cần lưu các con trỏ cây ($Left, Right$) cho từng node, cho phép truy cập chỉ số cha-con bằng các phép tính chỉ số có chi phí $O(1)$.
+
+\subsubsection*{1.5.4. Áp dụng quy trình Q1--Q4 cho các yêu cầu tự phát hiện}
+\addcontentsline{toc}{subsubsection}{1.5.4. Áp dụng quy trình Q1--Q4 cho các yêu cầu tự phát hiện}
+
+Đối với yêu cầu RQ2 (Lọc sinh viên theo khoảng GPA): Câu hỏi Q1 xác định dữ liệu bắt buộc phải được sắp xếp theo thứ tự điểm GPA tăng dần. Câu hỏi Q2 xác định miền giá trị tìm kiếm là liên tục. Câu hỏi Q3 và Q4 chỉ ra rằng cấu trúc Mảng con trỏ đã sắp xếp kết hợp thuật toán Tìm kiếm nhị phân hai đầu biên (Lower Bound và Upper Bound tự cài đặt) mang lại hiệu năng $O(\log N)$ cho pha xác định khoảng, đổi lại chi phí lưu thêm $N$ con trỏ \texttt{Student*}.
+
+\subsection*{1.6. Biện minh chi tiết việc lựa chọn cấu trúc dữ liệu cốt lõi}
+\addcontentsline{toc}{subsection}{1.6. Biện minh chi tiết việc lựa chọn cấu trúc dữ liệu cốt lõi}
+
+\subsubsection*{1.6.1. Biện minh lựa chọn Bảng băm đóng (Closed Hash Table) cho MC1}
+\addcontentsline{toc}{subsubsection}{1.6.1. Biện minh lựa chọn Bảng băm đóng (Closed Hash Table) cho MC1}
+
+Nhóm quyết định tự cài đặt cấu trúc Bảng băm đóng (Closed Hash Table với cơ chế Open Addressing và Linear Probing) cho yêu cầu MC1 dựa trên ba lý do kỹ thuật nền tảng:
+
+Thứ nhất, Bảng băm đóng lưu trữ các ô nhớ trực tiếp trong một mảng phẳng liên tục, tránh kiểu cấp phát rời rạc của các nút liên kết, giúp tiết kiệm đáng kể bộ nhớ trên tập dữ liệu $10.500.000$ bản ghi.
+
+Thứ hai, nhờ cấu trúc mảng liên tục, Bảng băm đóng tận dụng triệt để tính định vị không gian của bộ đệm CPU Cache. Khi xảy ra đụng độ, bước dò tuyến tính (\texttt{step = +1}) sẽ nạp sẵn các ô nhớ liền kề vào cùng một Cache Line của CPU, giúp thao tác dò tìm diễn ra nhanh hơn so với việc nhảy con trỏ ngẫu nhiên trong bộ nhớ.
+
+Thứ ba, việc tích hợp hàm băm FNV-1a (Fowler-Noll-Vo 1a) 64-bit giúp phân bố đều các giá trị băm trên không gian bảng $M = 2N + 1 = 21.000.001$, duy trì hệ số tải xấp xỉ $\alpha \approx 0.50$. Dung lượng này được chọn chủ yếu để giữ bảng thưa; với linear probing bước $+1$, tính chất duyệt được toàn bảng không phụ thuộc vào việc $M$ là số lẻ hay số nguyên tố.
+
+\subsubsection*{1.6.2. Biện minh lựa chọn Cây đống cực đại (Custom Max-Heap) cho MC2}
+\addcontentsline{toc}{subsubsection}{1.6.2. Biện minh lựa chọn Cây đống cực đại (Custom Max-Heap) cho MC2}
+
+Đối với yêu cầu MC2, Cây đống cực đại tự cài đặt (Custom Binary Max-Heap) là lựa chọn phù hợp vì:
+
+Thứ nhất, tính chất của Max-Heap đảm bảo rằng phần tử có độ ưu tiên lớn nhất luôn nằm tại vị trí gốc (chỉ số 0), cho phép trích xuất sinh viên có GPA cao nhất trong thời gian tức thời $O(1)$.
+
+Thứ hai, thuật toán vun đống từ dưới lên Floyd Build Heap cho phép chuyển đổi toàn bộ mảng dữ liệu ban đầu thành một Max-Heap hợp lệ trong thời gian tuyến tính $O(N)$ với công thức chứng minh:
+\begin{equation}
+\sum_{h=0}^{\lfloor \log_2 N \rfloor} \frac{N}{2^{h+1}} \cdot O(h) = O(N)
+\end{equation}
+Thuật toán này nhanh hơn đáng kể so với việc chèn lần lượt từng phần tử mất $O(N \log N)$ hoặc sắp xếp toàn bộ mảng.
+
+Thứ ba, quy tắc phân định đồng hạng theo MSSV được cài đặt trực tiếp vào toán tử so sánh ưu tiên (\texttt{higherPriority}), giúp kết quả tại nút gốc ổn định khi nhiều sinh viên có cùng GPA.
+
+\subsubsection*{1.6.3. Biện minh cấu trúc dữ liệu bổ trợ cho các truy vấn theo khoảng}
+\addcontentsline{toc}{subsubsection}{1.6.3. Biện minh cấu trúc dữ liệu bổ trợ cho các truy vấn theo khoảng}
+
+Để giải quyết yêu cầu lọc theo khoảng điểm GPA (RQ2), \texttt{SortedGpaFilter} tạo một \texttt{vector<const Student*>} và sắp xếp các con trỏ này theo GPA. Sau khi xây dựng, hệ thống áp dụng Tìm kiếm nhị phân để định vị hai vị trí biên trong thời gian $O(\log N)$. Kết quả truy vấn được biểu diễn bằng \texttt{GpaRangeViewResult}, gồm con trỏ tới mảng đã sắp xếp và cặp chỉ số $[startIndex, endIndex)$; vì vậy pha trả kết quả không sao chép $K$ bản ghi \texttt{Student}.
+
+\subsection*{1.7. Phân tích và giải trình các phương án kỹ thuật bị loại bỏ}
+\addcontentsline{toc}{subsection}{1.7. Phân tích và giải trình các phương án kỹ thuật bị loại bỏ}
+
+\subsubsection*{1.7.1. Lý do loại bỏ giải pháp duyệt tuyến tính trên Mảng tuần tự}
+\addcontentsline{toc}{subsubsection}{1.7.1. Lý do loại bỏ giải pháp duyệt tuyến tính trên Mảng tuần tự}
+
+Giải pháp duyệt tuyến tính trên mảng thô ($O(N)$) không được lựa chọn làm phương án chính trên tập dữ liệu quy mô lớn của hệ thống vì với tập dữ liệu $10.500.000$ bản ghi, mỗi thao tác tra cứu đơn lẻ đòi hỏi phải thực hiện trung bình hơn $5.250.000$ phép so sánh khóa và trong trường hợp xấu nhất là $10.500.000$ phép so sánh, gây ra độ trễ hàng chục mili-giây cho mỗi truy vấn, làm suy giảm khả năng đáp ứng của hệ thống.
+
+\subsubsection*{1.7.2. Lý do loại bỏ Bảng băm mở (Chaining) và Danh sách liên kết}
+\addcontentsline{toc}{subsubsection}{1.7.2. Lý do loại bỏ Bảng băm mở (Chaining) và Danh sách liên kết}
+
+Phương án Bảng băm mở (Separate Chaining) sử dụng danh sách liên kết đơn tại mỗi bucket bị loại bỏ vì hai nhược điểm cốt tử: 
+
+Thứ nhất, việc cấp phát động hàng triệu nút nhỏ lẻ (\texttt{Node*}) dẫn đến hiện tượng phân mảnh bộ nhớ RAM và tiêu tốn thêm một lượng lớn bộ nhớ phụ phí cho các con trỏ \texttt{next} (ít nhất 8 bytes cho mỗi nút). 
+
+Thứ hai, việc duyệt theo các con trỏ liên kết nằm phân tán ở các địa chỉ ngẫu nhiên trong vùng nhớ Heap có tính định vị không gian kém hơn và có thể làm tăng số lần Cache Miss so với cấu trúc mảng liên tục.
+
+\subsubsection*{1.7.3. Lý do loại bỏ Cây tìm kiếm nhị phân thông thường (Unbalanced BST)}
+\addcontentsline{toc}{subsubsection}{1.7.3. Lý do loại bỏ Cây tìm kiếm nhị phân thông thường (Unbalanced BST)}
+
+Cây tìm kiếm nhị phân thông thường không có cơ chế tự cân bằng bị loại bỏ do đặc thù dữ liệu thực tế: khi tập dữ liệu đầu vào có xu hướng tăng dần theo mã sinh viên, cây sẽ bị suy biến thành một danh sách liên kết với chiều cao cây đạt $O(N)$. Khi đó, mọi ưu thế tìm kiếm logarit bị phá vỡ và chi phí thao tác thoái hóa về mức tuyến tính $O(N)$.
+
+\subsection*{1.8. Thiết kế kiến trúc tổng thể 3 tầng của hệ thống}
+\addcontentsline{toc}{subsection}{1.8. Thiết kế kiến trúc tổng thể 3 tầng của hệ thống}
+
+\subsubsection*{1.8.1. Tầng giao diện người dùng (Presentation Layer)}
+\addcontentsline{toc}{subsubsection}{1.8.1. Tầng giao diện người dùng (Presentation Layer)}
+
+Tầng Presentation Layer được xây dựng bằng công nghệ Web hiện đại (Next.js/React kết hợp Ant Design và Tailwind CSS) nhằm cung cấp giao diện trực quan, thân thiện cho người dùng. Tầng này có nhiệm vụ tiếp nhận tham số tìm kiếm từ người dùng, gửi yêu cầu đến tầng xử lý thông qua API Bridge, và trực quan hóa kết quả tra cứu cũng như các biểu đồ đối sánh hiệu năng Benchmark chi tiết. Tầng này được thiết kế phân tách hoàn toàn và tuyệt đối không can thiệp vào logic tính toán giải thuật.
+
+\subsubsection*{1.8.2. Tầng cấu trúc dữ liệu cốt lõi và thuật toán (DSA Core Layer)}
+\addcontentsline{toc}{subsubsection}{1.8.2. Tầng cấu trúc dữ liệu cốt lõi và thuật toán (DSA Core Layer)}
+
+Tầng DSA Core Layer đóng vai trò là tầng xử lý trung tâm của toàn bộ hệ thống, được lập trình bằng C++. Đây là nơi chứa các cấu trúc dữ liệu cài đặt từ đầu (Bảng băm đóng FNV-1a, Cây đống cực đại Max-Heap, Mảng dữ liệu sắp xếp theo GPA) và trực tiếp thực thi logic nghiệp vụ MC1, MC2, RQ1, RQ2 trong bộ nhớ RAM. Các phép đo đạc thời gian trong phần báo cáo được ghi nhận tại tầng này bằng \texttt{std::chrono::high\_resolution\_clock}; các ảnh Dashboard được dùng như minh họa giao diện, không thay thế cho bảng số liệu thực nghiệm.
+
+\subsubsection*{1.8.3. Tầng lưu trữ bền vững (Persistence Layer) và tính phân tách}
+\addcontentsline{toc}{subsubsection}{1.8.3. Tầng lưu trữ bền vững (Persistence Layer) và tính phân tách}
+
+Tầng Persistence Layer đảm nhận vai trò đọc và lưu trữ dữ liệu thô ra các tệp tin lưu trữ bền vững (CSV/JSON) trên ổ cứng khi khởi động và kết thúc ứng dụng. Nhóm tuân thủ nghiêm ngặt nguyên tắc phân tách trách nhiệm trong thiết kế hệ thống: Tầng lưu trữ chỉ chịu trách nhiệm nạp dữ liệu thô vào RAM một lần duy nhất (\textit{Bulk Load}). Mọi thao tác tìm kiếm, lọc dữ liệu và trích xuất cực trị đều do tầng DSA Core giải quyết trực tiếp trên các cấu trúc dữ liệu tự cài đặt trong bộ nhớ, tuyệt đối không phụ thuộc hay lợi dụng các câu lệnh truy vấn có sẵn của các hệ quản trị cơ sở dữ liệu.
+
+% ==============================================================================
+% CHƯƠNG 2: HIỆN THỰC HỆ THỐNG, THỰC NGHIỆM VÀ ĐỐI SÁNH HIỆU NĂNG
+% ==============================================================================
+\newpage
+\section*{CHƯƠNG 2: HIỆN THỰC HỆ THỐNG,\\THỰC NGHIỆM VÀ ĐỐI SÁNH HIỆU NĂNG}
+\addcontentsline{toc}{section}{CHƯƠNG 2: HIỆN THỰC HỆ THỐNG, THỰC NGHIỆM VÀ ĐỐI SÁNH HIỆU NĂNG}
+
+\subsection*{2.1. Cài đặt chi tiết cấu trúc Bảng băm đóng từ đầu (From Scratch 1)}
+\addcontentsline{toc}{subsection}{2.1. Cài đặt chi tiết cấu trúc Bảng băm đóng từ đầu (From Scratch 1)}
+
+\subsubsection*{2.1.1. Thiết kế ô nhớ và cấu trúc Entry}
+\addcontentsline{toc}{subsubsection}{2.1.1. Thiết kế ô nhớ và cấu trúc Entry}
+
+Để hiện thực cấu trúc Bảng băm đóng (Closed Hash Table với cơ chế Open Addressing và Linear Probing) tự xây dựng từ đầu bằng C++20, nhóm thiết kế cấu trúc ô nhớ \texttt{Entry} tinh gọn cho mô hình bảng tra cứu tĩnh sau Bulk Load. Mỗi vị trí trong bảng băm được định nghĩa bởi cấu trúc:
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=0pt]
+    \item \texttt{const Student* student}: Con trỏ trỏ trực tiếp đến bản ghi sinh viên gốc trong vùng nhớ chung.
+    \item \texttt{bool occupied}: Cờ boolean đánh dấu ô nhớ đã được sử dụng (\texttt{true}) hay còn trống (\texttt{false}).
+\end{itemize}
+
+Về mặt tổ chức bộ nhớ, đối tượng \texttt{Student} bao gồm 4 trường thông tin: chuỗi mã định danh \texttt{id}, họ tên \texttt{name}, mã lớp \texttt{classId} và điểm \texttt{gpa} kiểu \texttt{double} (8 bytes). Nhóm nạp dữ liệu trực tiếp từ tệp JSON vào một mảng liên tục, sau đó mỗi ô nhớ \texttt{Entry} trong bảng băm chỉ lưu một con trỏ 8 bytes kèm 1 byte cờ trạng thái (cùng bộ đệm căn lề 64-bit alignment là 16 bytes), giúp tiết kiệm đáng kể dung lượng bộ nhớ khi mở rộng lên $22$ triệu ô nhớ.
+
+Trong kịch bản vận hành của đồ án, dữ liệu sinh viên được nạp hoàn tất thông qua tiến trình Bulk Load và sau đó hệ thống chủ yếu phục vụ các truy vấn tra cứu chỉ mục với tần suất cao (Read-Heavy / Analytical Workload). Do đó, thiết kế cờ nhị phân \texttt{occupied} đảm bảo tính đơn giản, hiệu quả và tối ưu hóa không gian bộ nhớ.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_student_struct.png}
+\caption{Cấu trúc thực thể Student và thiết kế ô nhớ Entry trong Bảng băm}
+\label{fig:code_student_struct}
+\end{figure}
+
+\subsubsection*{2.1.2. Hiện thực hàm băm chuỗi FNV-1a và phân bố giá trị băm}
+\addcontentsline{toc}{subsubsection}{2.1.2. Hiện thực hàm băm chuỗi FNV-1a và phân bố giá trị băm}
+
+Hàm băm đóng vai trò phân tán đều các khóa MSSV trên toàn bộ không gian bảng. Nhóm lựa chọn hàm băm FNV-1a (Fowler--Noll--Vo 1a) phiên bản 64-bit [6] vì ưu điểm cài đặt đơn giản, tốc độ tính toán nhanh trên chuỗi ký tự và cho độ phân tán tốt trên tập dữ liệu số báo danh sinh viên.
+
+Thuật toán hoạt động dựa trên hai hằng số toán học nguyên tố theo đặc tả IETF [6]: hằng số bù ban đầu $\text{FNV\_OFFSET\_BASIS} = 14695981039346656037\text{ULL}$ và hằng số nguyên tố băm $\text{FNV\_PRIME} = 1099511628211\text{ULL}$. Quá trình băm duyệt tuần tự từng byte ký tự của chuỗi MSSV, thực hiện phép XOR bit với giá trị tích lũy hiện tại (\texttt{value \^{}= c}) rồi nhân với hằng số nguyên tố (\texttt{value *= FNV\_PRIME}).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_fnv1a_hash.png}
+\caption{Mã nguồn hàm băm chuỗi FNV-1a 64-bit tự cài đặt}
+\label{fig:code_fnv1a_hash}
+\end{figure}
+
+Giá trị băm 64-bit đầu ra được ánh xạ vào chỉ số bảng thông qua phép chia lấy dư modulo với kích thước bảng $M = 2N + 1 = 21.000.001$. Cách chọn $M$ này nhằm duy trì hệ số tải xấp xỉ $0.5$, từ đó giảm số lần probe trung bình khi dò tuyến tính.
+
+\subsubsection*{2.1.3. Cơ chế giải quyết đụng độ và thuật toán tìm kiếm}
+\addcontentsline{toc}{subsubsection}{2.1.3. Cơ chế giải quyết đụng độ và thuật toán tìm kiếm}
+
+Khi xảy ra hiện tượng đụng độ giữa hai khóa có cùng chỉ số ban đầu $h_0 = \text{hash}(\text{key}) \pmod M$, nhóm áp dụng giải thuật Dò tuyến tính (Linear Probing): $h_i = (h_0 + i) \pmod M$ với $i = 1, 2, \dots$. Phương pháp này lưu trữ toàn bộ các ô nhớ trên một mảng liên tục, tận dụng tính định vị không gian (Spatial Locality) của bộ đệm CPU Cache Line 64-byte [8].
+
+Để duy trì hiệu năng trung bình tiệm cận $O(1)$ trên tập $10.500.000$ sinh viên, hệ số tải (\textit{Load Factor}) được kiểm soát ở mức $\alpha = N / M = 10.500.000 / 21.000.001 \approx 0.500 \le 0.5$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_hashtable_build.png}
+\caption{Mã nguồn thuật toán nạp dữ liệu và xử lý đụng độ tuyến tính trong Bảng băm}
+\label{fig:code_hashtable_build}
+\end{figure}
+
+Trong thuật toán xây dựng bảng (\texttt{build}), khi chèn một sinh viên, thuật toán tính chỉ số $h_0$ và tiến hành dò qua các ô nhớ kế tiếp cho đến khi gặp ô chưa bị chiếm (\texttt{!table[index].occupied}). Phần tử sau đó được gán trực tiếp vào ô trống này và bật cờ \texttt{occupied = true}.
+
+Đối với thao tác tìm kiếm (\texttt{search}), giải thuật bắt đầu tại $h_0$ và duyệt qua các ô nhớ liên tiếp. Nếu gặp ô chưa chiếm (\texttt{!table[index].occupied}), thuật toán kết luận ngay khóa không tồn tại và trả về \texttt{nullptr}. Nếu gặp ô đã chiếm có mã sinh viên trùng khớp (\texttt{table[index].student->id == targetId}), hàm trả về con trỏ sinh viên tương ứng. Để đảm bảo an toàn, số bước dò được giới hạn tối đa không vượt quá kích thước bảng $M$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_hashtable_search.png}
+\caption{Mã nguồn giải thuật tìm kiếm tra cứu chính xác theo MSSV trên Bảng băm}
+\label{fig:code_hashtable_search}
+\end{figure}
+
+Luồng vận hành tra cứu chính xác theo MSSV (Yêu cầu MC1) được mô hình hóa trong Sơ đồ tuần tự Hình \ref{fig:seq_mc1_lookup}. Toàn bộ tiến trình gồm: tiếp nhận MSSV từ giao diện Web, chuyển qua API Bridge, thực hiện tra cứu trên Bảng băm đóng bằng FNV-1a và Linear Probing trong thời gian trung bình $O(1)$, sau đó chuyển đổi kết quả thành JSON trả về giao diện.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.80\textwidth]{seq_mc1_lookup.png}
+\caption{Sơ đồ tuần tự (Sequence Diagram) luồng tra cứu chính xác theo MSSV trên Bảng băm}
+\label{fig:seq_mc1_lookup}
+\end{figure}
+
+\subsubsection*{2.1.4. Phân tích chi phí thời gian và không gian bộ nhớ}
+\addcontentsline{toc}{subsubsection}{2.1.4. Phân tích chi phí thời gian và không gian bộ nhớ}
+
+Theo phân tích toán học của Donald E. Knuth [2], với Bảng băm đóng sử dụng dò tuyến tính, số lần kiểm tra ô nhớ kỳ vọng cho một thao tác tìm kiếm thành công $S(\alpha)$ và không thành công $U(\alpha)$ xấp xỉ bằng:
+\begin{equation}
+S(\alpha) \approx \frac{1}{2} \left( 1 + \frac{1}{1 - \alpha} \right) = \frac{1}{2} \left( 1 + \frac{1}{1 - 0.5} \right) = 1.50 \text{ lần truy cập}
+\end{equation}
+Đối với thao tác tìm kiếm không thành công, số bước dò kỳ vọng xấp xỉ:
+\begin{equation}
+U(\alpha) \approx \frac{1}{2} \left( 1 + \frac{1}{(1 - \alpha)^2} \right) = \frac{1}{2} \left( 1 + \frac{1}{0.25} \right) = 2.50 \text{ lần truy cập}
+\end{equation}
+Điều này chứng minh rằng chi phí tìm kiếm trung bình của Bảng băm đóng đạt mức $O(1)$ khi hệ số tải được duy trì ở mức $\alpha \approx 0.50$ độc lập với kích thước dữ liệu $N$. Tuy nhiên, trong trường hợp xấu nhất về mặt lý thuyết khi tất cả các khóa bị đụng độ dồn cục bộ (Primary Clustering cực đoan), chi phí có thể lên đến $O(M)$ [1], [2]. Về không gian bộ nhớ, mỗi ô \texttt{Entry} chiếm $16$ bytes gồm một con trỏ \texttt{Student*} (8 bytes) và cờ trạng thái cùng vùng đệm căn lề (8 bytes). Toàn bộ bảng băm gồm $21.000.001$ ô nhớ tiêu tốn khoảng $21.000.001 \times 16 \text{ bytes} \approx 336\text{ MB}$ RAM trên một mảng phẳng liên tục, tương thích với các dòng Cache Line $64$-byte của vi xử lý hiện đại.
+
+\subsection*{2.2. Cài đặt chi tiết cấu trúc Cây đống cực đại từ đầu (From Scratch 2)}
+\addcontentsline{toc}{subsection}{2.2. Cài đặt chi tiết cấu trúc Cây đống cực đại từ đầu (From Scratch 2)}
+
+\subsubsection*{2.2.1. Biểu diễn mảng phẳng 1 chiều và công thức truy xuất chỉ số nút}
+\addcontentsline{toc}{subsubsection}{2.2.1. Biểu diễn mảng phẳng 1 chiều và công thức truy xuất chỉ số nút}
+
+Cấu trúc Cây đống cực đại (Custom Binary Max-Heap) được nhóm cài đặt trên mảng 1 chiều liên tục \texttt{std::vector<Student>} với gốc đặt tại chỉ số $0$. Code hiện tại sao chép dữ liệu từ vector gốc vào \texttt{maxHeap}, sau đó áp dụng Floyd Build Heap. Cách tổ chức này tránh các node cây cấp phát rời rạc, cho phép chuyển đổi quan hệ cha--con thành các phép tính chỉ số đơn giản:
+Nút con bên trái của nút tại chỉ số $i$ được tính theo công thức $\text{leftChild}(i) = 2i + 1$; nút con bên phải được tính theo công thức $\text{rightChild}(i) = 2i + 2$; và nút cha được tính theo công thức $\text{parent}(i) = \lfloor (i - 1) / 2 \rfloor$.
+
+Các thao tác xác định chỉ số này được thực hiện bằng các phép toán số học có chi phí $O(1)$, mang lại tốc độ truy xuất nhanh và tận dụng tối đa tính liên tục của bộ nhớ RAM.
+
+\subsubsection*{2.2.2. Hiện thực thuật toán vun đống Floyd Build Heap trong thời gian \texorpdfstring{$O(N)$}{O(N)}}
+\addcontentsline{toc}{subsubsection}{2.2.2. Hiện thực thuật toán vun đống Floyd Build Heap trong thời gian \texorpdfstring{$O(N)$}{O(N)}}
+
+Thay vì chèn lần lượt từng sinh viên vào đống với chi phí $O(N \log N)$, nhóm hiện thực thuật toán vun đống từ dưới lên cổ điển của Robert W. Floyd (\textit{Floyd Bottom-up Build Heap}). Thuật toán khởi đầu bằng việc nạp toàn bộ $N$ con trỏ sinh viên vào mảng, sau đó tiến hành duyệt ngược từ nút cha cuối cùng không phải là lá tại vị trí $i = \lfloor N/2 \rfloor - 1$ lùi dần về nút gốc tại vị trí $i = 0$, gọi hàm \texttt{heapifyDown(i)} tại mỗi bước.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_floyd_build_heap.png}
+\caption{Mã nguồn thuật toán Floyd Build Heap O(N) tự cài đặt}
+\label{fig:code_floyd_build_heap}
+\end{figure}
+
+Về mặt bản chất toán học, lý do thuật toán Floyd Build Heap khởi chạy từ chỉ số $i = \lfloor N/2 \rfloor - 1$ thay vì duyệt từ phần tử cuối cùng $N-1$ xuất phát từ cấu trúc của cây nhị phân hoàn chỉnh. Trong một mảng biểu diễn đống gồm $N$ phần tử, tất cả các nút có chỉ số từ $\lfloor N/2 \rfloor$ đến $N-1$ đều là các nút lá (\textit{Leaf Nodes}). Theo định nghĩa đống, một nút lá đơn lẻ không có nút con nào nên tự thân nó đã là một Max-Heap hợp lệ có chiều cao $h = 0$. Do đó, hệ thống không cần thực hiện thao tác \texttt{heapifyDown} trên khoảng một nửa số nút là các nút lá này mà vẫn đảm bảo tính toàn vẹn cấu trúc.
+
+Độ phức tạp thời gian tuyến tính $O(N)$ của thuật toán được chứng minh chặt chẽ thông qua tổng chuỗi lũy thừa hình học. Xét một cây nhị phân hoàn chỉnh có chiều cao $H = \lfloor \log_2 N \rfloor$. Số lượng nút tối đa ở độ cao $h$ (tính từ tầng lá lên) là $\lceil N / 2^{h+1} \rceil$. Chi phí thời gian thực thi của hàm \texttt{heapifyDown} trên một nút ở độ cao $h$ tỷ lệ thuận với chiều cao của nút đó, tức là mất tối đa $O(h)$ phép hoán vị. Do đó, tổng thời gian xây dựng toàn bộ đống $T(N)$ được xác định bởi công thức:
+\begin{equation}
+T(N) = \sum_{h=0}^{\lfloor \log_2 N \rfloor} \left\lceil \frac{N}{2^{h+1}} \right\rceil O(h) = O\left( N \sum_{h=0}^{\infty} \frac{h}{2^h} \right)
+\end{equation}
+Áp dụng tổng chuỗi số vô hạn đã hội tụ $\sum_{h=0}^{\infty} \frac{h}{2^h} = 2$, ta thu được kết quả:
+\begin{equation}
+T(N) \le O(2N) = O(N)
+\end{equation}
+Kết quả chứng minh trên khẳng định rằng thuật toán Floyd Build Heap chỉ tiêu tốn chi phí tuyến tính $O(N)$, phù hợp hơn cho bước khởi tạo tập dữ liệu lớn so với phương pháp chèn tuần tự từng phần tử từ trên xuống vốn tiêu tốn chi phí $O(N \log N)$.
+
+Cốt lõi của tiến trình vun đống là giải thuật \texttt{heapifyDown} được cài đặt thông qua vòng lặp \texttt{while (true)} dạng lặp (iterative) nhằm tránh chi phí gọi hàm đệ quy (\textit{Function Call Overhead}) và giúp việc quản lý, cập nhật chỉ số nút trực tiếp, tường minh hơn. Với một cây nhị phân hoàn chỉnh gồm $10.500.000$ phần tử, chiều cao tối đa của đống chỉ khoảng $\lfloor \log_2 N \rfloor \approx 23$ tầng. Tại mỗi bước lặp, hàm xác định chỉ số con trái $\text{left} = 2 \times \text{index} + 1$ và con phải $\text{right} = 2 \times \text{index} + 2$. Biến \texttt{highest} ban đầu được gán là nút hiện tại (\texttt{index}). Thuật toán lần lượt kiểm tra điều kiện chỉ số hợp lệ trong phạm vi mảng và gọi hàm so sánh ưu tiên \texttt{higherPriority} để tìm ra nút có độ ưu tiên cao nhất trong bộ ba: nút cha, nút con trái và nút con phải. Nếu nút cha đã có độ ưu tiên lớn hơn hoặc bằng cả hai con (\texttt{highest == index}), cấu trúc đống tại vị trí này đã thỏa mãn bất biến Max-Heap và vòng lặp dừng. Ngược lại, nếu một trong hai nút con có độ ưu tiên cao hơn, hàm thực hiện hoán vị hai bản ghi \texttt{Student} bằng \texttt{std::swap}, cập nhật \texttt{index = highest} và tiếp tục duyệt xuống các tầng bên dưới.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_heapify_down.png}
+\caption{Mã nguồn hàm heapifyDown duy trì bất biến cấu trúc Max-Heap}
+\label{fig:code_heapify_down}
+\end{figure}
+
+\subsubsection*{2.2.3. Cài đặt các thao tác truy xuất cực trị và cập nhật đống}
+\addcontentsline{toc}{subsubsection}{2.2.3. Cài đặt các thao tác truy xuất cực trị và cập nhật đống}
+
+Cấu trúc Max-Heap cung cấp các thao tác cơ bản với độ phức tạp phân định rõ ràng:
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=0pt]
+    \item \textbf{Truy xuất phần tử lớn nhất (\texttt{peekMax}):} Chỉ đọc bản ghi \texttt{Student} tại vị trí gốc \texttt{maxHeap[0]} với chi phí thời gian $O(1)$ [1].
+    \item \textbf{Lấy và xóa phần tử lớn nhất (\texttt{extractMax}):} Hoán vị phần tử gốc với phần tử cuối cùng ở đáy mảng, giảm kích thước đống đi 1 và thực hiện \texttt{heapifyDown(0)} để phục hồi tính chất đống với chi phí $O(\log N)$ [1], [5].
+    \item \textbf{Chèn phần tử mới (\texttt{insert}):} Đẩy phần tử vào cuối mảng và thực hiện thao tác vun đống ngược lên (\texttt{heapifyUp}) qua các nút cha với thời gian $O(\log N)$.
+\end{itemize}
+
+Luồng vận hành truy xuất GPA cao nhất (Yêu cầu MC2) được mô hình hóa chi tiết trong Sơ đồ tuần tự Hình \ref{fig:seq_mc2_extreme}. Tiến trình gồm: nhận yêu cầu từ Web Dashboard, API Bridge gọi tầng C++ Core, đọc trực tiếp bản ghi tại gốc \texttt{maxHeap[0]} trong thời gian $O(1)$, và đóng gói JSON phản hồi về giao diện.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.80\textwidth]{seq_mc2_extreme.png}
+\caption{Sơ đồ tuần tự (Sequence Diagram) luồng trích xuất GPA cao nhất trên Max-Heap}
+\label{fig:seq_mc2_extreme}
+\end{figure}
+
+\subsubsection*{2.2.4. Xử lý quy tắc phân định đồng hạng (Tie-breaking Rule)}
+\addcontentsline{toc}{subsubsection}{2.2.4. Xử lý quy tắc phân định đồng hạng (Tie-breaking Rule)}
+
+Trên tập dữ liệu thực nghiệm $10.500.000$ sinh viên, số lượng sinh viên có cùng mức điểm GPA là rất lớn. Để đảm bảo tính xác định và nhất quán của kết quả đầu ra, nhóm cài đặt hàm so sánh ưu tiên \texttt{higherPriority(const Student\& a, const Student\& b)}:
+\begin{equation}
+a \succ b \iff (a.\text{gpa} > b.\text{gpa}) \lor (a.\text{gpa} = b.\text{gpa} \land a.\text{id} < b.\text{id})
+\end{equation}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{code_heap_tiebreak.png}
+\caption{Hiện thực toán tử phân định đồng hạng kết hợp GPA và MSSV}
+\label{fig:code_heap_tiebreak}
+\end{figure}
+
+Quy tắc này đảm bảo rằng sinh viên có GPA cao hơn luôn đứng trước; nếu hai sinh viên có cùng điểm GPA thì sinh viên có mã số sinh viên nhỏ hơn theo thứ tự từ điển sẽ được ưu tiên đứng tại vị trí nút gốc.
+
+\subsection*{2.3. Cài đặt các thuật toán bổ trợ và xử lý Range Query}
+\addcontentsline{toc}{subsection}{2.3. Cài đặt các thuật toán bổ trợ và xử lý Range Query}
+
+\subsubsection*{2.3.1. Xây dựng mảng dữ liệu sắp xếp theo điểm GPA (RQ2)}
+\addcontentsline{toc}{subsubsection}{2.3.1. Xây dựng mảng dữ liệu sắp xếp theo điểm GPA (RQ2)}
+
+Để phục vụ yêu cầu truy vấn theo khoảng điểm GPA (RQ2), module \texttt{SortedGpaFilter} duy trì một mảng con trỏ \texttt{vector<const Student*> sortedStudents}. Mỗi phần tử trong mảng này trỏ về một bản ghi trong \texttt{vector<Student>} gốc, sau đó toàn bộ mảng con trỏ được sắp xếp theo thứ tự điểm GPA tăng dần thông qua \texttt{std::sort} với toán tử so sánh lambda tùy biến theo trường \texttt{gpa}. Cách tổ chức này tránh sao chép bản ghi \texttt{Student}, giảm footprint của chỉ mục GPA xuống còn chi phí con trỏ, đồng thời vẫn cho phép truy cập trực tiếp bản ghi thật khi cần hiển thị. Trong môi trường GCC/MinGW-w64 của nhóm, \texttt{std::sort} vận hành với chi phí thời gian trung bình $O(N \log N)$ [1], [7].
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_sorted_gpa_build.png}
+\caption{Mã nguồn xây dựng mảng dữ liệu sắp xếp theo GPA phục vụ Range Query}
+\label{fig:code_sorted_gpa_build}
+\end{figure}
+
+\subsubsection*{2.3.2. Hiện thực thuật toán tìm kiếm nhị phân 2 đầu biên trên mảng sắp xếp}
+\addcontentsline{toc}{subsubsection}{2.3.2. Hiện thực thuật toán tìm kiếm nhị phân 2 đầu biên trên mảng sắp xếp}
+
+Bài toán truy vấn theo dải điểm $[\text{minGPA}, \text{maxGPA}]$ trên tập dữ liệu $10.500.000$ phần tử đòi hỏi phải xác định chính xác hai vị trí biên trong mảng đã sắp xếp mà không được quét tuần tự toàn mảng ($O(N)$). Nhóm tự cài đặt thuật toán Tìm kiếm nhị phân hai đầu biên (\textit{Dual-boundary Binary Search}) với hai bước tìm kiếm độc lập: tìm kiếm biên dưới (\textit{Lower Bound}) và tìm kiếm biên trên (\textit{Upper Bound}).
+
+Về mặt giải thuật, hàm tìm kiếm biên dưới duyệt không gian tìm kiếm $[0, N)$ bằng cách chia đôi đoạn khảo sát. Tại mỗi bước lặp với $\text{mid} = \text{left} + (\text{right} - \text{left}) / 2$, nếu \texttt{sortedStudents[mid]->gpa < minGPA}, đoạn tìm kiếm được thu hẹp về nửa bên phải ($\text{left} = \text{mid} + 1$); ngược lại, $\text{right} = \text{mid}$. Vòng lặp dừng khi $\text{left} == \text{right}$, trả về vị trí phần tử đầu tiên có $\text{gpa} \ge \text{minGPA}$ (chỉ số \texttt{startIndex}) trong thời gian $O(\log N)$. Tương tự, hàm tìm kiếm biên trên sử dụng điều kiện \texttt{sortedStudents[mid]->gpa <= maxGPA} để xác định vị trí đầu tiên có điểm GPA nghiêm ngặt lớn hơn \texttt{maxGPA} (chỉ số \texttt{endIndex}) cũng trong thời gian $O(\log N)$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.78\textwidth]{code_binary_search_range.png}
+\caption{Mã nguồn thuật toán Binary Search 2 đầu biên trích xuất khoảng GPA}
+\label{fig:code_binary_search_range}
+\end{figure}
+
+Tổng thời gian xác định đoạn mảng kết quả là $2 \cdot O(\log N) = O(\log N)$. Sau đó, hệ thống không sao chép $K = \text{endIndex} - \text{startIndex}$ bản ghi sinh viên, mà trả \texttt{GpaRangeViewResult} tham chiếu đến đoạn $[startIndex, endIndex)$. Vì vậy chi phí tạo kết quả là $O(\log N)$; chỉ khi tầng gọi duyệt toàn bộ kết quả để hiển thị hoặc xuất dữ liệu thì mới phát sinh thêm $O(K)$.
+
+Luồng vận hành lọc sinh viên theo khoảng điểm GPA (Yêu cầu RQ2) được thể hiện chi tiết qua Sơ đồ tuần tự trong Hình \ref{fig:seq_rq2_range}: tiếp nhận tham số \texttt{minGPA} và \texttt{maxGPA}, kiểm tra hợp lệ, chạy tìm kiếm nhị phân 2 đầu biên trên mảng \texttt{SortedGpaFilter} để xác định $[startIndex, endIndex)$, trả về range view không sao chép bản ghi và chỉ dereference các phần tử cần hiển thị khi đóng gói JSON preview.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.82\textwidth]{seq_rq2_range.png}
+\caption{Sơ đồ tuần tự (Sequence Diagram) luồng lọc sinh viên theo khoảng GPA}
+\label{fig:seq_rq2_range}
+\end{figure}
+
+\subsubsection*{2.3.3. Hiện thực bộ lọc theo mã lớp học phần (RQ1) tối ưu bộ nhớ}
+\addcontentsline{toc}{subsubsection}{2.3.3. Hiện thực bộ lọc theo mã lớp học phần (RQ1) tối ưu bộ nhớ}
+
+Đối với yêu cầu lọc danh sách sinh viên theo mã lớp học phần (\texttt{classId}, Yêu cầu RQ1), nhóm xây dựng module \texttt{OptimizedLinearFilter}. Thay vì sao chép toàn bộ cấu trúc dữ liệu của $k$ sinh viên thỏa mãn (gây tốn kém bộ nhớ và phát sinh chi phí sao chép chuỗi), module thực hiện duyệt tuần tự qua mảng sinh viên trong thời gian $O(N)$ và chỉ lưu lại danh sách các chỉ số nguyên (\texttt{vector<int> indexes}) của các phần tử có \texttt{classId} trùng khớp.
+
+Giải pháp này tiêu tốn không gian bộ nhớ bổ trợ chỉ $O(k)$ (với $k$ là số lượng sinh viên trong lớp), giúp giảm thiểu chi phí cấp phát bộ nhớ động mà vẫn đảm bảo tính toàn vẹn dữ liệu truy xuất.
+
+\subsection*{2.4. Hiện thực tầng lưu trữ bền vững và cơ chế nạp dữ liệu hàng loạt}
+\addcontentsline{toc}{subsection}{2.4. Hiện thực tầng lưu trữ bền vững và cơ chế nạp dữ liệu hàng loạt}
+
+\subsubsection*{2.4.1. Thiết kế cấu trúc lưu trữ file dữ liệu (JSON / CSV)}
+\addcontentsline{toc}{subsubsection}{2.4.1. Thiết kế cấu trúc lưu trữ file dữ liệu (JSON / CSV)}
+
+Dữ liệu thực nghiệm của hệ thống được lưu trữ bền vững trong tệp \texttt{database.json} và \texttt{database.csv} trên đĩa cứng. Mỗi bản ghi bao gồm đầy đủ 4 trường thông tin đã chuẩn hóa: \texttt{id}, \texttt{name}, \texttt{classId} (lớp học phần), và \texttt{gpa} (thang điểm 10). Cấu trúc tệp được định dạng chặt chẽ, tối ưu dung lượng lưu trữ trên đĩa để hỗ trợ việc đọc tuần tự khối lượng lớn (khoảng vài trăm MB đến hơn 1 GB dữ liệu văn bản thô).
+
+\subsubsection*{2.4.2. Cơ chế nạp dữ liệu hàng loạt (Bulk Load) vào bộ nhớ RAM}
+\addcontentsline{toc}{subsubsection}{2.4.2. Cơ chế nạp dữ liệu hàng loạt (Bulk Load) vào bộ nhớ RAM}
+
+Khi hệ thống khởi động, tầng Persistence đọc tệp dữ liệu thông qua \texttt{std::ifstream}. Quá trình nạp dữ liệu diễn ra theo quy trình một chiều: Đọc bản ghi $\rightarrow$ Chuẩn hóa dữ liệu $\rightarrow$ Đưa vào vùng nhớ chính \texttt{std::vector<Student>} $\rightarrow$ Xây dựng Bảng băm đóng với con trỏ về dữ liệu gốc $\rightarrow$ Thực hiện Floyd Build Heap trên bản sao \texttt{maxHeap} $\rightarrow$ Sắp xếp mảng con trỏ \texttt{sortedStudents} theo GPA. Cơ chế nạp hàng loạt này giúp các cấu trúc sẵn sàng trước khi chạy benchmark.
+
+\textbf{Ghi chú phạm vi benchmark:} Các phép đo hiệu năng trong báo cáo được thực hiện trên tập dữ liệu đã nạp xong. Phần CRUD trong Web Dashboard phục vụ minh họa quản lý dữ liệu và không được tính vào các kết quả benchmark cốt lõi. Trong code hiện tại, HashTable và SortedGPA lưu con trỏ về vector gốc nên cần được build lại sau khi dữ liệu thay đổi; Heap sử dụng vùng dữ liệu sao chép riêng.
+
+Chu trình nạp dữ liệu hàng loạt và đồng bộ hóa đa cấu trúc chỉ mục (Bulk Loading \& Multi-Index Synchronization Flow) được mô tả toàn diện thông qua Sơ đồ tuần tự trong Hình \ref{fig:seq_bulk_load}. Quy trình gồm sáu giai đoạn phối hợp:
+
+Thứ nhất, người quản trị hoặc tiến trình khởi động kích hoạt lệnh nạp dữ liệu thông qua phương thức \texttt{loadFromFile("database.json")} trên lớp điều phối \texttt{StudentDatabase}.
+
+Thứ hai, tầng Persistence mở luồng tệp tin lưu trữ với bộ nhớ đệm luồng mở rộng (\textit{Stream Buffer}), đọc toàn bộ các dòng văn bản, kiểm tra cấu trúc cú pháp JSON/CSV và xác định tổng dung lượng tập dữ liệu $N = 10.500.000$ bản ghi.
+
+Thứ ba, tầng DSA Core thực hiện cấp phát trước bộ nhớ (\texttt{students.reserve(10500000)}) trên mảng thực thể chính \texttt{std::vector<Student>} nhằm giảm số lần tái cấp phát trong giai đoạn nạp dữ liệu lớn. Dữ liệu từng sinh viên sau khi chuẩn hóa được ghi trực tiếp vào các ô nhớ liên tục này.
+
+Thứ tư, hệ thống tiến hành đồng bộ hóa Bảng băm đóng (\texttt{HashTable}): mảng băm được khởi tạo sẵn với kích thước $M = 2N + 1 = 21.000.001$. Lần lượt $N$ con trỏ trỏ về các phần tử trong mảng thực thể gốc được tính toán hàm băm FNV-1a và chèn vào bảng băm theo giải thuật dò tuyến tính để hoàn thành chỉ mục tra cứu MC1.
+
+Thứ năm, hệ thống tiến hành đồng bộ hóa Cây đống cực đại (\texttt{CustomMaxHeap}) và Mảng con trỏ sắp xếp GPA (\texttt{SortedGpaFilter}). Dữ liệu sinh viên được nạp vào mảng đống và kích hoạt thuật toán vun đống từ dưới lên Floyd Build Heap chạy ngược từ $\lfloor N/2 \rfloor - 1$ về gốc $0$ với chi phí tuyến tính $O(N)$. Đồng thời, mảng con trỏ GPA được sắp xếp bằng \texttt{std::sort} ($O(N \log N)$) để hoàn thành chỉ mục phục vụ truy vấn khoảng.
+
+Thứ sáu, sau khi cả ba cấu trúc chỉ mục đã được xây dựng hoàn tất trong bộ nhớ RAM, hệ thống phát tín hiệu xác nhận sẵn sàng (Engine Ready) và chuyển hoàn toàn sang trạng thái phục vụ các yêu cầu truy vấn thời gian thực của người dùng.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.80\textwidth]{seq_bulk_load.png}
+\caption{Sơ đồ tuần tự (Sequence Diagram) luồng khởi tạo và nạp dữ liệu hàng loạt (Bulk Load)}
+\label{fig:seq_bulk_load}
+\end{figure}
+
+\subsubsection*{2.4.3. Đảm bảo nguyên tắc độc lập giữa lưu trữ và xử lý truy vấn}
+\addcontentsline{toc}{subsubsection}{2.4.3. Đảm bảo nguyên tắc độc lập giữa lưu trữ và xử lý truy vấn}
+
+Nhóm tuân thủ nghiêm ngặt nguyên tắc kiến trúc: Tệp tin lưu trữ chỉ được truy cập một lần duy nhất lúc khởi động để nạp dữ liệu thô vào RAM. Mọi thao tác tìm kiếm MC1, MC2, lọc RQ1, RQ2 đều được xử lý hoàn toàn trên cấu trúc dữ liệu trong bộ nhớ (In-memory DSA Core). Hệ thống tuyệt đối không thực hiện đọc lại tệp hay sử dụng các cơ chế truy vấn của cơ sở dữ liệu để giải quyết bài toán.
+
+\subsection*{2.5. Xây dựng giao diện tương tác và trực quan hóa dữ liệu}
+\addcontentsline{toc}{subsection}{2.5. Xây dựng giao diện tương tác và trực quan hóa dữ liệu}
+
+\subsubsection*{2.5.1. Thiết kế giao diện dòng lệnh CLI tương tác nhanh}
+\addcontentsline{toc}{subsubsection}{2.5.1. Thiết kế giao diện dòng lệnh CLI tương tác nhanh}
+
+Hệ thống cung cấp một module giao diện dòng lệnh (CLI Engine) bằng C++ hỗ trợ các lệnh tương tác tức thời: tra cứu theo MSSV, lấy GPA cao nhất, lọc theo lớp, lọc theo khoảng điểm và kích hoạt chế độ Benchmark tự động. Giao diện CLI cho phép các kỹ sư kiểm thử nhanh chóng tính đúng đắn và đo thời gian thực thi bằng \texttt{std::chrono::high\_resolution\_clock} với độ chính xác cao.
+
+\subsubsection*{2.5.2. Xây dựng module trực quan hóa cấu trúc dữ liệu và benchmark}
+\addcontentsline{toc}{subsubsection}{2.5.2. Xây dựng module trực quan hóa cấu trúc dữ liệu và benchmark}
+
+Để nâng cao tính trực quan và phục vụ đánh giá năng lực, nhóm xây dựng Web Dashboard hiện đại bằng Next.js và React kết hợp Ant Design. Giao diện Web giao tiếp với C++ Engine qua API Bridge, hiển thị chi tiết các bảng dữ liệu, trạng thái các ô nhớ trong bảng băm, cây Max-Heap, và trực quan hóa các biểu đồ đối sánh thời gian thực thi Benchmark bằng biểu đồ cột so sánh trực tiếp với Baseline.
+
+\subsection*{2.6. Thiết kế kịch bản kiểm thử tự động và xử lý trường hợp biên}
+\addcontentsline{toc}{subsection}{2.6. Thiết kế kịch bản kiểm thử tự động và xử lý trường hợp biên}
+
+\subsubsection*{2.6.1. Xây dựng bộ Unit Test tự động cho các cấu trúc tự cài đặt}
+\addcontentsline{toc}{subsubsection}{2.6.1. Xây dựng bộ Unit Test tự động cho các cấu trúc tự cài đặt}
+
+Nhóm đã xây dựng bộ kiểm thử tự động toàn diện bao quát các phương thức và thao tác cốt lõi của Bảng băm đóng và Max-Heap. Mỗi cấu trúc dữ liệu đều trải qua các bài kiểm thử tính đúng đắn về khởi tạo chỉ mục, tra cứu thành công, tra cứu khóa không tồn tại, kiểm soát xung đột chỉ số, vun đống Floyd từ dưới lên và duy trì bất biến cấu trúc Max-Heap sau các kịch bản kiểm thử.
+
+\subsubsection*{2.6.2. Kiểm thử xử lý dữ liệu trùng lặp, dữ liệu rỗng và tràn ngưỡng}
+\addcontentsline{toc}{subsubsection}{2.6.2. Kiểm thử xử lý dữ liệu trùng lặp, dữ liệu rỗng và tràn ngưỡng}
+
+Hệ thống được kiểm thử nghiêm ngặt trên toàn bộ 21 trường hợp biên (Edge Cases) quan trọng được đặc tả trong tài liệu yêu cầu:
+Thứ nhất, kiểm thử tập dữ liệu rỗng ($N = 0$), hệ thống phản hồi an toàn với thông báo hợp lệ mà không phát sinh lỗi truy cập vùng nhớ null.
+Thứ hai, kiểm thử tra cứu MSSV không tồn tại, hệ thống trả về thông báo không tìm thấy trong thời gian trung bình $O(1)$ mà không bị treo chương trình.
+Thứ ba, kiểm thử trường hợp dữ liệu đầu vào bị trùng lặp khóa chính MSSV được đặt ở tầng CRUD/Persistence khi thêm mới sinh viên. Hàm \texttt{createStudent} kiểm tra tồn tại bằng \texttt{findIndexById} trước khi ghi vào vector và file JSON. Riêng hàm \texttt{HashTable::build} trong module MC1 giả định dữ liệu đầu vào đã sạch khóa trùng, nên báo cáo không xem HashTable là nơi chịu trách nhiệm phát hiện duplicate.
+Thứ tư, kiểm thử nhiều sinh viên cùng đạt GPA $10.0$, Max-Heap tự động phân định đồng hạng chính xác bằng MSSV nhỏ hơn theo đúng quy tắc Tie-break.
+Thứ năm, kiểm thử các khoảng GPA không hợp lệ như $\text{minGPA} > \text{maxGPA}$ hoặc điểm ngoài dải $[0.0, 10.0]$, hệ thống tự động từ chối và cảnh báo lỗi rõ ràng.
+
+\subsubsection*{2.6.3. Kiểm thử tính ổn định khi chạy tải truy vấn liên tục}
+\addcontentsline{toc}{subsubsection}{2.6.3. Kiểm thử tính ổn định khi chạy tải truy vấn liên tục}
+
+Nhóm thực hiện bài kiểm thử sức chịu tải (Stress Test) với các workload truy vấn lặp trên tập dữ liệu hiện tại $500.000$ bản ghi. Kết quả ghi nhận hệ thống vận hành ổn định, không quan sát thấy dấu hiệu rò rỉ bộ nhớ (Memory Leak) hay suy giảm tốc độ xử lý trong quá trình kiểm thử.
+
+\subsection*{2.7. Thực nghiệm đo đạc Benchmark hiệu năng trên tập dữ liệu quy mô lớn}
+\addcontentsline{toc}{subsection}{2.7. Thực nghiệm đo đạc Benchmark hiệu năng trên tập dữ liệu quy mô lớn}
+
+\subsubsection*{2.7.1. Môi trường phần cứng, hệ điều hành và phương pháp luận đo lường}
+\addcontentsline{toc}{subsubsection}{2.7.1. Môi trường phần cứng, hệ điều hành và phương pháp luận đo lường}
+
+Toàn bộ các phép đo đạc Benchmark đối sánh được thực hiện trên cùng một môi trường phần cứng và cấu hình phần mềm đồng nhất:
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=0pt]
+    \item Vi xử lý (CPU): Intel Core i7-13620H (10 Cores, 16 Threads), bộ nhớ đệm Cache 24MB.
+    \item Bộ nhớ RAM: 16 GB DDR4 Bus 3200 MHz.
+    \item Hệ điều hành: Microsoft Windows 11 64-bit.
+    \item Trình biên dịch: GCC / MinGW-w64 hỗ trợ chuẩn C++20, cờ tối ưu hóa \texttt{-O3}.
+    \item Công cụ đo thời gian: Thư viện chuẩn C++ \texttt{std::chrono::high\_resolution\_clock}.
+\end{itemize}
+
+\textbf{Phương pháp luận đo lường (Benchmark Methodology):} Để giảm nhiễu hệ điều hành và tránh nhầm lẫn giữa chi phí thuật toán với chi phí giao diện, nhóm tách hai loại số liệu. Bảng số trong báo cáo là microbenchmark C++ Core: thực hiện warm-up để ổn định đường thực thi, trạng thái bộ nhớ đệm và giảm ảnh hưởng của page fault/khởi tạo lần đầu; sau đó lặp batch nhiều lần, gán kết quả vào biến lưu trữ để tránh Dead Code Elimination khi bật \texttt{-O3}. Harness đo được biên dịch riêng bằng lệnh \texttt{g++ -std=c++20 -O3}; lần đo chính dùng $5$ lượt warm-up và $21$ mẫu đo, lấy median làm số đại diện. Các hình Dashboard ở cuối phần này minh họa giao diện và luồng API, có thêm chi phí JSON/IPC/render nên không được dùng để thay thế số microbenchmark.
+
+\textbf{Cấu hình workload thực nghiệm:} Tập dữ liệu nạp từ \texttt{data/database.json} có $500.000$ sinh viên. MC1 chạy $1.000$ truy vấn MSSV cố định, gồm $950$ khóa tồn tại và $50$ khóa không tồn tại. MC2 chạy $1.000$ lần gọi truy xuất GPA cao nhất. RQ1 lọc lớp \texttt{C01}. RQ2 lọc khoảng GPA $[8.0, 10.0]$. Thời gian nạp JSON vào \texttt{vector<Student>} trong lần chạy chính là khoảng $1.340$ ms và không được tính vào thời gian query của từng cấu trúc.
+
+\begin{table}[H]
+\centering
+\small
+\begingroup
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.4cm}|r|r|r|r|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Build structure} & \textbf{Min} & \textbf{Median} & \textbf{Mean} & \textbf{Max} & \textbf{Ghi chú} \\ \hline
+HashTable & $18.131$ & $20.523$ & $20.818$ & $24.531$ & $266.468$ collision khi build \\ \hline
+MaxHeap & $47.111$ & $48.984$ & $49.371$ & $55.616$ & Floyd Build Heap trên bản sao \texttt{maxHeap} \\ \hline
+SortedGPA & $125.896$ & $132.005$ & $132.334$ & $151.376$ & Tạo mảng con trỏ và \texttt{std::sort} theo GPA \\ \hline
+\end{tabularx}
+\endgroup
+\caption{Thời gian build cấu trúc C++ Core trên $500.000$ sinh viên (ms)}
+\label{tab:core_build_benchmark}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begingroup
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.2cm}|r|r|r|r|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Query workload} & \textbf{Min} & \textbf{Median} & \textbf{Mean} & \textbf{Max} & \textbf{Ghi chú} \\ \hline
+MC1 Linear Search & $1186.783$ & $1220.950$ & $1247.371$ & $1642.405$ & $1.000$ truy vấn, $260.717.750$ so sánh \\ \hline
+MC1 Hash Search & $0.026$ & $0.026$ & $0.027$ & $0.039$ & $1.000$ truy vấn, $1.696$ probe \\ \hline
+MC2 Linear Max & $1768.811$ & $1824.797$ & $1852.038$ & $2023.272$ & $1.000$ lần gọi, $499.999.000$ so sánh \\ \hline
+MC2 Heap Max & $0.101$ & $0.116$ & $0.160$ & $0.758$ & $1.000$ lần đọc \texttt{maxHeap[0]} \\ \hline
+RQ1 Linear Class & $3.575$ & $3.897$ & $4.147$ & $6.308$ & Lớp \texttt{C01}, trả $20.000$ sinh viên \\ \hline
+RQ1 Index Class & $2.178$ & $2.400$ & $2.518$ & $3.423$ & Lớp \texttt{C01}, lưu $20.000$ chỉ số \\ \hline
+RQ2 Linear GPA & $12.844$ & $14.039$ & $14.266$ & $18.167$ & Khoảng $[8.0,10.0]$, copy $167.775$ sinh viên \\ \hline
+RQ2 Sorted GPA & $0.0001$ & $0.0002$ & $0.0002$ & $0.0002$ & $37$ so sánh biên, trả range view không copy \\ \hline
+\end{tabularx}
+\endgroup
+\caption{Thời gian query C++ Core trên $500.000$ sinh viên, $5$ warm-up và $21$ mẫu đo (ms)}
+\label{tab:core_microbenchmark}
+\end{table}
+
+\subsubsection*{2.7.2. Kết quả đo thời gian tra cứu MC1 qua các mốc dữ liệu lớn}
+\addcontentsline{toc}{subsubsection}{2.7.2. Kết quả đo thời gian tra cứu MC1 qua các mốc dữ liệu lớn}
+
+Nhóm tiến hành đo đạc MC1 bằng workload $1.000$ truy vấn cố định trên tập hiện tại ($25000001$ đến $25500000$). Workload gồm khóa tồn tại rải đều trong dải dữ liệu và một nhóm khóa không tồn tại để kiểm tra điều kiện dừng khi gặp ô trống trong bảng băm. Các ảnh dưới đây vẫn được giữ như minh họa giao diện Dashboard theo từng vị trí khóa; bảng \ref{tab:core_microbenchmark} mới là số liệu C++ Core dùng để kết luận hiệu năng.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{mc1_dau_dai.png}
+\caption{Benchmark MC1 tra cứu MSSV tại đầu dải dữ liệu}
+\label{fig:mc1_dau_dai}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{mc1_giua_dai.jpeg}
+\caption{Benchmark MC1 tra cứu MSSV tại giữa dải dữ liệu}
+\label{fig:mc1_giua_dai}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{mc1_cuoi_dai.jpeg}
+\caption{Benchmark MC1 tra cứu MSSV tại cuối dải dữ liệu}
+\label{fig:mc1_cuoi_dai}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{mc1_khong_ton_tai.jpeg}
+\caption{Benchmark MC1 tra cứu MSSV khi khóa không tồn tại trong hệ thống}
+\label{fig:mc1_khong_ton_tai}
+\end{figure}
+
+Kết quả thực nghiệm cho thấy Bảng băm đóng duy trì thời gian trả kết quả ở mức rất nhỏ và gần như không phụ thuộc vị trí khóa, trong khi thuật toán duyệt tuyến tính tăng rõ rệt khi khóa nằm sâu trong vector hoặc không tồn tại. Trên workload $1.000$ truy vấn, median của Linear Search là $1220.950$ ms, còn Hash Search là $0.026$ ms. Do thao tác Hash lookup quá ngắn, các con số dưới micro-giây cho một truy vấn đơn lẻ chỉ nên được hiểu như xu hướng trung bình sau lặp batch, không phải độ trễ cảm nhận của giao diện.
+
+\subsubsection*{2.7.3. Kết quả đo thời gian trích xuất cực trị MC2 và xây dựng đống}
+\addcontentsline{toc}{subsubsection}{2.7.3. Kết quả đo thời gian trích xuất cực trị MC2 và xây dựng đống}
+
+Đối với yêu cầu MC2, sau khi \texttt{CustomMaxHeapGpaFinder} đã xây dựng xong heap, thao tác trả sinh viên GPA cao nhất chỉ là đọc \texttt{maxHeap[0]}, nên chi phí lý thuyết là $O(1)$. Phần đo thực nghiệm được trình bày theo hướng đối sánh: quét tuyến tính phụ thuộc $N$, còn heap peek gần như hằng số sau khi đã trả chi phí build $O(N)$. Trên $1.000$ lần gọi, median của Linear Max là $1824.797$ ms, trong khi Heap Max là $0.116$ ms; median build heap là $48.984$ ms.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{benchmark_mc2_max_heap.jpeg}
+\caption{Biểu đồ Benchmark MC2 trích xuất GPA cao nhất trên Max-Heap so với Baseline}
+\label{fig:benchmark_mc2_max_heap}
+\end{figure}
+
+\subsubsection*{2.7.4. Kết quả đo thời gian thực thi các truy vấn tự phát hiện}
+\addcontentsline{toc}{subsubsection}{2.7.4. Kết quả đo thời gian thực thi các truy vấn tự phát hiện}
+
+Đối với yêu cầu RQ1 (Lọc danh sách sinh viên theo lớp), nhóm thực nghiệm kiểm chứng trên 4 trường hợp giao diện: lớp đầu dải ($C01$), lớp giữa dải ($C13$), lớp cuối dải ($C25$) và mã lớp không tồn tại ($C99$). Riêng bảng số C++ Core chọn lớp \texttt{C01}; trên tập hiện tại lớp này có $20.000$ sinh viên. Baseline sao chép toàn bộ \texttt{Student} thỏa điều kiện, còn phiên bản tối ưu chỉ lưu index nên median giảm từ $3.897$ ms xuống $2.400$ ms, dù cả hai vẫn là quét tuyến tính $O(N)$.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{rq1_lop_dau_dai.jpeg}
+\caption{Benchmark RQ1 lọc danh sách sinh viên lớp C01 (Đầu dải)}
+\label{fig:rq1_lop_dau_dai}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{rq1_lop_giua_dai.jpeg}
+\caption{Benchmark RQ1 lọc danh sách sinh viên lớp C13 (Giữa dải)}
+\label{fig:rq1_lop_giua_dai}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{rq1_lop_cuoi_dai.jpeg}
+\caption{Benchmark RQ1 lọc danh sách sinh viên lớp C25 (Cuối dải)}
+\label{fig:rq1_lop_cuoi_dai}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{rq1_lop_khong_ton_tai.jpeg}
+\caption{Benchmark RQ1 khi tra cứu mã lớp không tồn tại}
+\label{fig:rq1_lop_khong_ton_tai}
+\end{figure}
+
+Đối với yêu cầu RQ2 (bảng số đo khoảng GPA $[8.0, 10.0]$), Binary Search hai đầu biên giúp tìm nhanh vị trí bắt đầu và kết thúc trong $O(\log N)$. Sau khi tối ưu lại \texttt{SortedGpaFilter} theo hướng range view, code không còn sao chép $K$ bản ghi vào \texttt{vector<Student>} kết quả. Trong lần đo C++ Core, khoảng này chứa $167.775$ sinh viên; LinearGPA mất median $14.039$ ms vì vừa quét toàn bộ $N$ vừa copy kết quả, còn SortedGPA chỉ cần $37$ so sánh biên và trả view trong khoảng $0.0002$ ms. Nếu tầng giao diện cần hiển thị dữ liệu, API chỉ dereference tối đa số phần tử preview cần gửi đi, nên chi phí hiển thị được tách khỏi chi phí tìm khoảng.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.88\textwidth]{benchmark_rq2_gpa_range.jpeg}
+\caption{Biểu đồ Benchmark RQ2 lọc sinh viên theo khoảng GPA [8.0, 9.5]}
+\label{fig:benchmark_rq2_gpa_range}
+\end{figure}
+
+\subsection*{2.8. Đối sánh hiệu năng thực nghiệm với lý thuyết và thuật toán tuyến tính}
+\addcontentsline{toc}{subsection}{2.8. Đối sánh hiệu năng thực nghiệm với lý thuyết và thuật toán tuyến tính}
+
+\subsubsection*{2.8.1. So sánh tốc độ Bảng băm đóng \texorpdfstring{($O(1)$)}{(O(1))} với Quét tuyến tính \texorpdfstring{($O(N)$)}{(O(N))}}
+\addcontentsline{toc}{subsubsection}{2.8.1. So sánh tốc độ Bảng băm đóng \texorpdfstring{($O(1)$)}{(O(1))} với Quét tuyến tính \texorpdfstring{($O(N)$)}{(O(N))}}
+
+Bảng tổng hợp đối sánh thực nghiệm thời gian thực thi giữa Bảng băm đóng và Thuật toán quét tuyến tính trên workload chính được trình bày chi tiết dưới đây:
+
+\begin{table}[H]
+\centering
+\small
+\begingroup
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.7cm}|>{\raggedright\arraybackslash}p{2.45cm}|>{\raggedright\arraybackslash}p{2.45cm}|>{\raggedright\arraybackslash}p{2.25cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Workload} & \textbf{Linear} & \textbf{Closed Hash} & \textbf{Tăng tốc} & \textbf{Kết luận} \\ \hline
+Build cấu trúc & --- & $20.523$ ms & --- & Chi phí dựng ban đầu $O(N)$ \\ \hline
+$1.000$ truy vấn MSSV & $1220.950$ ms & $0.026$ ms & $\sim 46.780 \times$ & Hash lookup gần như hằng số sau build \\ \hline
+Số bước kiểm tra & $\sim 260.7$M so sánh & $1.696$ probe & $\sim 153.7$K$\times$ & Khác biệt đến từ $O(N)$ và $O(1)$ trung bình \\ \hline
+Tính đúng & $950/950$ khóa tồn tại & $950/950$ khóa tồn tại & Tương đương & Hai phương án đều trả đúng \\ \hline
+\end{tabularx}
+\endgroup
+\end{table}
+
+Số liệu thực nghiệm khẳng định rằng trên cùng workload, thời gian thực thi của Bảng băm đóng nhỏ hơn rất nhiều so với Linear Search sau khi đã trả chi phí build ban đầu. Vì thời gian hash lookup ngắn hơn độ nhiễu của đồng hồ khi đo một lần đơn lẻ, nhóm đo theo batch $1.000$ truy vấn và dùng median của $21$ mẫu để kết luận xu hướng $O(1)$ trung bình, không tuyên bố con số tuyệt đối như thời gian phản hồi UI.
+
+\subsubsection*{2.8.2. So sánh tốc độ truy xuất Max-Heap \texorpdfstring{($O(1)$)}{(O(1))} với Quét tìm Max tuyến tính \texorpdfstring{($O(N)$)}{(O(N))}}
+\addcontentsline{toc}{subsubsection}{2.8.2. So sánh tốc độ truy xuất Max-Heap \texorpdfstring{($O(1)$)}{(O(1))} với Quét tìm Max tuyến tính \texorpdfstring{($O(N)$)}{(O(N))}}
+
+Trên tập dữ liệu thực nghiệm $500.000$ sinh viên, điểm mạnh của Max-Heap không nằm ở việc build nhanh hơn mọi phương án, mà ở chỗ sau khi build xong, thao tác đọc phần tử cực đại chỉ còn là truy cập phần tử gốc $O(1)$. Median build heap là $48.984$ ms; sau đó $1.000$ lần đọc cực trị chỉ mất median $0.116$ ms, trong khi $1.000$ lần quét tuyến tính mất median $1824.797$ ms. Chi phí khởi tạo vẫn là $O(N)$ theo Floyd Build Heap; vì vậy báo cáo tách riêng thời gian build và thời gian query để tránh hiểu nhầm rằng heap tìm max ``miễn phí'' ngay từ đầu.
+
+\subsubsection*{2.8.3. Đánh giá chi tiết mức độ tiêu hao bộ nhớ RAM và hiệu ứng Cache}
+\addcontentsline{toc}{subsubsection}{2.8.3. Đánh giá chi tiết mức độ tiêu hao bộ nhớ RAM và hiệu ứng Cache}
+
+Toàn bộ hệ thống được tổ chức theo các cấu trúc mảng phẳng liên tục để tối ưu hóa bộ nhớ đệm CPU Cache Line 64-byte. Chi tiết phân bổ bộ nhớ cho các cấu trúc chính trên nền tảng 64-bit:
+\begin{itemize}[leftmargin=*, itemsep=2pt, parsep=0pt]
+    \item \textbf{Vùng lưu trữ sinh viên gốc (\texttt{vector<Student>}):} Kiểm tra trực tiếp bằng MinGW 64-bit cho thấy \texttt{sizeof(Student) = 104} bytes và \texttt{sizeof(std::string) = 32} bytes. Do đó, phần thân vector cho $10.500.000$ bản ghi xấp xỉ $10.500.000 \times 104 \approx 1.092$ GB, chưa tính allocation riêng có thể phát sinh cho tên sinh viên dài.
+    \item \textbf{Bảng băm đóng (\texttt{HashTable}):} $21.000.001 \text{ ô} \times 16 \text{ bytes/Entry} \approx 336 \text{ MB}$ (mỗi \texttt{Entry} chứa 1 con trỏ \texttt{Student*} 8 bytes và cờ trạng thái căn lề 8 bytes).
+    \item \textbf{Mảng con trỏ sắp xếp GPA (\texttt{SortedGpaFilter}):} Code duy trì \texttt{vector<const Student*> sortedStudents}; mỗi phần tử là một con trỏ 8 bytes trỏ về dữ liệu gốc. Với $10.500.000$ bản ghi, phần thân vector xấp xỉ $10.500.000 \times 8 \approx 84$ MB, nhỏ hơn rất nhiều so với phương án sao chép toàn bộ \texttt{Student}.
+    \item \textbf{Cây đống cực đại (\texttt{CustomMaxHeapGpaFinder}):} Code gán \texttt{maxHeap = *studentsPtr}, tức cũng duy trì một bản sao \texttt{Student}; phần thân vector xấp xỉ $1.092$ GB cho $10.500.000$ bản ghi.
+\end{itemize}
+Trong mô hình kiến trúc module hóa, các chỉ mục đọc nhiều ưu tiên mảng phẳng liên tục để tối ưu tính định vị không gian (Spatial Locality). Điểm cần lưu ý là footprint lý thuyết tính từ \texttt{sizeof} có thể cao hơn Working Set quan sát trong một pipeline riêng vì không phải lúc nào cả \texttt{students}, \texttt{sortedStudents}, \texttt{maxHeap} và bảng băm đều được giữ đồng thời với dung lượng tối đa. Sau tối ưu RQ2, \texttt{sortedStudents} chỉ còn là mảng con trỏ nên phần bộ nhớ lớn nhất còn lại thuộc về dữ liệu gốc, \texttt{maxHeap} và bảng băm.
+
+\subsection*{2.9. Nhật ký gỡ lỗi (Debug Log) và tối ưu hóa giải thuật}
+\addcontentsline{toc}{subsection}{2.9. Nhật ký gỡ lỗi (Debug Log) và tối ưu hóa giải thuật}
+
+\subsubsection*{2.9.1. Ghi nhận lỗi phát sinh khi xử lý điều kiện dừng tìm kiếm trên Bảng băm}
+\addcontentsline{toc}{subsubsection}{2.9.1. Ghi nhận lỗi phát sinh khi xử lý điều kiện dừng tìm kiếm trên Bảng băm}
+
+Trong quá trình thực nghiệm ban đầu với Bảng băm đóng, nhóm phát hiện khi tra cứu một khóa MSSV không tồn tại trong hệ thống, nếu không giới hạn số bước dò tối đa thì trong trường hợp bảng đầy hoặc vòng lặp chỉ số có sai lệch, hàm có thể lặp quá mức cần thiết. Nhóm đã hoàn thiện giải thuật: vòng dò dừng ngay lập tức khi bắt gặp ô chưa chiếm (\texttt{!table[index].occupied}) đầu tiên, đồng thời giới hạn số lần duyệt tối đa không vượt quá kích thước bảng $M$, đảm bảo thao tác tìm kiếm thất bại luôn kết thúc nhanh chóng và an toàn.
+
+\subsubsection*{2.9.2. Tối ưu hóa cấp phát bộ nhớ và bảo toàn con trỏ trong Bulk Load}
+\addcontentsline{toc}{subsubsection}{2.9.2. Tối ưu hóa cấp phát bộ nhớ và bảo toàn con trỏ trong Bulk Load}
+
+Trong quá trình nạp dữ liệu quy mô lớn ($10.500.000$ bản ghi), việc \texttt{std::vector} tự động mở rộng dung lượng nhiều lần sẽ phát sinh chi phí sao chép dữ liệu và có thể làm thay đổi địa chỉ bộ nhớ của các phần tử \texttt{Student}. Lệnh \texttt{reserve(10500000)} giúp giảm số lần tái cấp phát và giữ ổn định vùng dữ liệu gốc trước khi xây dựng các chỉ mục lưu con trỏ như \texttt{HashTable} và \texttt{SortedGpaFilter}. Riêng MaxHeap không phụ thuộc vào con trỏ về vùng gốc vì chủ động xây dựng bản sao \texttt{Student} nội bộ.
+
+\subsection*{2.10. Tuyên bố Trách nhiệm Giải trình về Sử dụng AI và Liêm chính Học thuật (AI-Audit Log)}
+\addcontentsline{toc}{subsection}{2.10. Tuyên bố Trách nhiệm Giải trình về Sử dụng AI và Liêm chính Học thuật (AI-Audit Log)}
+
+Nhằm tuân thủ quy định về Liêm chính học thuật và Chuẩn mực nghiên cứu khoa học của Trường Đại học Công nghệ Kỹ thuật TP. Hồ Chí Minh, nhóm tác giả công khai nhật ký sử dụng các công cụ Trí tuệ Nhân tạo tạo sinh (GenAI / LLMs) trong quá trình thực hiện đề tài:
+
+\begin{table}[H]
+\centering
+\begingroup
+\small
+\begin{singlespace}
+\setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|}
+\hline
+\textbf{Hạng mục} & \textbf{Mức độ \& Công cụ AI} & \textbf{Trách nhiệm và Đóng góp của Nhóm Sinh viên} \\ \hline
+Thiết kế CTDL & Gợi ý cú pháp C++20 và mẫu biểu diễn struct. & Nhóm trực tiếp thiết kế Closed Hash Table, Floyd Max-Heap, kiến trúc 3 tầng và mảng dữ liệu sắp xếp. \\ \hline
+Cài đặt Thuật toán & Hỗ trợ rà soát cú pháp và tối ưu vòng lặp. & Tự cài đặt FNV-1a, Linear Probing, Floyd Build-Heap, iterative heapifyDown, Binary Search 2 đầu biên và bộ lọc classId; sử dụng \texttt{std::sort} dựng mảng GPA ban đầu. \\ \hline
+Thực nghiệm Benchmark & Hỗ trợ sinh mã kịch bản đo thời gian \texttt{std::chrono}. & Nhóm trực tiếp thực thi đo đạc trên máy tính cá nhân với tập dữ liệu hiện tại $500.000$ sinh viên, dùng $5$ lượt warm-up và $21$ mẫu đo để ghi nhận số liệu thực tế. \\ \hline
+Giao diện Web/API & Hỗ trợ khung thành phần giao diện React/Next.js. & Nhóm trực tiếp xây dựng API Bridge C++, binding dữ liệu và kiểm thử trải nghiệm người dùng. \\ \hline
+Báo cáo LaTeX & Hỗ trợ căn chỉnh bảng biểu, phản biện tính nhất quán và định dạng. & Nhóm trực tiếp biên soạn nội dung học thuật, phân tích kết quả và kiểm duyệt toàn bộ báo cáo. \\ \hline
+\end{tabularx}
+\end{singlespace}
+\endgroup
+\caption{Nhật ký giải trình minh bạch việc sử dụng công cụ AI (AI-Audit Log)}
+\label{tab:ai_audit_log}
+\end{table}
+
+Cam kết liêm chính học thuật: Toàn bộ thành viên trong nhóm khẳng định các cấu trúc dữ liệu, thuật toán và giải pháp kiến trúc trong báo cáo đều do nhóm trực tiếp nghiên cứu, lập trình và kiểm nghiệm thực tế. Công cụ AI được sử dụng để hỗ trợ rà soát cú pháp, phản biện tính nhất quán kỹ thuật và chuẩn hóa định dạng LaTeX. Nhóm sinh viên trực tiếp quyết định thiết kế, kiểm tra mã nguồn, thực thi benchmark và chịu trách nhiệm trước Hội đồng chấm thi về tính xác thực của công trình.
+
+% ==============================================================================
+% KẾT LUẬN VÀ BÀI HỌC KINH NGHIỆM
+% ==============================================================================
+\newpage
+\section*{PHẦN KẾT LUẬN VÀ BÀI HỌC KINH NGHIỆM}
+\addcontentsline{toc}{section}{PHẦN KẾT LUẬN VÀ BÀI HỌC KINH NGHIỆM}
+
+\subsection*{1. Kết luận tổng quan về dự án}
+\addcontentsline{toc}{subsection}{1. Kết luận tổng quan về dự án}
+
+Trải qua quá trình nghiên cứu và phát triển, nhóm đã hoàn thiện hệ thống quản lý cơ sở dữ liệu sinh viên quy mô lớn, kiểm thử thực nghiệm trên tập hiện tại $500.000$ bản ghi và phân tích khả năng mở rộng lên mốc thiết kế $10.500.000$ bản ghi, giải quyết hiệu quả bài toán cân bằng giữa tốc độ xử lý tức thì và giới hạn tài nguyên phần cứng.
+
+Việc tự tay cài đặt các cấu trúc dữ liệu kinh điển từ đầu thay vì dựa vào các thư viện có sẵn giúp nhóm nắm vững bản chất hoạt động ở cấp độ bộ nhớ. Các kết quả thực nghiệm với Bảng băm đóng kết hợp FNV-1a, Max-Heap và Mảng con trỏ sắp xếp đều đạt được đúng các ngưỡng tiệm cận lý thuyết $O(1)$, $O(N)$ và $O(\log N)$ cho range view, mang lại trải nghiệm phản hồi nhanh khi thao tác trên tập dữ liệu hàng chục triệu dòng.
+
+Đặc biệt, mô hình kiến trúc phân tầng kết hợp chiến lược tổ chức dữ liệu mảng phẳng liên tục đã chứng minh tính hiệu quả khi toàn bộ hệ thống vận hành ổn định trong giới hạn tài nguyên bộ nhớ RAM (dao động từ $1.25\text{ GB}$ đến $1.35\text{ GB}$ khi chạy từng pipeline chuyên biệt, và khoảng $2.4\text{ GB}$ khi nạp đồng thời toàn bộ các module trong cùng tiến trình). Đây là cơ sở thực nghiệm quý giá giúp nhóm kết nối chặt chẽ giữa lý thuyết thuật toán và các kỹ thuật lập trình hệ thống hiệu năng cao.
+
+\subsection*{2. Bài phản tư cá nhân của 4 thành viên (Individual Reflections - D7)}
+\addcontentsline{toc}{subsection}{2. Bài phản tư cá nhân của 4 thành viên (Individual Reflections - D7)}
+
+\subsubsection*{2.1. Phản tư của sinh viên Bùi Tấn Phát (MSSV: 25110289)}
+\addcontentsline{toc}{subsubsection}{2.1. Phản tư của sinh viên Bùi Tấn Phát (MSSV: 25110289)}
+Trong đồ án, nhiệm vụ chính của em là cài đặt Bảng băm đóng với $M = 21.000.001$ ô nhớ để phục vụ yêu cầu tra cứu MC1. Trong giai đoạn đầu kiểm thử với trường hợp mã sinh viên không tồn tại, em gặp sự cố hàm tìm kiếm bị lặp quá số bước cần thiết do chưa chặn chặt chẽ điều kiện dừng của vòng dò tuyến tính. Sau khi rà soát cơ chế của bảng băm tĩnh hai trạng thái, em đã cập nhật điều kiện dừng ngay khi gặp ô trống đầu tiên (\texttt{!occupied}) hoặc khi số bước dò chạm ngưỡng kích thước bảng $M$, nhờ đó hàm tìm kiếm luôn trả về \texttt{nullptr} an toàn mà không phát sinh vòng lặp vô tận. Qua phần này, em hiểu sâu sắc về công thức kỳ vọng số bước dò của Knuth và tầm quan trọng của việc kiểm soát hệ số tải $\alpha \approx 0.50$ trong thực tế. Em cam kết phần cài đặt và kiểm thử Bảng băm thuộc phạm vi của mình được thực hiện trung thực.
+
+\subsubsection*{2.2. Phản tư của sinh viên Nguyễn Phan Thành Tiến (MSSV: 25110361)}
+\addcontentsline{toc}{subsubsection}{2.2. Phản tư của sinh viên Nguyễn Phan Thành Tiến (MSSV: 25110361)}
+Phần em đảm nhận trong đồ án là xây dựng Max-Heap tự cài đặt để trích xuất sinh viên có GPA cao nhất cho yêu cầu MC2. Quyết định kỹ thuật quan trọng nhất của em là chuyển giải thuật \texttt{heapifyDown} từ dạng đệ quy sang vòng lặp \texttt{while} nhằm loại bỏ chi phí gọi hàm và trực tiếp kiểm soát chỉ số nút con trên mảng một chiều. Khó khăn thực tế em xử lý là trường hợp nhiều sinh viên cùng đạt mức điểm cực đại $10.0$; em đã thiết kế hàm so sánh ưu tiên kết hợp cả điểm GPA và so sánh chuỗi MSSV theo thứ tự từ điển để bảo đảm tính tất định ở nút gốc. Qua trải nghiệm này, em nắm vững thuật toán Floyd Build Heap $O(N)$ và cách tổ chức cây nhị phân hoàn chỉnh trên mảng liên tục. Em cam kết toàn bộ mã nguồn Max-Heap và dữ liệu thực nghiệm MC2 do em trực tiếp thực hiện.
+
+\subsubsection*{2.3. Phản tư của sinh viên Ngô Đức Thành (MSSV: 25110335)}
+\addcontentsline{toc}{subsubsection}{2.3. Phản tư của sinh viên Ngô Đức Thành (MSSV: 25110335)}
+Nhiệm vụ của em là thiết kế giải thuật lọc dải điểm GPA (RQ2) và bộ lọc theo lớp (RQ1). Với RQ2, thách thức lớn nhất là xử lý chính xác các trường hợp biên của dải điểm, đặc biệt là khi có nhiều sinh viên có điểm GPA đúng bằng cận trên hoặc cận dưới. Ban đầu ở hàm tìm kiếm biên trên, em sử dụng điều kiện so sánh nghiêm ngặt dẫn đến việc bỏ sót các sinh viên có điểm chạm đúng \texttt{maxGPA}; sau đó em đã sửa thành điều kiện $\le \text{maxGPA}$ và tối ưu kết quả trả về thành range view để tránh sao chép toàn bộ dải sinh viên. Đối với RQ1, em áp dụng phương pháp quét tuyến tính chỉ lưu mảng chỉ số nguyên $O(k)$ để tối ưu hóa bộ nhớ tạm. Qua đồ án, em hiểu rõ hơn về cách chia đôi không gian tìm kiếm và các kỹ thuật tối ưu hóa truy vấn dải. Em cam kết toàn bộ thuật toán và kết quả kiểm thử thuộc phần việc của mình đều trung thực.
+
+\subsubsection*{2.4. Phản tư của sinh viên Đặng Đoàn Minh Khang (MSSV: 25110227)}
+\addcontentsline{toc}{subsubsection}{2.4. Phản tư của sinh viên Đặng Đoàn Minh Khang (MSSV: 25110227)}
+Ở vai trò nhóm trưởng và phụ trách kiến trúc tổng thể, nhiệm vụ của em là kết nối các cấu trúc dữ liệu thành hệ thống hoàn chỉnh và điều phối quy trình nạp dữ liệu hàng loạt (Bulk Load). Trải nghiệm kỹ thuật đáng nhớ nhất của em là giữ cho vùng dữ liệu gốc ổn định để các chỉ mục lưu \texttt{Student*} như HashTable và SortedGPA có thể tham chiếu an toàn; việc sử dụng \texttt{reserve()} trước khi đọc file giúp giảm tái cấp phát trong giai đoạn nạp ban đầu. Sau khi rà soát lại code, em cũng phân biệt rõ hơn: Heap tự tạo bản sao dữ liệu riêng, còn SortedGPA chỉ sắp xếp con trỏ và trả range view để tránh sao chép kết quả. Ngoài ra, em chịu trách nhiệm xây dựng tầng API Bridge để kết nối DSA Core C++ với Web Dashboard trực quan. Quá trình làm đồ án giúp em nâng cao tư duy thiết kế hệ thống module hóa và kỹ năng phối hợp làm việc nhóm. Em cam kết toàn bộ phần kiến trúc tích hợp và kết quả tổng hợp trong báo cáo được thực hiện trung thực.
+
+% ==============================================================================
+% TÀI LIỆU THAM KHẢO
+% ==============================================================================
+\newpage
+\section*{TÀI LIỆU THAM KHẢO}
+\addcontentsline{toc}{section}{TÀI LIỆU THAM KHẢO}
+
+\begin{enumerate}[label={[\arabic*]}, leftmargin=*, itemsep=6pt, parsep=0pt, topsep=4pt]
+    \item Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein (2022), \textit{Introduction to Algorithms (CLRS)}, 4th Edition, The MIT Press \& McGraw-Hill, Cambridge, Massachusetts. (Trọng tâm: Chương 6 -- Heapsort và Hàng đợi ưu tiên; Chương 11 -- Bảng băm và Kỹ thuật giải quyết đụng độ Open Addressing).
+    
+    \item Donald E. Knuth (1998), \textit{The Art of Computer Programming, Volume 3: Sorting and Searching}, 2nd Edition, Addison-Wesley Professional, Reading, Massachusetts. (Trọng tâm: Mục 6.4 -- Hashing, Giải thuật Dò tuyến tính Linear Probing và Phân tích toán học về cụm sơ cấp).
+    
+    \item Robert Sedgewick and Kevin Wayne (2011), \textit{Algorithms}, 4th Edition, Addison-Wesley Professional, Boston. (Trọng tâm: Chương 2.4 -- Priority Queues; Chương 3.4 -- Hash Tables; Phân tích thực nghiệm cấu trúc dữ liệu trên bộ nhớ chính).
+    
+    \item Mark Allen Weiss (2014), \textit{Data Structures and Algorithm Analysis in C++}, 4th Edition, Pearson Education, Upper Saddle River, New Jersey. (Trọng tâm: Cài đặt Cấu trúc Dữ liệu tối ưu hiệu năng và Kỹ thuật quản lý con trỏ bản ghi).
+    
+    \item Robert W. Floyd (1964), ``Algorithm 245: Treesort 3'', \textit{Communications of the ACM (CACM)}, Tập 7, Số 12, tr. 701, DOI: 10.1145/355588.365103. (Công trình gốc đề xuất giải thuật vun đống Floyd Build-Heap với độ phức tạp tuyến tính $O(N)$ từ dưới lên).
+    
+    \item Glenn Fowler, Landon Curt Noll, and Phong Vo (2011), ``Fowler--Noll--Vo Hash Function (FNV-1a)'', \textit{Internet Engineering Task Force (IETF) Specification Draft}, Silicon Graphics \& Cisco Systems. (Đặc tả giải thuật hàm băm FNV-1a 64-bit với các hằng số nguyên tố FNV\_PRIME và FNV\_OFFSET\_BASIS).
+    
+    \item Bjarne Stroustrup (2013), \textit{The C++ Programming Language}, 4th Edition, Addison-Wesley Professional, Boston. (Trọng tâm: Mô hình bộ nhớ RAM, Tổ chức Layout đối tượng phẳng, Kỹ thuật tránh phân mảnh và Quản lý tài nguyên RAII).
+    
+    \item Ulrich Drepper (2007), ``What Every Programmer Should Know About Memory'', \textit{Red Hat Technical Whitepaper}, tr. 1--114. (Phân tích chuyên sâu về kiến trúc phân cấp bộ nhớ, đường truyền Bus, bộ đệm Cache L1/L2/L3, hiện tượng Cache Line Miss và phương pháp tối ưu hóa dữ liệu liền kề Contiguous Memory Layout).
+    
+    \item ISO/IEC 14882:2020 (2020), \textit{Programming Languages --- C++ (International Standard ISO/IEC C++20 Specification)}, International Organization for Standardization, Geneva, Switzerland. (Chuẩn ngôn ngữ lập trình C++20 và Đặc tả hệ thống thư viện thời gian chính xác cao \texttt{std::chrono}).
+    
+    \item Đinh Bá Tiến, Trương Anh Hoàng, Trần Hạnh Nhi (2020), \textit{Giáo trình Cấu trúc Dữ liệu và Giải thuật}, NXB Đại học Quốc gia TP. Hồ Chí Minh, TP. Hồ Chí Minh.
+    
+    \item Nguyễn Trung Trực (2018), \textit{Cấu trúc Dữ liệu và Giải thuật trong C/C++}, NXB Khoa học và Kỹ thuật, Hà Nội.
+    
+    \item Bộ môn Công nghệ Phần mềm, Khoa Công nghệ Thông tin (2024), \textit{Đề cương chi tiết và Hướng dẫn thực hành học phần Cấu trúc Dữ liệu và Giải thuật (Mã lớp học phần: DASA230179\_03)}, Trường Đại học Công nghệ Kỹ thuật TP. Hồ Chí Minh.
+\end{enumerate}
+
+\end{document}

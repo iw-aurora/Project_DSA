@@ -23,10 +23,9 @@ export const CriteriaBar: React.FC = () => {
         </span>
         <span className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 px-2.5 py-1 rounded-lg font-semibold">
           <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <b className="font-mono">RQ2 (Tự chọn):</b> Lọc Khoảng GPA [O(log N + K)]
+          <b className="font-mono">RQ2 (Tự chọn):</b> Lọc Khoảng GPA [O(log N) View]
         </span>
       </div>
     </div>
   );
 };
-

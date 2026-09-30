@@ -231,11 +231,11 @@ FilterGpaResult FindStudentByGpaRange::filterBaseline(double minGpa, double maxG
 // ----------------------------------------------------------------------------
 // 4. FINAL SOLUTION - SORT + BINARY SEARCH
 // ----------------------------------------------------------------------------
-FilterGpaResult FindStudentByGpaRange::filterFinalSolution(double minGpa, double maxGpa)
+GpaRangeViewResult FindStudentByGpaRange::filterFinalSolution(double minGpa, double maxGpa)
 {
     if (studentsPtr == nullptr)
     {
-        return FilterGpaResult{};
+        return GpaRangeViewResult{};
     }
     const vector<Student> &students = *studentsPtr;
     if (!isBuilt)
@@ -281,7 +281,7 @@ void FindStudentByGpaRange::runComparison()
 
     // 2. Chạy 1 lần trên khoảng GPA vừa chọn
     FilterGpaResult baseline = filterBaseline(minGpa, maxGpa);
-    FilterGpaResult optimized = filterFinalSolution(minGpa, maxGpa);
+    GpaRangeViewResult optimized = filterFinalSolution(minGpa, maxGpa);
 
     // 3. Lặp workload để đo thời gian tổng quát ổn định (tự động điều chỉnh theo kích thước CSDL)
     const int TEST_LOOPS = (studentsPtr->size() > 50000) ? 50 : 1000;
@@ -307,7 +307,7 @@ void FindStudentByGpaRange::runComparison()
     cout << "                 BENCHMARK SO SANH THUAT TOAN LOC THEO KHOANG GPA                        \n";
     cout << "=========================================================================================\n";
     cout << "  - Khoang GPA can loc       : [" << fixed << setprecision(2) << minGpa << " - " << maxGpa << "]\n";
-    cout << "  - So sinh vien tim thay    : " << optimized.students.size() << " sinh vien\n";
+    cout << "  - So sinh vien tim thay    : " << optimized.size() << " sinh vien\n";
     cout << "  - Tap thu nghiem tong quat : " << TEST_LOOPS << " lan lap (Workload)\n";
     cout << "-----------------------------------------------------------------------------------------\n";
     cout << left << setw(32) << "TIEU CHI SO SANH"
@@ -331,19 +331,19 @@ void FindStudentByGpaRange::runComparison()
          << setw(25) << (optimized.comparisons * TEST_LOOPS) << "\n";
     cout << left << setw(32) << "So luong ket qua tim thay"
          << right << setw(25) << baseline.students.size()
-         << setw(25) << optimized.students.size() << "\n";
+         << setw(25) << optimized.size() << "\n";
     cout << "=========================================================================================\n";
 
     displayResult(minGpa, maxGpa, optimized);
 }
 
-void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const FilterGpaResult &result) const
+void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const GpaRangeViewResult &result) const
 {
     cout << "\n=========================================================================================\n";
     cout << "                             DANH SACH SINH VIEN THEO KHOANG GPA                         \n";
     cout << "=========================================================================================\n";
 
-    if (result.students.empty())
+    if (result.empty())
     {
         cout << "  [!] Khong tim thay sinh vien nao trong khoang GPA [" << fixed << setprecision(2) << minGpa << " - " << maxGpa << "].\n";
         cout << "=========================================================================================\n";
@@ -357,12 +357,13 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
          << " | " << setw(6) << "GPA" << "\n";
     cout << "-----------------------------------------------------------------------------------------\n";
 
-    size_t total = result.students.size();
+    size_t total = result.size();
     if (total <= 10)
     {
         int stt = 1;
-        for (const auto &student : result.students)
+        for (size_t i = 0; i < total; ++i)
         {
+            const auto &student = result.at(i);
             cout << left << setw(6) << stt++
                  << " | " << setw(12) << student.id
                  << " | " << setw(26) << student.name
@@ -375,7 +376,7 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
         // 1. In 9 sinh viên đầu tiên
         for (size_t i = 0; i < 9; ++i)
         {
-            const auto &student = result.students[i];
+            const auto &student = result.at(i);
             cout << left << setw(6) << (i + 1)
                  << " | " << setw(12) << student.id
                  << " | " << setw(26) << student.name
@@ -391,7 +392,7 @@ void FindStudentByGpaRange::displayResult(double minGpa, double maxGpa, const Fi
              << " | " << right << setw(5) << "..." << "\n";
 
         // 3. In sinh viên cuối cùng
-        const auto &lastStudent = result.students.back();
+        const auto &lastStudent = result.at(total - 1);
         cout << left << setw(6) << total
              << " | " << setw(12) << lastStudent.id
              << " | " << setw(26) << lastStudent.name
@@ -426,13 +427,13 @@ void FindStudentByGpaRange::runFinalSolution()
 
     clearScreen();
 
-    FilterGpaResult result = filterFinalSolution(minGpa, maxGpa);
+    GpaRangeViewResult result = filterFinalSolution(minGpa, maxGpa);
 
     cout << "=========================================================================================\n";
     cout << "          KET QUA LOC SINH VIEN THEO KHOANG GPA (GIAI THUAT TOI UU: BINARY SEARCH)       \n";
     cout << "=========================================================================================\n";
     cout << "  - Khoang GPA can loc    : [" << fixed << setprecision(2) << minGpa << " - " << maxGpa << "]\n";
-    cout << "  - So sinh vien tim thay : " << result.students.size() << " sinh vien\n";
+    cout << "  - So sinh vien tim thay : " << result.size() << " sinh vien\n";
     cout << "  - Thoi gian thuc thi    : " << fixed << setprecision(4) << result.queryTimeMs << " ms\n";
     cout << "  - So phep so sanh       : " << result.comparisons << " phep so sanh (O(log N + K))\n";
     cout << "=========================================================================================\n";

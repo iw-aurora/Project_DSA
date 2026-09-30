@@ -121,7 +121,7 @@ export const FinalSolutionTab: React.FC<FinalSolutionTabProps> = ({ totalStudent
             </div>
             <div className="text-sm font-bold text-slate-800 mt-2">Lọc Khoảng Điểm GPA</div>
             <div className="text-[11px] text-slate-500 mt-0.5">Range query (Binary Search)</div>
-            <div className="text-[11px] text-emerald-600 font-mono font-bold mt-1">Độ phức tạp: O(log N + K)</div>
+            <div className="text-[11px] text-emerald-600 font-mono font-bold mt-1">Độ phức tạp: O(log N) View</div>
           </div>
         </div>
 

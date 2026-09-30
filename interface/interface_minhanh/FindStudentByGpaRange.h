@@ -40,11 +40,11 @@ public:
     void getGpaRangeFromUser(double &minGpa, double &maxGpa);
 
     FilterGpaResult filterBaseline(double minGpa, double maxGpa);
-    FilterGpaResult filterFinalSolution(double minGpa, double maxGpa);
+    GpaRangeViewResult filterFinalSolution(double minGpa, double maxGpa);
 
     void runComparison();
     void runFinalSolution();
-    void displayResult(double minGpa, double maxGpa, const FilterGpaResult &result) const;
+    void displayResult(double minGpa, double maxGpa, const GpaRangeViewResult &result) const;
 };
 
 #endif
