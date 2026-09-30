@@ -11,7 +11,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **MC1** *(Bắt buộc)* | Tra cứu theo Mã Sinh Viên (MSSV) | Duyệt tuyến tính (Linear Scan) | **Hash Table** (`std::unordered_map`) | **$\mathcal{O}(1)$** |
 | **MC2** *(Bắt buộc)* | Tìm sinh viên có GPA cao nhất | Quét toàn bộ danh sách | **Custom Max-Heap** (Phần tử gốc) | **$\mathcal{O}(1)$** |
-| **RQ1** *(Tự chọn)* | Lọc danh sách sinh viên theo Lớp | Quét từng phần tử mảng | **Chỉ mục bộ nhớ (Inverted Index Filter)** | **$\mathcal{O}(K)$** |
+| **RQ1** *(Tự chọn)* | Lọc danh sách sinh viên theo Lớp | Quét từng phần tử mảng | **Class Index View (`classId -> indexes`)** | **$\mathcal{O}(1)$ view / $\mathcal{O}(K)$ khi liệt kê** |
 | **RQ2** *(Tự chọn)* | Lọc sinh viên theo khoảng GPA | Quét tuyến tính $O(N)$ | **Mảng con trỏ sắp xếp + Tìm kiếm nhị phân (Range View)** | **$\mathcal{O}(\log N)$ view / $\mathcal{O}(\log N + K)$ khi liệt kê** |
 | **CRUD** | Thêm, sửa, xóa, tìm kiếm sinh viên | Thao tác trên bộ nhớ | **Cập nhật đồng bộ RAM & Database JSON** | $\mathcal{O}(1)$ / $\mathcal{O}(N)$ |
 | **RAM Injector** | Nạp & cộng dồn dữ liệu lớn vào RAM | N/A | **In-Memory High-Speed Generator (500k records trong vài ms)** | Instant |

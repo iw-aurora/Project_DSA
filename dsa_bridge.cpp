@@ -117,6 +117,8 @@ int main(int argc, char *argv[])
     prebuiltHeapFinder.buildStructure();
 
     FindStudentByGpaRange prebuiltGpaFinder(students);
+    OptimizedLinearFilter prebuiltClassFilter;
+    prebuiltClassFilter.build(students);
 
     // FULL SYSTEM & CPU CACHE WARM-UP (L1/L2/L3 Cache Line Pre-fetching)
     if (!students.empty())
@@ -124,8 +126,7 @@ int main(int argc, char *argv[])
         prebuiltHashTable.search(students[0].id);
         prebuiltHeapFinder.findMaxGPA();
         prebuiltGpaFinder.filterFinalSolution(cachedMinGpa, cachedMaxGpa);
-        LinearFilter wf;
-        wf.filter(students, students[0].classId);
+        prebuiltClassFilter.filterView(students[0].classId);
     }
 
     // Notify ready to parent process
@@ -189,6 +190,7 @@ int main(int argc, char *argv[])
                 prebuiltHeapFinder = CustomMaxHeapGpaFinder(students);
                 prebuiltHeapFinder.buildStructure();
                 prebuiltGpaFinder = FindStudentByGpaRange(students);
+                prebuiltClassFilter.build(students);
 
                 // Warm-up
                 if (!students.empty())
@@ -196,6 +198,7 @@ int main(int argc, char *argv[])
                     prebuiltHashTable.search(students[0].id);
                     prebuiltHeapFinder.findMaxGPA();
                     prebuiltGpaFinder.filterFinalSolution(cachedMinGpa, cachedMaxGpa);
+                    prebuiltClassFilter.filterView(students[0].classId);
                 }
 
                 auto endGen = chrono::high_resolution_clock::now();
@@ -303,8 +306,6 @@ int main(int argc, char *argv[])
                 ss >> targetClass;
 
                 LinearFilter baseline;
-                OptimizedLinearFilter optimized;
-
                 // Baseline Single
                 auto t1 = chrono::high_resolution_clock::now();
                 LinearFilterResult baseRes = baseline.filter(students, targetClass);
@@ -313,7 +314,7 @@ int main(int argc, char *argv[])
 
                 // Final Solution Single
                 auto ft1 = chrono::high_resolution_clock::now();
-                OptimizedFilterResult optRes = optimized.filter(students, targetClass);
+                ClassIndexViewResult optRes = prebuiltClassFilter.filterView(targetClass);
                 auto ft2 = chrono::high_resolution_clock::now();
                 double optSingleMs = chrono::duration<double, milli>(ft2 - ft1).count();
 
@@ -324,12 +325,12 @@ int main(int argc, char *argv[])
                 res["status"] = "success";
                 res["module"] = "RQ1: Sinh viên theo Mã Lớp (Multi-Result Equality)";
                 res["classId"] = targetClass;
-                res["matchCount"] = optRes.indexes.size();
+                res["matchCount"] = optRes.size();
 
                 json bTable = json::array();
                 bTable.push_back({{"metric", "Độ phức tạp lý thuyết (Theoretical Complexity)"},
                                   {"baseline", "O(N)"},
-                                  {"final", "O(N) Indexing"}});
+                                  {"final", "O(1) average class-index lookup + O(1) result view"}});
                 bTable.push_back({{"metric", "Thời gian truy vấn đơn lẻ (Single Query Time)"},
                                   {"baseline", to_string(baseSingleMs) + " ms"},
                                   {"final", to_string(optSingleMs) + " ms"}});
@@ -341,17 +342,17 @@ int main(int argc, char *argv[])
                                   {"final", to_string(optRes.comparisons)}});
                 bTable.push_back({{"metric", "Bộ nhớ tiêu thụ thêm (Extra Memory)"},
                                   {"baseline", "Dynamic realloc (Student copies)"},
-                                  {"final", "Vector int indexes"}});
+                                  {"final", "O(N) classId -> indexes, O(1) result view"}});
                 bTable.push_back({{"metric", "Số kết quả tìm thấy (Results Count)"},
                                   {"baseline", to_string(baseRes.students.size()) + " SV"},
-                                  {"final", to_string(optRes.indexes.size()) + " SV"}});
+                                  {"final", to_string(optRes.size()) + " SV"}});
                 res["benchmark"] = bTable;
 
                 json studentsJson = json::array();
-                size_t maxPreview = min(optRes.indexes.size(), (size_t)100);
+                size_t maxPreview = min(optRes.size(), (size_t)100);
                 for (size_t i = 0; i < maxPreview; ++i)
                 {
-                    const auto &s = students[optRes.indexes[i]];
+                    const auto &s = students[optRes.at(i)];
                     json item;
                     item["id"] = s.id;
                     item["name"] = s.name;

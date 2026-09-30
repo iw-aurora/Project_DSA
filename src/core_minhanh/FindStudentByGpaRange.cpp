@@ -435,7 +435,7 @@ void FindStudentByGpaRange::runFinalSolution()
     cout << "  - Khoang GPA can loc    : [" << fixed << setprecision(2) << minGpa << " - " << maxGpa << "]\n";
     cout << "  - So sinh vien tim thay : " << result.size() << " sinh vien\n";
     cout << "  - Thoi gian thuc thi    : " << fixed << setprecision(4) << result.queryTimeMs << " ms\n";
-    cout << "  - So phep so sanh       : " << result.comparisons << " phep so sanh (O(log N + K))\n";
+    cout << "  - So phep so sanh       : " << result.comparisons << " phep so sanh (O(log N) range view)\n";
     cout << "=========================================================================================\n";
 
     displayResult(minGpa, maxGpa, result);

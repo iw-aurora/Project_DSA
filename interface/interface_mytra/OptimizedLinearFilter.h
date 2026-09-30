@@ -2,6 +2,7 @@
 #define OPTIMIZED_LINEAR_FILTER_H
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 #include "../student.h"
 
@@ -10,16 +11,10 @@ using namespace std;
 // ============================================================================
 // STRUCT: OptimizedFilterResult
 // ============================================================================
-// Chức năng:
-// - Lưu kết quả của Optimized Linear Filter.
-// - Thay vì lưu bản sao của từng Student,
-//   chỉ lưu vị trí (index) của Student trong vector dữ liệu gốc.
-// - Lưu số phép so sánh classId.
-//
-// Lưu ý:
-// - indexes chỉ là kết quả tạm thời của một lần truy vấn.
-// - Không lưu indexes lâu dài.
-// - Nếu database thay đổi, lần truy vấn tiếp theo sẽ tạo indexes mới.
+// Purpose:
+// - Legacy result type that stores matching student indexes instead of
+//   copying full Student records.
+// - Kept for older call sites that still expect an owned vector<int>.
 // ============================================================================
 
 struct OptimizedFilterResult
@@ -39,43 +34,68 @@ struct OptimizedFilterResult
     }
 };
 
+struct ClassIndexViewResult
+{
+    const vector<int> *indexes;
+    long long comparisons;
+
+    ClassIndexViewResult()
+    {
+        indexes = nullptr;
+        comparisons = 0;
+    }
+
+    size_t size() const
+    {
+        return indexes == nullptr ? 0 : indexes->size();
+    }
+
+    bool empty() const
+    {
+        return size() == 0;
+    }
+
+    int at(size_t index) const
+    {
+        return (*indexes)[index];
+    }
+};
+
 // ============================================================================
 // CLASS: OptimizedLinearFilter
 // ============================================================================
-// Chức năng:
-// - Thực hiện Final Solution của RQ1.
-// - Vẫn sử dụng Linear Filter nên thời gian vẫn là O(N).
-// - Cải tiến cách lưu kết quả:
-//      Baseline : lưu bản sao Student.
-//      Final    : chỉ lưu index của Student.
-// - Mục tiêu là giảm chi phí sao chép dữ liệu, không làm thay đổi thuật toán tìm kiếm.
-// Độ phức tạp:
-// - Time : O(N)
-// - Space: O(k)
+// Purpose:
+// - Final RQ1 data structure.
+// - build(): one pass over N students to create classId -> indexes.
+// - filterView(): average O(1) lookup that returns a view of the stored
+//   index vector, so the query does not copy K Student records or K indexes.
 //
-// N: tổng số sinh viên.
-// k: số sinh viên thuộc lớp cần tìm.
+// Complexity:
+// - Build time : O(N)
+// - Build space: O(N)
+// - Query time : O(1) average for lookup, O(K) only when the caller iterates
+//   the returned indexes to render/list results.
+// - Query space: O(1)
 // ============================================================================
 
 class OptimizedLinearFilter
 {
+private:
+    unordered_map<string, vector<int>> classIndex;
+    bool built;
+
 public:
+    OptimizedLinearFilter();
+
+    void build(const vector<Student> &students);
+    ClassIndexViewResult filterView(const string &classId) const;
+    OptimizedFilterResult filter(const string &classId) const;
+
     // ------------------------------------------------------------------------
     // Hàm: filter()
     //
-    // Chức năng:
-    // - Tìm tất cả sinh viên thuộc classId cần tìm.
-    // - Duyệt toàn bộ vector students.
-    // - Nếu classId trùng nhau, lưu index của Student.
-    //
-    // Input:
-    // - students : danh sách sinh viên gốc.
-    // - classId  : mã lớp cần tìm.
-    //
-    // Output:
-    // - Trả về OptimizedFilterResult gồm:
-    //      + indexes
-    //      + số phép so sánh.
+    // Legacy one-shot scan. It is intentionally still O(N), but avoids
+    // copying Student objects by storing indexes only.
     // ------------------------------------------------------------------------
 
     static OptimizedFilterResult filter(

@@ -1,14 +1,55 @@
 #include "../../interface/interface_mytra/OptimizedLinearFilter.h"
-// Final Solution lưu index của Student thay vì sao chép
-// toàn bộ đối tượng Student vào kết quả.
-// Điều này giảm chi phí sao chép dữ liệu nhưng không
-// làm thay đổi độ phức tạp của quá trình tìm kiếm.
-// Điểm cải tiến so với Baseline:
-// - Baseline:
-//      result.students.push_back(student);
-// - Final:
-//      result.indexes.push_back(i);
-// Nhờ đó Final không cần tạo bản sao Student cho từng kết quả.
+
+OptimizedLinearFilter::OptimizedLinearFilter()
+    : built(false)
+{
+}
+
+void OptimizedLinearFilter::build(const vector<Student> &students)
+{
+    classIndex.clear();
+    classIndex.reserve(64);
+
+    for (int i = 0; i < static_cast<int>(students.size()); ++i)
+    {
+        classIndex[students[i].classId].push_back(i);
+    }
+
+    built = true;
+}
+
+ClassIndexViewResult OptimizedLinearFilter::filterView(const string &classId) const
+{
+    ClassIndexViewResult result;
+    if (!built)
+    {
+        return result;
+    }
+
+    result.comparisons = 1;
+    auto it = classIndex.find(classId);
+    if (it != classIndex.end())
+    {
+        result.indexes = &it->second;
+    }
+
+    return result;
+}
+
+OptimizedFilterResult OptimizedLinearFilter::filter(const string &classId) const
+{
+    OptimizedFilterResult result;
+    ClassIndexViewResult view = filterView(classId);
+    result.comparisons = view.comparisons;
+    if (view.indexes != nullptr)
+    {
+        result.indexes = *view.indexes;
+    }
+    return result;
+}
+
+// Legacy one-shot path: still scans linearly and stores indexes instead of
+// copying Student objects. Kept for older console flows and direct tests.
 OptimizedFilterResult OptimizedLinearFilter::filter(
     const vector<Student> &students,
     const string &classId)

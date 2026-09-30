@@ -19,7 +19,7 @@ export const CriteriaBar: React.FC = () => {
         </span>
         <span className="inline-flex items-center gap-1.5 bg-purple-50 border border-purple-200 text-purple-700 px-2.5 py-1 rounded-lg font-semibold">
           <span className="w-2 h-2 rounded-full bg-purple-500"></span>
-          <b className="font-mono">RQ1 (Tự chọn):</b> Lọc Theo Mã Lớp [Vector Index]
+          <b className="font-mono">RQ1 (Tự chọn):</b> Lọc Theo Mã Lớp [Class Index View]
         </span>
         <span className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 px-2.5 py-1 rounded-lg font-semibold">
           <span className="w-2 h-2 rounded-full bg-emerald-500"></span>

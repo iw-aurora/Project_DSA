@@ -218,13 +218,14 @@ void FindStudentByClassId::filterBaseline()
     baselineBenchmark.comparisons = baselineResult.comparisons;
     baselineBenchmark.resultCount = baselineResult.students.size();
 
-    // 3. CHẠY FINAL SOLUTION (Optimized Linear Filter)
+    // 3. CHẠY FINAL SOLUTION (Prebuilt Class Index)
+    OptimizedLinearFilter optimizedFilter;
+    optimizedFilter.build(*studentsPtr);
+
     auto startOptimized = high_resolution_clock::now();
 
-    OptimizedFilterResult optimizedResult =
-        OptimizedLinearFilter::filter(
-            *studentsPtr,
-            classId);
+    ClassIndexViewResult optimizedResult =
+        optimizedFilter.filterView(classId);
 
     auto endOptimized = high_resolution_clock::now();
 
@@ -237,7 +238,7 @@ void FindStudentByClassId::filterBaseline()
     BenchmarkResult optimizedBenchmark;
     optimizedBenchmark.timeMs = optimizedTime;
     optimizedBenchmark.comparisons = optimizedResult.comparisons;
-    optimizedBenchmark.resultCount = optimizedResult.indexes.size();
+    optimizedBenchmark.resultCount = optimizedResult.size();
 
     // 4. HIỂN THỊ BENCHMARK
     Benchmark::printComparison(
@@ -246,13 +247,18 @@ void FindStudentByClassId::filterBaseline()
         optimizedBenchmark);
 
     // 5. HIỂN THỊ DANH SÁCH SINH VIÊN TRONG LỚP
+    vector<int> optimizedIndexes;
+    if (optimizedResult.indexes != nullptr)
+    {
+        optimizedIndexes = *optimizedResult.indexes;
+    }
     Benchmark::printStudents(
         *studentsPtr,
-        optimizedResult.indexes);
+        optimizedIndexes);
 }
 
 // HÀM: filterFinalSolution()
-// Chạy trực tiếp thuật toán tối ưu (Optimized Linear Filter) và hiển thị kết quả
+// Chay truc tiep final solution: prebuilt class index view.
 void FindStudentByClassId::filterFinalSolution()
 {
     // 1. CHỌN MÃ LỚP QUA MENU TƯƠNG TÁC PHÍM MŨI TÊN
@@ -266,13 +272,14 @@ void FindStudentByClassId::filterFinalSolution()
 
     clearScreen();
 
-    // 2. CHẠY FINAL SOLUTION (Optimized Linear Filter)
+    // 2. CHẠY FINAL SOLUTION (Prebuilt Class Index)
+    OptimizedLinearFilter optimizedFilter;
+    optimizedFilter.build(*studentsPtr);
+
     auto startOptimized = high_resolution_clock::now();
 
-    OptimizedFilterResult optimizedResult =
-        OptimizedLinearFilter::filter(
-            *studentsPtr,
-            classId);
+    ClassIndexViewResult optimizedResult =
+        optimizedFilter.filterView(classId);
 
     auto endOptimized = high_resolution_clock::now();
 
@@ -286,13 +293,18 @@ void FindStudentByClassId::filterFinalSolution()
     cout << "             KET QUA LOC SINH VIEN THEO LOP (GIAI THUAT TOI UU: OPTIMIZED INDEX)         \n";
     cout << "=========================================================================================\n";
     cout << "  - Ma lop can loc        : " << classId << "\n";
-    cout << "  - So sinh vien tim thay : " << optimizedResult.indexes.size() << " sinh vien\n";
+    cout << "  - So sinh vien tim thay : " << optimizedResult.size() << " sinh vien\n";
     cout << "  - Thoi gian thuc thi    : " << fixed << setprecision(4) << optimizedTime << " ms\n";
-    cout << "  - So phep so sanh       : " << optimizedResult.comparisons << " phep so sanh (O(N))\n";
+    cout << "  - So phep so sanh       : " << optimizedResult.comparisons << " phep so sanh (O(1) average index lookup)\n";
     cout << "=========================================================================================\n";
 
     // 4. HIỂN THỊ DANH SÁCH SINH VIÊN TRONG LỚP
+    vector<int> optimizedIndexes;
+    if (optimizedResult.indexes != nullptr)
+    {
+        optimizedIndexes = *optimizedResult.indexes;
+    }
     Benchmark::printStudents(
         *studentsPtr,
-        optimizedResult.indexes);
+        optimizedIndexes);
 }

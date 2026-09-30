@@ -25,11 +25,11 @@ void Benchmark::printComparison(
      cout << "-----------------------------------------------------------------------------------------\n";
      cout << left << setw(32) << "TIEU CHI SO SANH"
           << right << setw(25) << "BASELINE LINEAR"
-          << setw(25) << "OPTIMIZED LINEAR" << "\n";
+          << setw(25) << "CLASS INDEX VIEW" << "\n";
      cout << "-----------------------------------------------------------------------------------------\n";
      cout << left << setw(32) << "Do phuc tap ly thuyet"
           << right << setw(25) << "O(N)"
-          << setw(25) << "O(N)" << "\n";
+          << setw(25) << "O(1) average" << "\n";
      cout << left << setw(32) << "Thoi gian 1 lan loc"
           << right << setw(20) << fixed << setprecision(4) << baseline.timeMs << " ms"
           << setw(20) << fixed << setprecision(4) << optimized.timeMs << " ms" << "\n";
@@ -44,7 +44,7 @@ void Benchmark::printComparison(
           << setw(25) << (optimized.comparisons * TEST_LOOPS) << "\n";
      cout << left << setw(32) << "Cap phat bo nho (Memory)"
           << right << setw(25) << (to_string(baseline.resultCount) + " Student Objects")
-          << setw(25) << (to_string(optimized.resultCount) + " Indexes (int)") << "\n";
+          << setw(25) << "Class index view" << "\n";
      cout << left << setw(32) << "So luong ket qua tim thay"
           << right << setw(25) << baseline.resultCount
           << setw(25) << optimized.resultCount << "\n";

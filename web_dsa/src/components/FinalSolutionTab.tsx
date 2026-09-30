@@ -108,7 +108,7 @@ export const FinalSolutionTab: React.FC<FinalSolutionTabProps> = ({ totalStudent
             </div>
             <div className="text-sm font-bold text-slate-800 mt-2">Lọc Theo Mã Lớp</div>
             <div className="text-[11px] text-slate-500 mt-0.5">Multi-result equality lookup</div>
-            <div className="text-[11px] text-indigo-600 font-mono font-bold mt-1">Độ phức tạp: O(N) Indexing</div>
+            <div className="text-[11px] text-indigo-600 font-mono font-bold mt-1">Độ phức tạp: O(1) Index View</div>
           </div>
 
           <div 

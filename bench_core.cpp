@@ -222,6 +222,14 @@ int main(int argc, char **argv) {
             return TimedResult{ms, students.size(), 0};
         });
 
+        OptimizedLinearFilter classIndexFilter;
+        auto classIndexBuildSamples = runTimedSamples(warmupRuns, samples, [&]() {
+            double ms = measureMs([&]() {
+                classIndexFilter.build(students);
+            });
+            return TimedResult{ms, students.size(), 0};
+        });
+
         LinearSearch linearSearch;
         LinearMaxScanGpaFinder linearMax(students);
 
@@ -288,11 +296,11 @@ int main(int argc, char **argv) {
         });
 
         auto rq1Optimized = runTimedSamples(warmupRuns, samples, [&]() {
-            OptimizedFilterResult result;
+            ClassIndexViewResult result;
             double ms = measureMs([&]() {
-                result = OptimizedLinearFilter::filter(students, classId);
+                result = classIndexFilter.filterView(classId);
             });
-            return TimedResult{ms, result.indexes.size(), result.comparisons};
+            return TimedResult{ms, result.size(), result.comparisons};
         });
 
         auto rq2Linear = runTimedSamples(warmupRuns, samples, [&]() {
@@ -325,6 +333,7 @@ int main(int argc, char **argv) {
         std::cout << "hash_collisions=" << hashTable.getCollisions() << '\n';
         std::cout << "heap_build_median_ms=" << statsOf(heapBuildSamples).medianMs << '\n';
         std::cout << "sorted_gpa_build_median_ms=" << statsOf(sortedBuildSamples).medianMs << '\n';
+        std::cout << "class_index_build_median_ms=" << statsOf(classIndexBuildSamples).medianMs << '\n';
         std::cout << '\n';
         std::cout << std::left << std::setw(34) << "metric"
                   << std::right << std::setw(14) << "min_ms"
@@ -334,12 +343,13 @@ int main(int argc, char **argv) {
         printStats("Build HashTable", statsOf(hashBuildSamples));
         printStats("Build MaxHeap", statsOf(heapBuildSamples));
         printStats("Build SortedGPA", statsOf(sortedBuildSamples));
+        printStats("Build ClassIndex", statsOf(classIndexBuildSamples));
         printStats("MC1 Linear Search " + std::to_string(idQueryCount) + "q", statsOf(mc1Linear));
         printStats("MC1 Hash Search " + std::to_string(idQueryCount) + "q", statsOf(mc1Hash));
         printStats("MC2 Linear Max " + std::to_string(repeatedQueries) + "q", statsOf(mc2Linear));
         printStats("MC2 Heap Max " + std::to_string(repeatedQueries) + "q", statsOf(mc2Heap));
         printStats("RQ1 Linear Class", statsOf(rq1Linear));
-        printStats("RQ1 Index Class", statsOf(rq1Optimized));
+        printStats("RQ1 ClassIndex View", statsOf(rq1Optimized));
         printStats("RQ2 Linear GPA", statsOf(rq2Linear));
         printStats("RQ2 Sorted GPA", statsOf(rq2Sorted));
         std::cout << '\n';

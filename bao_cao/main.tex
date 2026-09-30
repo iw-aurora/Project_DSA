@@ -1,4 +1,4 @@
-\documentclass[14pt,a4paper]{extarticle}
+﻿\documentclass[14pt,a4paper]{extarticle}
 
 % ==============================================================================
 % 1. CẤU HÌNH GÓI VÀ BẢNG MÃ TIẾNG VIỆT
@@ -344,7 +344,7 @@ Tuân thủ quy định về Đánh giá năng lực cá nhân (\textit{Individu
 \textbf{Thành viên \& MSSV} & \textbf{Thành phần sở hữu} & \textbf{Đóng góp Kỹ thuật \& Biện minh Thiết kế} \\ \hline
 \textbf{Bùi Tấn Phát} \newline MSSV: 25110289 & \textbf{Module 1: Closed Hash} \newline \textit{(Phục vụ yêu cầu MC1)} & Tự cài đặt FNV-1a 64-bit, Linear Probing và cấu trúc ô nhớ 2 trạng thái (\texttt{OCCUPIED}/\texttt{EMPTY}) tĩnh sau Bulk Load. Chứng minh số bước dò kỳ vọng xấp xỉ 1.5 probe với hệ số tải $\alpha \approx 0.50$ và dung lượng bảng $M = 21.000.001$. \\ \hline
 \textbf{Nguyễn Phan Thành Tiến} \newline MSSV: 25110361 & \textbf{Module 2: Custom Heap} \newline \textit{(Phục vụ yêu cầu MC2)} & Tự cài đặt Max-Heap mảng 1D, Floyd Build Heap $O(N)$ từ dưới lên, \texttt{heapifyDown} dạng lặp và xử lý quy tắc Tie-break theo MSSV. Chứng minh toán học độ phức tạp $O(N)$ qua chuỗi hội tụ. \\ \hline
-\textbf{Ngô Đức Thành} \newline MSSV: 25110335 & \textbf{Module 3: Sorted GPA \& Class Filter} \newline \textit{(Phục vụ RQ1, RQ2)} & Xây dựng mảng con trỏ sắp xếp GPA bằng \texttt{std::sort}, tự cài đặt thuật toán Tìm kiếm Nhị phân 2 đầu biên (\textit{Lower/Upper Bound}) tạo range view trong thời gian $O(\log N)$, và triển khai thuật toán quét tuyến tính \texttt{OptimizedLinearFilter} $O(N)$ lọc theo lớp. \\ \hline
+\textbf{Ngô Đức Thành} \newline MSSV: 25110335 & \textbf{Module 3: Sorted GPA \& Class Filter} \newline \textit{(Phục vụ RQ1, RQ2)} & Xây dựng mảng con trỏ sắp xếp GPA bằng \texttt{std::sort}, tự cài đặt thuật toán Tìm kiếm Nhị phân 2 đầu biên (\textit{Lower/Upper Bound}) tạo range view trong thời gian $O(\log N)$, và triển khai \texttt{OptimizedLinearFilter} dạng Class Index View cho RQ1 với build $O(N)$ và query trung bình $O(1)$. \\ \hline
 \textbf{Đặng Đoàn Minh Khang} \newline MSSV: 25110227 & \textbf{Module 4: 3-Tier \& Core} \newline \textit{(Giải quyết xung đột)} & Thiết kế kiến trúc module hóa kết hợp đa cấu trúc, quy trình Bulk Load, cấp phát \texttt{reserve(10500000)} chống phân mảnh vùng nhớ, cầu nối API Bridge C++ và Web Dashboard trực quan hóa. \\ \hline
 \end{tabularx}
 \endgroup
@@ -516,7 +516,7 @@ Yêu cầu bắt buộc thứ hai (MC2 -- \textit{Extreme Priority Retrieval}) �
 
 Từ góc độ nghiệp vụ quản lý đào tạo thực tế, ban chủ nhiệm khoa và cố vấn học tập luôn cần truy xuất danh sách toàn bộ sinh viên thuộc một lớp học cụ thể (Yêu cầu RQ1 -- \textit{Filter by Class ID}).
 
-Đặc thù của yêu cầu này là trường khóa lọc \texttt{classId} có tính phân nhóm cao nhưng số lượng nhóm hữu hạn (toàn bộ $10.500.000$ sinh viên được phân chia đều vào 25 mã lớp từ $C01$ đến $C25$, tương đương khoảng $420.000$ sinh viên mỗi lớp). Trong code hiện tại, RQ1 vẫn duyệt tuyến tính toàn bộ danh sách nhưng chỉ lưu chỉ số kết quả thay vì sao chép toàn bộ \texttt{Student}, nhờ đó giảm chi phí bộ nhớ tạm khi trả danh sách sinh viên theo lớp.
+Đặc thù của yêu cầu này là trường khóa lọc \texttt{classId} có tính phân nhóm cao nhưng số lượng nhóm hữu hạn (toàn bộ $10.500.000$ sinh viên được phân chia đều vào 25 mã lớp từ $C01$ đến $C25$, tương đương khoảng $420.000$ sinh viên mỗi lớp). Trong code hien tai, RQ1 build truoc chi muc \texttt{classId -> indexes}; vi vay truy van theo lop khong can quet lai toan bo danh sach va khong sao chep cac doi tuong \texttt{Student}. Chi phi build la $O(N)$, con query trung binh la $O(1)$ de lay view va chi phat sinh $O(K)$ khi tang goi can liet ke/serialize ket qua.
 
 \subsubsection*{1.3.2. Yêu cầu tự phát hiện 2: Truy vấn dữ liệu theo khoảng giá trị}
 \addcontentsline{toc}{subsubsection}{1.3.2. Yêu cầu tự phát hiện 2: Truy vấn dữ liệu theo khoảng giá trị}
@@ -915,13 +915,12 @@ Luồng vận hành lọc sinh viên theo khoảng điểm GPA (Yêu cầu RQ2) 
 \label{fig:seq_rq2_range}
 \end{figure}
 
-\subsubsection*{2.3.3. Hiện thực bộ lọc theo mã lớp học phần (RQ1) tối ưu bộ nhớ}
-\addcontentsline{toc}{subsubsection}{2.3.3. Hiện thực bộ lọc theo mã lớp học phần (RQ1) tối ưu bộ nhớ}
+\subsubsection*{2.3.3. Hiện thực bộ lọc theo mã lớp học phần (RQ1) bằng Class Index View}
+\addcontentsline{toc}{subsubsection}{2.3.3. Hiện thực bộ lọc theo mã lớp học phần (RQ1) bằng Class Index View}
 
-Đối với yêu cầu lọc danh sách sinh viên theo mã lớp học phần (\texttt{classId}, Yêu cầu RQ1), nhóm xây dựng module \texttt{OptimizedLinearFilter}. Thay vì sao chép toàn bộ cấu trúc dữ liệu của $k$ sinh viên thỏa mãn (gây tốn kém bộ nhớ và phát sinh chi phí sao chép chuỗi), module thực hiện duyệt tuần tự qua mảng sinh viên trong thời gian $O(N)$ và chỉ lưu lại danh sách các chỉ số nguyên (\texttt{vector<int> indexes}) của các phần tử có \texttt{classId} trùng khớp.
+Đối với yêu cầu lọc danh sách sinh viên theo mã lớp học phần (\texttt{classId}, RQ1), nhóm xây dựng \texttt{OptimizedLinearFilter} theo hướng Class Index View. Pha \texttt{build()} duyệt một lần qua mảng sinh viên và lưu \texttt{unordered\_map<string, vector<int>>}, trong đó mỗi khóa \texttt{classId} trỏ đến danh sách chỉ số sinh viên thuộc lớp đó. Pha \texttt{filterView()} chỉ thực hiện tra cứu hash trung bình $O(1)$ và trả về con trỏ tới \texttt{vector<int>} đã có sẵn, nên không sao chép $K$ đối tượng \texttt{Student} và cũng không sao chép lại $K$ chỉ số khi chỉ cần benchmark query.
 
-Giải pháp này tiêu tốn không gian bộ nhớ bổ trợ chỉ $O(k)$ (với $k$ là số lượng sinh viên trong lớp), giúp giảm thiểu chi phí cấp phát bộ nhớ động mà vẫn đảm bảo tính toàn vẹn dữ liệu truy xuất.
-
+Chi phí xây dựng của cấu trúc này là $O(N)$ thời gian và $O(N)$ bộ nhớ chỉ mục. Sau khi build, mỗi truy vấn theo lớp có chi phí trung bình $O(1)$ để lấy view; chỉ khi tầng giao diện/API cần liệt kê kết quả thì mới phát sinh thêm $O(K)$ để dereference các chỉ số cần hiển thị.
 \subsection*{2.4. Hiện thực tầng lưu trữ bền vững và cơ chế nạp dữ liệu hàng loạt}
 \addcontentsline{toc}{subsection}{2.4. Hiện thực tầng lưu trữ bền vững và cơ chế nạp dữ liệu hàng loạt}
 
@@ -1027,9 +1026,10 @@ Toàn bộ các phép đo đạc Benchmark đối sánh được thực hiện t
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.4cm}|r|r|r|r|>{\raggedright\arraybackslash}X|}
 \hline
 \textbf{Build structure} & \textbf{Min} & \textbf{Median} & \textbf{Mean} & \textbf{Max} & \textbf{Ghi chú} \\ \hline
-HashTable & $18.131$ & $20.523$ & $20.818$ & $24.531$ & $266.468$ collision khi build \\ \hline
-MaxHeap & $47.111$ & $48.984$ & $49.371$ & $55.616$ & Floyd Build Heap trên bản sao \texttt{maxHeap} \\ \hline
-SortedGPA & $125.896$ & $132.005$ & $132.334$ & $151.376$ & Tạo mảng con trỏ và \texttt{std::sort} theo GPA \\ \hline
+HashTable & $19.404$ & $21.241$ & $21.594$ & $25.177$ & $266.468$ collision khi build \\ \hline
+MaxHeap & $48.532$ & $51.957$ & $51.906$ & $55.472$ & Floyd Build Heap tren ban sao \texttt{maxHeap} \\ \hline
+SortedGPA & $135.008$ & $143.192$ & $144.939$ & $174.170$ & Tao mang con tro va \texttt{std::sort} theo GPA \\ \hline
+ClassIndex & $7.007$ & $9.341$ & $9.492$ & $12.252$ & Xay dung \texttt{classId -> indexes} cho RQ1 \\ \hline
 \end{tabularx}
 \endgroup
 \caption{Thời gian build cấu trúc C++ Core trên $500.000$ sinh viên (ms)}
@@ -1045,14 +1045,14 @@ SortedGPA & $125.896$ & $132.005$ & $132.334$ & $151.376$ & Tạo mảng con tr�
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{3.2cm}|r|r|r|r|>{\raggedright\arraybackslash}X|}
 \hline
 \textbf{Query workload} & \textbf{Min} & \textbf{Median} & \textbf{Mean} & \textbf{Max} & \textbf{Ghi chú} \\ \hline
-MC1 Linear Search & $1186.783$ & $1220.950$ & $1247.371$ & $1642.405$ & $1.000$ truy vấn, $260.717.750$ so sánh \\ \hline
-MC1 Hash Search & $0.026$ & $0.026$ & $0.027$ & $0.039$ & $1.000$ truy vấn, $1.696$ probe \\ \hline
-MC2 Linear Max & $1768.811$ & $1824.797$ & $1852.038$ & $2023.272$ & $1.000$ lần gọi, $499.999.000$ so sánh \\ \hline
-MC2 Heap Max & $0.101$ & $0.116$ & $0.160$ & $0.758$ & $1.000$ lần đọc \texttt{maxHeap[0]} \\ \hline
-RQ1 Linear Class & $3.575$ & $3.897$ & $4.147$ & $6.308$ & Lớp \texttt{C01}, trả $20.000$ sinh viên \\ \hline
-RQ1 Index Class & $2.178$ & $2.400$ & $2.518$ & $3.423$ & Lớp \texttt{C01}, lưu $20.000$ chỉ số \\ \hline
-RQ2 Linear GPA & $12.844$ & $14.039$ & $14.266$ & $18.167$ & Khoảng $[8.0,10.0]$, copy $167.775$ sinh viên \\ \hline
-RQ2 Sorted GPA & $0.0001$ & $0.0002$ & $0.0002$ & $0.0002$ & $37$ so sánh biên, trả range view không copy \\ \hline
+MC1 Linear Search & $1230.687$ & $1301.847$ & $1307.803$ & $1437.031$ & $1.000$ truy vấn, $260.717.750$ so sánh \\ \hline
+MC1 Hash Search & $0.027$ & $0.029$ & $0.033$ & $0.057$ & $1.000$ truy vấn, $1.696$ probe \\ \hline
+MC2 Linear Max & $1814.745$ & $1865.623$ & $1882.269$ & $2051.800$ & $1.000$ lần gọi, $499.999.000$ so sánh \\ \hline
+MC2 Heap Max & $0.102$ & $0.103$ & $0.104$ & $0.118$ & $1.000$ lần đọc \texttt{maxHeap[0]} \\ \hline
+RQ1 Linear Class & $3.394$ & $3.895$ & $4.079$ & $5.354$ & Lớp \texttt{C01}, copy $20.000$ sinh viên, $500.000$ so sánh \\ \hline
+RQ1 ClassIndex View & $0.0000$ & $0.0000$ & $0.000038$ & $0.0001$ & Lớp \texttt{C01}, trả view $20.000$ chỉ số, $1$ lookup \\ \hline
+RQ2 Linear GPA & $13.257$ & $14.060$ & $14.314$ & $15.948$ & Khoảng $[8.0,10.0]$, copy $167.775$ sinh viên \\ \hline
+RQ2 Sorted GPA & $0.0001$ & $0.0001$ & $0.000129$ & $0.0002$ & $37$ so sánh biên, trả range view không copy \\ \hline
 \end{tabularx}
 \endgroup
 \caption{Thời gian query C++ Core trên $500.000$ sinh viên, $5$ warm-up và $21$ mẫu đo (ms)}
@@ -1092,12 +1092,12 @@ Nhóm tiến hành đo đạc MC1 bằng workload $1.000$ truy vấn cố địn
 \label{fig:mc1_khong_ton_tai}
 \end{figure}
 
-Kết quả thực nghiệm cho thấy Bảng băm đóng duy trì thời gian trả kết quả ở mức rất nhỏ và gần như không phụ thuộc vị trí khóa, trong khi thuật toán duyệt tuyến tính tăng rõ rệt khi khóa nằm sâu trong vector hoặc không tồn tại. Trên workload $1.000$ truy vấn, median của Linear Search là $1220.950$ ms, còn Hash Search là $0.026$ ms. Do thao tác Hash lookup quá ngắn, các con số dưới micro-giây cho một truy vấn đơn lẻ chỉ nên được hiểu như xu hướng trung bình sau lặp batch, không phải độ trễ cảm nhận của giao diện.
+Kết quả thực nghiệm cho thấy Bảng băm đóng duy trì thời gian trả kết quả ở mức rất nhỏ và gần như không phụ thuộc vị trí khóa, trong khi thuật toán duyệt tuyến tính tăng rõ rệt khi khóa nằm sâu trong vector hoặc không tồn tại. Trên workload $1.000$ truy vấn, median của Linear Search là $1301.847$ ms, còn Hash Search là $0.029$ ms. Do thao tác Hash lookup quá ngắn, các con số dưới micro-giây cho một truy vấn đơn lẻ chỉ nên được hiểu như xu hướng trung bình sau lặp batch, không phải độ trễ cảm nhận của giao diện.
 
 \subsubsection*{2.7.3. Kết quả đo thời gian trích xuất cực trị MC2 và xây dựng đống}
 \addcontentsline{toc}{subsubsection}{2.7.3. Kết quả đo thời gian trích xuất cực trị MC2 và xây dựng đống}
 
-Đối với yêu cầu MC2, sau khi \texttt{CustomMaxHeapGpaFinder} đã xây dựng xong heap, thao tác trả sinh viên GPA cao nhất chỉ là đọc \texttt{maxHeap[0]}, nên chi phí lý thuyết là $O(1)$. Phần đo thực nghiệm được trình bày theo hướng đối sánh: quét tuyến tính phụ thuộc $N$, còn heap peek gần như hằng số sau khi đã trả chi phí build $O(N)$. Trên $1.000$ lần gọi, median của Linear Max là $1824.797$ ms, trong khi Heap Max là $0.116$ ms; median build heap là $48.984$ ms.
+Đối với yêu cầu MC2, sau khi \texttt{CustomMaxHeapGpaFinder} đã xây dựng xong heap, thao tác trả sinh viên GPA cao nhất chỉ là đọc \texttt{maxHeap[0]}, nên chi phí lý thuyết là $O(1)$. Phần đo thực nghiệm được trình bày theo hướng đối sánh: quét tuyến tính phụ thuộc $N$, còn heap peek gần như hằng số sau khi đã trả chi phí build $O(N)$. Trên $1.000$ lần gọi, median của Linear Max là $1865.623$ ms, trong khi Heap Max là $0.103$ ms; median build heap là $51.957$ ms.
 
 \begin{figure}[H]
 \centering
@@ -1109,7 +1109,7 @@ Kết quả thực nghiệm cho thấy Bảng băm đóng duy trì thời gian t
 \subsubsection*{2.7.4. Kết quả đo thời gian thực thi các truy vấn tự phát hiện}
 \addcontentsline{toc}{subsubsection}{2.7.4. Kết quả đo thời gian thực thi các truy vấn tự phát hiện}
 
-Đối với yêu cầu RQ1 (Lọc danh sách sinh viên theo lớp), nhóm thực nghiệm kiểm chứng trên 4 trường hợp giao diện: lớp đầu dải ($C01$), lớp giữa dải ($C13$), lớp cuối dải ($C25$) và mã lớp không tồn tại ($C99$). Riêng bảng số C++ Core chọn lớp \texttt{C01}; trên tập hiện tại lớp này có $20.000$ sinh viên. Baseline sao chép toàn bộ \texttt{Student} thỏa điều kiện, còn phiên bản tối ưu chỉ lưu index nên median giảm từ $3.897$ ms xuống $2.400$ ms, dù cả hai vẫn là quét tuyến tính $O(N)$.
+Đối với yêu cầu RQ1 (Lọc danh sách sinh viên theo lớp), nhóm thực nghiệm kiểm chứng trên 4 trường hợp giao diện: lớp đầu dải ($C01$), lớp giữa dải ($C13$), lớp cuối dải ($C25$) và mã lớp không tồn tại ($C99$). Riêng bảng số C++ Core chọn lớp \texttt{C01}; trên tập hiện tại lớp này có $20.000$ sinh viên. Baseline sao chép toàn bộ \texttt{Student} thỏa điều kiện, còn final dùng \texttt{ClassIndexViewResult}: chỉ mục \texttt{classId -> indexes} được build trước một lần, truy vấn chỉ còn lookup trung bình $O(1)$ và trả view không copy $K$ kết quả. Median query giảm từ $3.895$ ms xuống gần $0.0000$ ms; số phép so sánh giảm từ $500.000$ xuống $1$ lookup.
 
 \begin{figure}[H]
 \centering
@@ -1165,8 +1165,8 @@ Bảng tổng hợp đối sánh thực nghiệm thời gian thực thi giữa B
 \begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.7cm}|>{\raggedright\arraybackslash}p{2.45cm}|>{\raggedright\arraybackslash}p{2.45cm}|>{\raggedright\arraybackslash}p{2.25cm}|>{\raggedright\arraybackslash}X|}
 \hline
 \textbf{Workload} & \textbf{Linear} & \textbf{Closed Hash} & \textbf{Tăng tốc} & \textbf{Kết luận} \\ \hline
-Build cấu trúc & --- & $20.523$ ms & --- & Chi phí dựng ban đầu $O(N)$ \\ \hline
-$1.000$ truy vấn MSSV & $1220.950$ ms & $0.026$ ms & $\sim 46.780 \times$ & Hash lookup gần như hằng số sau build \\ \hline
+Build cấu trúc & --- & $21.241$ ms & --- & Chi phí dựng ban đầu $O(N)$ \\ \hline
+$1.000$ truy vấn MSSV & $1301.847$ ms & $0.029$ ms & $\sim 44.891 \times$ & Hash lookup gần như hằng số sau build \\ \hline
 Số bước kiểm tra & $\sim 260.7$M so sánh & $1.696$ probe & $\sim 153.7$K$\times$ & Khác biệt đến từ $O(N)$ và $O(1)$ trung bình \\ \hline
 Tính đúng & $950/950$ khóa tồn tại & $950/950$ khóa tồn tại & Tương đương & Hai phương án đều trả đúng \\ \hline
 \end{tabularx}
@@ -1178,7 +1178,7 @@ Số liệu thực nghiệm khẳng định rằng trên cùng workload, thời 
 \subsubsection*{2.8.2. So sánh tốc độ truy xuất Max-Heap \texorpdfstring{($O(1)$)}{(O(1))} với Quét tìm Max tuyến tính \texorpdfstring{($O(N)$)}{(O(N))}}
 \addcontentsline{toc}{subsubsection}{2.8.2. So sánh tốc độ truy xuất Max-Heap \texorpdfstring{($O(1)$)}{(O(1))} với Quét tìm Max tuyến tính \texorpdfstring{($O(N)$)}{(O(N))}}
 
-Trên tập dữ liệu thực nghiệm $500.000$ sinh viên, điểm mạnh của Max-Heap không nằm ở việc build nhanh hơn mọi phương án, mà ở chỗ sau khi build xong, thao tác đọc phần tử cực đại chỉ còn là truy cập phần tử gốc $O(1)$. Median build heap là $48.984$ ms; sau đó $1.000$ lần đọc cực trị chỉ mất median $0.116$ ms, trong khi $1.000$ lần quét tuyến tính mất median $1824.797$ ms. Chi phí khởi tạo vẫn là $O(N)$ theo Floyd Build Heap; vì vậy báo cáo tách riêng thời gian build và thời gian query để tránh hiểu nhầm rằng heap tìm max ``miễn phí'' ngay từ đầu.
+Trên tập dữ liệu thực nghiệm $500.000$ sinh viên, điểm mạnh của Max-Heap không nằm ở việc build nhanh hơn mọi phương án, mà ở chỗ sau khi build xong, thao tác đọc phần tử cực đại chỉ còn là truy cập phần tử gốc $O(1)$. Median build heap là $51.957$ ms; sau đó $1.000$ lần đọc cực trị chỉ mất median $0.103$ ms, trong khi $1.000$ lần quét tuyến tính mất median $1865.623$ ms. Chi phí khởi tạo vẫn là $O(N)$ theo Floyd Build Heap; vì vậy báo cáo tách riêng thời gian build và thời gian query để tránh hiểu nhầm rằng heap tìm max ``miễn phí'' ngay từ đầu.
 
 \subsubsection*{2.8.3. Đánh giá chi tiết mức độ tiêu hao bộ nhớ RAM và hiệu ứng Cache}
 \addcontentsline{toc}{subsubsection}{2.8.3. Đánh giá chi tiết mức độ tiêu hao bộ nhớ RAM và hiệu ứng Cache}
@@ -1190,7 +1190,7 @@ Toàn bộ hệ thống được tổ chức theo các cấu trúc mảng phẳn
     \item \textbf{Mảng con trỏ sắp xếp GPA (\texttt{SortedGpaFilter}):} Code duy trì \texttt{vector<const Student*> sortedStudents}; mỗi phần tử là một con trỏ 8 bytes trỏ về dữ liệu gốc. Với $10.500.000$ bản ghi, phần thân vector xấp xỉ $10.500.000 \times 8 \approx 84$ MB, nhỏ hơn rất nhiều so với phương án sao chép toàn bộ \texttt{Student}.
     \item \textbf{Cây đống cực đại (\texttt{CustomMaxHeapGpaFinder}):} Code gán \texttt{maxHeap = *studentsPtr}, tức cũng duy trì một bản sao \texttt{Student}; phần thân vector xấp xỉ $1.092$ GB cho $10.500.000$ bản ghi.
 \end{itemize}
-Trong mô hình kiến trúc module hóa, các chỉ mục đọc nhiều ưu tiên mảng phẳng liên tục để tối ưu tính định vị không gian (Spatial Locality). Điểm cần lưu ý là footprint lý thuyết tính từ \texttt{sizeof} có thể cao hơn Working Set quan sát trong một pipeline riêng vì không phải lúc nào cả \texttt{students}, \texttt{sortedStudents}, \texttt{maxHeap} và bảng băm đều được giữ đồng thời với dung lượng tối đa. Sau tối ưu RQ2, \texttt{sortedStudents} chỉ còn là mảng con trỏ nên phần bộ nhớ lớn nhất còn lại thuộc về dữ liệu gốc, \texttt{maxHeap} và bảng băm.
+Trong mô hình kiến trúc module hóa, các chỉ mục đọc nhiều ưu tiên mảng phẳng liên tục để tối ưu tính định vị không gian (Spatial Locality). Điểm cần lưu ý là footprint lý thuyết tính từ \texttt{sizeof} có thể cao hơn Working Set quan sát trong một pipeline riêng vì không phải lúc nào cả \texttt{students}, \texttt{sortedStudents}, \texttt{maxHeap} và bảng băm đều được giữ đồng thời với dung lượng tối đa. Sau toi uu RQ1 va RQ2, \texttt{classIndex} chi luu cac chi so \texttt{int} theo lop, con \texttt{sortedStudents} chi con la mang con tro; vi vay cac truy van nhieu ket qua khong con tao ban sao lon cua \texttt{Student} trong pha query.
 
 \subsection*{2.9. Nhật ký gỡ lỗi (Debug Log) và tối ưu hóa giải thuật}
 \addcontentsline{toc}{subsection}{2.9. Nhật ký gỡ lỗi (Debug Log) và tối ưu hóa giải thuật}
@@ -1263,7 +1263,7 @@ Phần em đảm nhận trong đồ án là xây dựng Max-Heap tự cài đặ
 
 \subsubsection*{2.3. Phản tư của sinh viên Ngô Đức Thành (MSSV: 25110335)}
 \addcontentsline{toc}{subsubsection}{2.3. Phản tư của sinh viên Ngô Đức Thành (MSSV: 25110335)}
-Nhiệm vụ của em là thiết kế giải thuật lọc dải điểm GPA (RQ2) và bộ lọc theo lớp (RQ1). Với RQ2, thách thức lớn nhất là xử lý chính xác các trường hợp biên của dải điểm, đặc biệt là khi có nhiều sinh viên có điểm GPA đúng bằng cận trên hoặc cận dưới. Ban đầu ở hàm tìm kiếm biên trên, em sử dụng điều kiện so sánh nghiêm ngặt dẫn đến việc bỏ sót các sinh viên có điểm chạm đúng \texttt{maxGPA}; sau đó em đã sửa thành điều kiện $\le \text{maxGPA}$ và tối ưu kết quả trả về thành range view để tránh sao chép toàn bộ dải sinh viên. Đối với RQ1, em áp dụng phương pháp quét tuyến tính chỉ lưu mảng chỉ số nguyên $O(k)$ để tối ưu hóa bộ nhớ tạm. Qua đồ án, em hiểu rõ hơn về cách chia đôi không gian tìm kiếm và các kỹ thuật tối ưu hóa truy vấn dải. Em cam kết toàn bộ thuật toán và kết quả kiểm thử thuộc phần việc của mình đều trung thực.
+Nhiệm vụ của em là thiết kế giải thuật lọc dải điểm GPA (RQ2) và bộ lọc theo lớp (RQ1). Với RQ2, thách thức lớn nhất là xử lý chính xác các trường hợp biên của dải điểm, đặc biệt là khi có nhiều sinh viên có điểm GPA đúng bằng cận trên hoặc cận dưới. Ban đầu ở hàm tìm kiếm biên trên, em sử dụng điều kiện so sánh nghiêm ngặt dẫn đến việc bỏ sót các sinh viên có điểm chạm đúng \texttt{maxGPA}; sau đó em đã sửa thành điều kiện $\le \text{maxGPA}$ và tối ưu kết quả trả về thành range view để tránh sao chép toàn bộ dải sinh viên. Đối với RQ1, em chuyển sang Class Index View \texttt{classId -> indexes}, tách chi phí build $O(N)$ khỏi pha query trung bình $O(1)$ và tránh copy kết quả lớn trong benchmark. Qua đồ án, em hiểu rõ hơn về cách chia đôi không gian tìm kiếm và các kỹ thuật tối ưu hóa truy vấn dải. Em cam kết toàn bộ thuật toán và kết quả kiểm thử thuộc phần việc của mình đều trung thực.
 
 \subsubsection*{2.4. Phản tư của sinh viên Đặng Đoàn Minh Khang (MSSV: 25110227)}
 \addcontentsline{toc}{subsubsection}{2.4. Phản tư của sinh viên Đặng Đoàn Minh Khang (MSSV: 25110227)}
@@ -1303,3 +1303,5 @@ Nhiệm vụ của em là thiết kế giải thuật lọc dải điểm GPA (R
 \end{enumerate}
 
 \end{document}
+
+
