@@ -16,7 +16,7 @@
 //      chỉ cần bấm phím `ESC` là hệ thống sẽ lập tức hủy bỏ thao tác và quay về menu.
 // ============================================================================
 
-#include "../../interface/interface_phat/StudentCRUD.h"
+#include "../../interface/core_crud/StudentCRUD.h"
 #include "../../nlohmann/json.hpp"
 #include <iostream>
 #include <fstream>

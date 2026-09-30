@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js",
     "server": "nodemon server.js",
-    "build:core": "g++ -O3 -march=native -funroll-loops -flto -DNDEBUG -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_minhanh/*.cpp src/core_mytra/*.cpp src/core_phat/*.cpp src/core_trang/*.cpp src/core_tra/*.cpp",
+    "build:core": "g++ -O3 -march=native -funroll-loops -flto -DNDEBUG -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp",
     "test:speed": "node test_speed.js"
   },
   "repository": {

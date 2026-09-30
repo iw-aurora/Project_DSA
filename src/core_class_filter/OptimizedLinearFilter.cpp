@@ -1,4 +1,4 @@
-#include "../../interface/interface_mytra/OptimizedLinearFilter.h"
+#include "../../interface/core_class_filter/OptimizedLinearFilter.h"
 
 ClassIndexFilter::ClassIndexFilter()
     : built(false)

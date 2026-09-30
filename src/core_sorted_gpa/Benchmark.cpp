@@ -1,4 +1,4 @@
-#include "../../interface/interface_minhanh/Benchmark.h"
+#include "../../interface/core_sorted_gpa/Benchmark.h"
 #include <iostream>
 #include <iomanip>
 

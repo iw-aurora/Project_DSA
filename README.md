@@ -109,7 +109,7 @@ Giao diện dòng lệnh tương tác trực tiếp với menu điều hướng 
   ```
 * **Cách C (Biên dịch thủ công bằng lệnh `g++`)**:
   ```bash
-  g++ -O2 -std=c++17 main.cpp src/*.cpp src/core_minhanh/*.cpp src/core_mytra/*.cpp src/core_phat/*.cpp src/core_trang/*.cpp src/core_tra/*.cpp -o main.exe
+  g++ -O2 -std=c++17 main.cpp src/*.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp -o main.exe
   .\main.exe
   ```
 

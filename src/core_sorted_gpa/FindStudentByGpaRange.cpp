@@ -2,10 +2,10 @@
 // MODULE: LỌC SINH VIÊN THEO KHOẢNG GPA (TÁC GIẢ: MINH ANH)
 // ============================================================================
 
-#include "../../interface/interface_minhanh/FindStudentByGpaRange.h"
-#include "../../interface/interface_minhanh/LinearGpaFilter.h"
-#include "../../interface/interface_minhanh/SortedGpaFilter.h"
-#include "../../interface/interface_minhanh/Benchmark.h"
+#include "../../interface/core_sorted_gpa/FindStudentByGpaRange.h"
+#include "../../interface/core_sorted_gpa/LinearGpaFilter.h"
+#include "../../interface/core_sorted_gpa/SortedGpaFilter.h"
+#include "../../interface/core_sorted_gpa/Benchmark.h"
 #include <iostream>
 #include <iomanip>
 #include <chrono>

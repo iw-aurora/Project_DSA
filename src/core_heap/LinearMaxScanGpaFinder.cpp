@@ -1,4 +1,4 @@
-#include "../../interface/interface_tra/LinearMaxScanGpaFinder.h"
+#include "../../interface/core_heap/LinearMaxScanGpaFinder.h"
 #include <chrono>
 
 using namespace std::chrono;

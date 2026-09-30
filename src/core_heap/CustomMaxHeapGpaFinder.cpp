@@ -1,4 +1,4 @@
-#include "../../interface/interface_tra/CustomMaxHeapGpaFinder.h"
+#include "../../interface/core_heap/CustomMaxHeapGpaFinder.h"
 #include <chrono>
 
 using namespace std::chrono;

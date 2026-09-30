@@ -2,9 +2,9 @@
 // MODULE: CÀI ĐẶT TÌM KIẾM SINH VIÊN THEO MSSV (TÁC GIẢ: TRANG)
 // ============================================================================
 
-#include "../../interface/interface_trang/FindStudentById.h"
-#include "../../interface/interface_trang/LinearSearch.h"
-#include "../../interface/interface_trang/HashTable.h"
+#include "../../interface/core_hash/FindStudentById.h"
+#include "../../interface/core_hash/LinearSearch.h"
+#include "../../interface/core_hash/HashTable.h"
 #include <iostream>
 #include <iomanip>
 #include <chrono>

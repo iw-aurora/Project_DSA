@@ -1,4 +1,4 @@
-#include "../../interface/interface_trang/HashTable.h"
+#include "../../interface/core_hash/HashTable.h"
 using namespace std;
 
 // Khởi tạo một ô trong Hash Table

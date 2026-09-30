@@ -1,4 +1,4 @@
-#include "../../interface/interface_trang/Benchmark.h"
+#include "../../interface/core_hash/Benchmark.h"
 
 #include <chrono>
 #include <iomanip>

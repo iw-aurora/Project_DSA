@@ -1,4 +1,4 @@
-#include "../../interface/interface_minhanh/SortedGpaFilter.h"
+#include "../../interface/core_sorted_gpa/SortedGpaFilter.h"
 #include <algorithm>
 #include <chrono>
 

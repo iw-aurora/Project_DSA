@@ -2,11 +2,11 @@
 // CHUONG TRINH CHINH - HE THONG QUAN LY SINH VIEN (DASA230179)
 // ============================================================================
 
-#include "interface/interface_minhanh/FindStudentByGpaRange.h"
-#include "interface/interface_mytra/FindStudentByClassId.h"
-#include "interface/interface_phat/StudentCRUD.h"
-#include "interface/interface_trang/FindStudentById.h"
-#include "interface/interface_tra/FindStudentByMaxGpa.h"
+#include "interface/core_sorted_gpa/FindStudentByGpaRange.h"
+#include "interface/core_class_filter/FindStudentByClassId.h"
+#include "interface/core_crud/StudentCRUD.h"
+#include "interface/core_hash/FindStudentById.h"
+#include "interface/core_heap/FindStudentByMaxGpa.h"
 #include "interface/student.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
@@ -69,14 +69,11 @@ void clearScreen()
 void pauseScreen()
 {
 #ifdef _WIN32
-    cout << "
-        Nhan phim bat ky de tiep tuc... ";
-        _getch();
+    cout << "\nNhan phim bat ky de tiep tuc... ";
+    _getch();
 #else
-    cout << "
-Nhan Enter de tiep tuc...";
-    cin.ignore(numeric_limits<streamsize>::max(), '
-');
+    cout << "\nNhan Enter de tiep tuc...";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 #endif
 }
@@ -89,44 +86,32 @@ static int selectMenuInteractive(const string &title, const vector<string> &opti
     while (true)
     {
         clearScreen();
-        cout << "=========================================================================================
-                ";
-            cout
-             << "                  " << title << "
-                                                 ";
-            cout
-             << "=========================================================================================
-                ";
-            cout
-             << " [HUONG DAN]: Dung phim Mui ten Len/Xuong de chon, Enter de thuc thi, Esc de thoat      
-                ";
-            cout
-             << "-----------------------------------------------------------------------------------------
-                ";
+        cout << "=========================================================================================\n";
+        cout << "                  " << title << "\n";
+        cout << "=========================================================================================\n";
+        cout << " [HUONG DAN]: Dung phim Mui ten Len/Xuong de chon, Enter de thuc thi, Esc de thoat      \n";
+        cout << "-----------------------------------------------------------------------------------------\n";
 
-            for (int i = 0; i < totalOptions; i++)
+        for (int i = 0; i < totalOptions; i++)
         {
             int displayNum = (i == totalOptions - 1) ? 0 : (i + 1);
             if (i == currentIndex)
             {
                 cout << "  -->  [ " << displayNum << " ]  "
                      << left << setw(65) << options[i]
-                     << "  <== [DANG CHON]
-                        ";
+                     << "  <== [DANG CHON]\n";
             }
             else
             {
                 cout << "       [ " << displayNum << " ]  "
-                     << left << setw(65) << options[i] << "
-                                                          ";
+                     << left << setw(65) << options[i] << "\n";
             }
         }
 
-        cout << "=========================================================================================
-                ";
+        cout << "=========================================================================================\n";
 
 #ifdef _WIN32
-            int ch = _getch();
+        int ch = _getch();
         if (ch == 0 || ch == 224)
         {
             int arrow = _getch();
@@ -160,8 +145,7 @@ static int selectMenuInteractive(const string &title, const vector<string> &opti
             return ch - '0';
         }
 #else
-            cout
-             << "Chon chuc nang (0-" << totalOptions - 1 << "): ";
+        cout << "Chon chuc nang (0-" << totalOptions - 1 << "): ";
         int choice;
         if (cin >> choice)
             return choice;
@@ -300,8 +284,8 @@ int main()
     }
     catch (const exception &e)
     {
-        cerr << "[Loi] Khong the nap du lieu: " << e.what() << '
-'; return 1;
+        cerr << "[Loi] Khong the nap du lieu: " << e.what() << "\n";
+        return 1;
     }
 
     FindStudentByGpaRange gpaFilter(students);
@@ -317,18 +301,10 @@ int main()
         if (modeChoice == 0)
         {
             clearScreen();
-            cout << "
-                == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == == ==
-                =
-                    ";
-                    cout
-                    << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       
-                       ";
-                    cout
-                    << "=========================================================================================
-
-                       ";
-                    break;
+            cout << "=========================================================================================\n";
+            cout << "                 CAM ON BAN DA SU DUNG HE THONG QUAN LY SINH VIEN!                       \n";
+            cout << "=========================================================================================\n";
+            break;
         }
 
         switch (modeChoice)

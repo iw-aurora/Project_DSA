@@ -1,7 +1,7 @@
 #ifndef BENCHMARK_H
 #define BENCHMARK_H
 
-#include "../../interface/interface_minhanh/FindStudentByGpaRange.h"
+#include "../../interface/core_sorted_gpa/FindStudentByGpaRange.h"
 
 using namespace std;
 

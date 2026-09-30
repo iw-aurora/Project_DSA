@@ -1,4 +1,4 @@
-#include "../../interface/interface_mytra/LinearFilter.h"
+#include "../../interface/core_class_filter/LinearFilter.h"
 LinearFilterResult LinearFilter::filter(
     const vector<Student>& students,
     const string& classId

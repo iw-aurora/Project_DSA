@@ -1,4 +1,4 @@
-#include "../../interface/interface_mytra/FindStudentByClassId.h"
+#include "../../interface/core_class_filter/FindStudentByClassId.h"
 #include <iostream>
 #include <iomanip>
 #include <chrono>

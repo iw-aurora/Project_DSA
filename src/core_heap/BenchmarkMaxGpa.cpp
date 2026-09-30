@@ -1,6 +1,6 @@
-#include "../../interface/interface_tra/BenchmarkMaxGpa.h"
-#include "../../interface/interface_tra/CustomMaxHeapGpaFinder.h"
-#include "../../interface/interface_tra/LinearMaxScanGpaFinder.h"
+#include "../../interface/core_heap/BenchmarkMaxGpa.h"
+#include "../../interface/core_heap/CustomMaxHeapGpaFinder.h"
+#include "../../interface/core_heap/LinearMaxScanGpaFinder.h"
 #include <iomanip>
 #include <iostream>
 #include <chrono>

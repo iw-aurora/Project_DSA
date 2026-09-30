@@ -1,4 +1,4 @@
-#include "../../interface/interface_minhanh/LinearGpaFilter.h"
+#include "../../interface/core_sorted_gpa/LinearGpaFilter.h"
 #include <iostream>
 #include <chrono>
 

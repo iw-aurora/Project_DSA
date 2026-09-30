@@ -5,7 +5,7 @@ echo        KHOI DONG HE THONG WEB DSA (NEXT.JS + ANTD + C++ CORE)
 echo ====================================================================
 
 echo [1/3] Kiem tra va bien dich C++ DSA Bridge...
-g++ -O2 -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_minhanh/*.cpp src/core_mytra/*.cpp src/core_phat/*.cpp src/core_trang/*.cpp src/core_tra/*.cpp
+g++ -O2 -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp
 if errorlevel 1 (
     echo [LOI] Khong the bien dich dsa_bridge.exe!
     pause

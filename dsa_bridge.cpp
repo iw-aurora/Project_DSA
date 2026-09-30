@@ -2,11 +2,11 @@
 // C++ DSA RESIDENT SERVER FOR WEB API (ZERO LATENCY - IN-MEMORY DAEMON)
 // ============================================================================
 
-#include "interface/interface_minhanh/FindStudentByGpaRange.h"
-#include "interface/interface_mytra/FindStudentByClassId.h"
-#include "interface/interface_phat/StudentCRUD.h"
-#include "interface/interface_trang/FindStudentById.h"
-#include "interface/interface_tra/FindStudentByMaxGpa.h"
+#include "interface/core_sorted_gpa/FindStudentByGpaRange.h"
+#include "interface/core_class_filter/FindStudentByClassId.h"
+#include "interface/core_crud/StudentCRUD.h"
+#include "interface/core_hash/FindStudentById.h"
+#include "interface/core_heap/FindStudentByMaxGpa.h"
 #include "interface/student.h"
 #include "nlohmann/json.hpp"
 

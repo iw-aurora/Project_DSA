@@ -703,6 +703,51 @@ Tầng DSA Core Layer đóng vai trò là tầng xử lý trung tâm của toàn
 
 Tầng Persistence Layer đảm nhận vai trò đọc và lưu trữ dữ liệu thô ra các tệp tin lưu trữ bền vững (CSV/JSON) trên ổ cứng khi khởi động và kết thúc ứng dụng. Nhóm tuân thủ nguyên tắc phân tách trách nhiệm trong thiết kế hệ thống: Tầng lưu trữ chỉ chịu trách nhiệm nạp dữ liệu thô vào RAM một lần duy nhất (\textit{Bulk Load}). Mọi thao tác tìm kiếm, lọc dữ liệu và trích xuất cực trị đều do tầng DSA Core giải quyết trực tiếp trên các cấu trúc dữ liệu tự cài đặt trong bộ nhớ, không dựa vào các câu lệnh truy vấn có sẵn của hệ quản trị cơ sở dữ liệu.
 
+\subsubsection*{1.8.4. Cấu trúc tổ chức thư mục mã nguồn dự án}
+\addcontentsline{toc}{subsubsection}{1.8.4. Cấu trúc tổ chức thư mục mã nguồn dự án}
+
+Toàn bộ hệ thống mã nguồn được module hóa phân tầng rõ ràng, chuẩn hóa ranh giới giữa giao diện định nghĩa (\texttt{interface/}) và phần mã hiện thực giải thuật (\texttt{src/}):
+
+\begin{verbatim}
+code_dsa/
+|-- interface/                     # Tap hop cac header khai bao (.h)
+|   |-- core_crud/                 # Module CRUD quan ly sinh vien
+|   |   \-- StudentCRUD.h
+|   |-- core_hash/                 # Module Closed Hash Table (MC1)
+|   |   |-- HashTable.h
+|   |   |-- LinearSearch.h
+|   |   |-- FindStudentById.h
+|   |   \-- Benchmark.h
+|   |-- core_heap/                 # Module Max-Heap (MC2)
+|   |   |-- CustomMaxHeapGpaFinder.h
+|   |   |-- LinearMaxScanGpaFinder.h
+|   |   |-- FindStudentByMaxGpa.h
+|   |   \-- BenchmarkMaxGpa.h
+|   |-- core_sorted_gpa/           # Module Binary Search theo GPA (RQ1)
+|   |   |-- SortedGpaFilter.h
+|   |   |-- LinearGpaFilter.h
+|   |   |-- FindStudentByGpaRange.h
+|   |   \-- Benchmark.h
+|   |-- core_class_filter/         # Module Loc theo Lop sinh hoat (RQ2)
+|   |   |-- OptimizedLinearFilter.h
+|   |   |-- LinearFilter.h
+|   |   |-- FindStudentByClassId.h
+|   |   \-- Benchmark.h
+|   \-- Student.h                  # Dinh nghia struct Student
+|-- src/                           # Tap hop cac file hien thuc ma nguon (.cpp)
+|   |-- core_crud/
+|   |-- core_hash/
+|   |-- core_heap/
+|   |-- core_sorted_gpa/
+|   |-- core_class_filter/
+|   \-- Student.cpp
+|-- bao_cao/                       # Bao cao hoc thuat LaTeX va hinh anh thuc nghiem
+|-- web/                           # Giao dien Web Dashboard (Next.js/React/Tailwind)
+|-- main.cpp                       # CLI Menu dieu khien chuong trinh chinh
+|-- dsa_bridge.cpp                 # IPC WebSocket/HTTP Bridge giao tiep Web-C++
+\-- bench_core.cpp                 # Cong cu do luong Benchmark tu dong
+\end{verbatim}
+
 % ==============================================================================
 % CHƯƠNG 2: HIỆN THỰC HỆ THỐNG, THỰC NGHIỆM VÀ ĐỐI SÁNH HIỆU NĂNG
 % ==============================================================================

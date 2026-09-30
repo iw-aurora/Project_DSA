@@ -1,4 +1,4 @@
-#include "../../interface/interface_trang/LinearSearch.h"
+#include "../../interface/core_hash/LinearSearch.h"
 using namespace std;
 
 LinearSearch::LinearSearch() : comparisons(0) {}
