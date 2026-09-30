@@ -15,7 +15,9 @@
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <iterator>
 #include <numeric>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -81,6 +83,35 @@ std::vector<Student> loadStudents(const std::string &path) {
             item.value("name", ""),
             item.value("classId", ""),
             item.value("gpa", 0.0),
+        });
+    }
+    return students;
+}
+
+std::vector<Student> generateFastStudents(std::size_t count, std::size_t startId = 25150000) {
+    static const std::vector<std::string> firstNames = {"Nguyen", "Tran", "Le", "Pham", "Hoang", "Phan", "Vu", "Dang", "Bui", "Do"};
+    static const std::vector<std::string> middleNames = {"Van", "Thi", "Duc", "Minh", "Huu", "Quoc", "Thanh", "Dinh", "Xuan", "Ngoc"};
+    static const std::vector<std::string> lastNames = {"An", "Binh", "Chau", "Dung", "Em", "Giang", "Hai", "Hung", "Khoa", "Linh", "Minh", "Nam", "Phat", "Quan", "Sang", "Trang", "Tra", "Tung", "Vinh", "Yen"};
+    static const std::vector<std::string> classPrefixes = {"23DTH", "24DTH", "25DTH", "23KTP", "24KTP", "25KTP", "23ATTT", "24ATTT", "25ATTT"};
+
+    std::vector<Student> students;
+    students.reserve(count);
+
+    std::mt19937 rng(1337);
+    std::uniform_int_distribution<int> fnDist(0, static_cast<int>(firstNames.size()) - 1);
+    std::uniform_int_distribution<int> mnDist(0, static_cast<int>(middleNames.size()) - 1);
+    std::uniform_int_distribution<int> lnDist(0, static_cast<int>(lastNames.size()) - 1);
+    std::uniform_int_distribution<int> cpDist(0, static_cast<int>(classPrefixes.size()) - 1);
+    std::uniform_int_distribution<int> classNumDist(1, 20);
+    std::uniform_int_distribution<int> gpaIntDist(400, 1000);
+
+    for (std::size_t i = 0; i < count; ++i) {
+        const int classNum = classNumDist(rng);
+        students.push_back({
+            std::to_string(startId + i + 1),
+            firstNames[fnDist(rng)] + " " + middleNames[mnDist(rng)] + " " + lastNames[lnDist(rng)],
+            classPrefixes[cpDist(rng)] + (classNum < 10 ? "0" : "") + std::to_string(classNum),
+            gpaIntDist(rng) / 100.0,
         });
     }
     return students;
@@ -179,17 +210,46 @@ void printStats(const std::string &label, const Stats &stats) {
 
 int main(int argc, char **argv) {
     try {
-        const std::string path = argc > 1 ? argv[1] : "data/database.json";
-        const int warmupRuns = argc > 2 ? std::stoi(argv[2]) : 5;
-        const int samples = argc > 3 ? std::stoi(argv[3]) : 15;
-        const std::size_t idQueryCount = argc > 4 ? static_cast<std::size_t>(std::stoull(argv[4])) : 1000;
-        const int repeatedQueries = argc > 5 ? std::stoi(argv[5]) : 1000;
+        std::string path = "data/database.json";
+        std::size_t generateCount = 0;
+        std::size_t bulkTarget = 0;
+        int argOffset = 1;
+
+        if (argc > 1 && std::string(argv[1]) == "--generate") {
+            generateCount = argc > 2 ? static_cast<std::size_t>(std::stoull(argv[2])) : 10000000ULL;
+            argOffset = 3;
+            path = "generated";
+        } else if (argc > 1 && std::string(argv[1]) == "--bulk-to") {
+            bulkTarget = argc > 2 ? static_cast<std::size_t>(std::stoull(argv[2])) : 10000000ULL;
+            path = argc > 3 ? argv[3] : "data/database.json";
+            argOffset = 4;
+        } else if (argc > 1) {
+            path = argv[1];
+            argOffset = 2;
+        }
+
+        const int warmupRuns = argc > argOffset ? std::stoi(argv[argOffset]) : 5;
+        const int samples = argc > argOffset + 1 ? std::stoi(argv[argOffset + 1]) : 15;
+        const std::size_t idQueryCount = argc > argOffset + 2 ? static_cast<std::size_t>(std::stoull(argv[argOffset + 2])) : 1000;
+        const int repeatedQueries = argc > argOffset + 3 ? std::stoi(argv[argOffset + 3]) : 1000;
 
         auto loadMs = measureMs([&]() {
             sinkSize = 0;
         });
         auto loadStart = Clock::now();
-        std::vector<Student> students = loadStudents(path);
+        std::vector<Student> students;
+        if (generateCount > 0) {
+            students = generateFastStudents(generateCount, 25150000);
+        } else {
+            students = loadStudents(path);
+            if (bulkTarget > students.size()) {
+                auto added = generateFastStudents(bulkTarget - students.size(), 25150000 + students.size());
+                students.reserve(bulkTarget);
+                students.insert(students.end(),
+                                std::make_move_iterator(added.begin()),
+                                std::make_move_iterator(added.end()));
+            }
+        }
         auto loadEnd = Clock::now();
         loadMs = std::chrono::duration<double, std::milli>(loadEnd - loadStart).count();
 
@@ -222,7 +282,7 @@ int main(int argc, char **argv) {
             return TimedResult{ms, students.size(), 0};
         });
 
-        OptimizedLinearFilter classIndexFilter;
+        ClassIndexFilter classIndexFilter;
         auto classIndexBuildSamples = runTimedSamples(warmupRuns, samples, [&]() {
             double ms = measureMs([&]() {
                 classIndexFilter.build(students);
@@ -321,6 +381,13 @@ int main(int argc, char **argv) {
 
         std::cout << "CORE_BENCHMARK_REPORT\n";
         std::cout << "dataset_path=" << path << '\n';
+        if (generateCount > 0) {
+            std::cout << "dataset_mode=generate\n";
+        } else if (bulkTarget > 0) {
+            std::cout << "dataset_mode=bulk_to_" << bulkTarget << '\n';
+        } else {
+            std::cout << "dataset_mode=json\n";
+        }
         std::cout << "dataset_size=" << students.size() << '\n';
         std::cout << "load_ms=" << std::fixed << std::setprecision(3) << loadMs << '\n';
         std::cout << "warmup_runs=" << warmupRuns << '\n';

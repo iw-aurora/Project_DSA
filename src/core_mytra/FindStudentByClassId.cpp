@@ -219,7 +219,7 @@ void FindStudentByClassId::filterBaseline()
     baselineBenchmark.resultCount = baselineResult.students.size();
 
     // 3. CHẠY FINAL SOLUTION (Prebuilt Class Index)
-    OptimizedLinearFilter optimizedFilter;
+    ClassIndexFilter optimizedFilter;
     optimizedFilter.build(*studentsPtr);
 
     auto startOptimized = high_resolution_clock::now();
@@ -273,7 +273,7 @@ void FindStudentByClassId::filterFinalSolution()
     clearScreen();
 
     // 2. CHẠY FINAL SOLUTION (Prebuilt Class Index)
-    OptimizedLinearFilter optimizedFilter;
+    ClassIndexFilter optimizedFilter;
     optimizedFilter.build(*studentsPtr);
 
     auto startOptimized = high_resolution_clock::now();
@@ -290,7 +290,7 @@ void FindStudentByClassId::filterFinalSolution()
 
     // 3. HIỂN THỊ THÔNG TIN KẾT QUẢ
     cout << "=========================================================================================\n";
-    cout << "             KET QUA LOC SINH VIEN THEO LOP (GIAI THUAT TOI UU: OPTIMIZED INDEX)         \n";
+    cout << "             KET QUA LOC SINH VIEN THEO LOP (GIAI THUAT TOI UU: CLASS INDEX VIEW)        \n";
     cout << "=========================================================================================\n";
     cout << "  - Ma lop can loc        : " << classId << "\n";
     cout << "  - So sinh vien tim thay : " << optimizedResult.size() << " sinh vien\n";

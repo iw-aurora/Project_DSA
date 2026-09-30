@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
     prebuiltHeapFinder.buildStructure();
 
     FindStudentByGpaRange prebuiltGpaFinder(students);
-    OptimizedLinearFilter prebuiltClassFilter;
+    ClassIndexFilter prebuiltClassFilter;
     prebuiltClassFilter.build(students);
 
     // FULL SYSTEM & CPU CACHE WARM-UP (L1/L2/L3 Cache Line Pre-fetching)

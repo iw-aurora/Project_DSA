@@ -123,7 +123,7 @@ export const BenchmarkTab: React.FC<BenchmarkTabProps> = ({ totalStudents = 5000
               Thiết Lập Bài Toán & Tham Số Kiểm Thử
             </h2>
             <p className="text-xs text-slate-500 mt-1 m-0">
-              So sánh hiệu năng chi tiết giữa giải thuật cơ sở (Baseline) và tối ưu (Final Solution) trên tập 500k phần tử.
+              So sánh hiệu năng chi tiết giữa giải thuật cơ sở (Baseline) và tối ưu (Final Solution) trên tập {totalStudents.toLocaleString()} phần tử.
             </p>
           </div>
 

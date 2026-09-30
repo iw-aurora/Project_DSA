@@ -62,7 +62,7 @@ struct ClassIndexViewResult
 };
 
 // ============================================================================
-// CLASS: OptimizedLinearFilter
+// CLASS: ClassIndexFilter
 // ============================================================================
 // Purpose:
 // - Final RQ1 data structure.
@@ -78,14 +78,14 @@ struct ClassIndexViewResult
 // - Query space: O(1)
 // ============================================================================
 
-class OptimizedLinearFilter
+class ClassIndexFilter
 {
 private:
     unordered_map<string, vector<int>> classIndex;
     bool built;
 
 public:
-    OptimizedLinearFilter();
+    ClassIndexFilter();
 
     void build(const vector<Student> &students);
     ClassIndexViewResult filterView(const string &classId) const;
@@ -102,5 +102,9 @@ public:
         const vector<Student> &students,
         const string &classId);
 };
+
+// Backward-compatible alias for older files/tests that still use the previous
+// name. The implementation is now a prebuilt ClassIndex, not a linear filter.
+using OptimizedLinearFilter = ClassIndexFilter;
 
 #endif // OPTIMIZED_LINEAR_FILTER_H
