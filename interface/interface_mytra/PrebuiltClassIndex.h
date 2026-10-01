@@ -1,5 +1,5 @@
-#ifndef OPTIMIZED_LINEAR_FILTER_H
-#define OPTIMIZED_LINEAR_FILTER_H
+#ifndef PREBUILT_CLASS_INDEX_H
+#define PREBUILT_CLASS_INDEX_H
 
 #include <string>
 #include <unordered_map>
@@ -9,7 +9,7 @@
 using namespace std;
 
 // ============================================================================
-// STRUCT: OptimizedFilterResult
+// STRUCT: PrebuiltClassIndexResult
 // ============================================================================
 // Purpose:
 // - Legacy result type that stores matching student indexes instead of
@@ -17,7 +17,7 @@ using namespace std;
 // - Kept for older call sites that still expect an owned vector<int>.
 // ============================================================================
 
-struct OptimizedFilterResult
+struct PrebuiltClassIndexResult
 {
     vector<int> indexes;
     long long comparisons;
@@ -28,7 +28,7 @@ struct OptimizedFilterResult
     // - Khởi tạo số phép so sánh bằng 0.
     // ------------------------------------------------------------------------
 
-    OptimizedFilterResult()
+    PrebuiltClassIndexResult()
     {
         comparisons = 0;
     }
@@ -62,7 +62,7 @@ struct ClassIndexViewResult
 };
 
 // ============================================================================
-// CLASS: OptimizedLinearFilter
+// CLASS: PrebuiltClassIndex
 // ============================================================================
 // Purpose:
 // - Final RQ1 data structure.
@@ -78,18 +78,18 @@ struct ClassIndexViewResult
 // - Query space: O(1)
 // ============================================================================
 
-class OptimizedLinearFilter
+class PrebuiltClassIndex
 {
 private:
     unordered_map<string, vector<int>> classIndex;
     bool built;
 
 public:
-    OptimizedLinearFilter();
+    PrebuiltClassIndex();
 
     void build(const vector<Student> &students);
     ClassIndexViewResult filterView(const string &classId) const;
-    OptimizedFilterResult filter(const string &classId) const;
+    PrebuiltClassIndexResult filter(const string &classId) const;
 
     // ------------------------------------------------------------------------
     // Hàm: filter()
@@ -98,9 +98,9 @@ public:
     // copying Student objects by storing indexes only.
     // ------------------------------------------------------------------------
 
-    static OptimizedFilterResult filter(
+    static PrebuiltClassIndexResult filter(
         const vector<Student> &students,
         const string &classId);
 };
 
-#endif // OPTIMIZED_LINEAR_FILTER_H
+#endif // PREBUILT_CLASS_INDEX_H

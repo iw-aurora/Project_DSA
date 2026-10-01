@@ -1,11 +1,11 @@
-#include "../../interface/interface_mytra/OptimizedLinearFilter.h"
+#include "../../interface/interface_mytra/PrebuiltClassIndex.h"
 
-OptimizedLinearFilter::OptimizedLinearFilter()
+PrebuiltClassIndex::PrebuiltClassIndex()
     : built(false)
 {
 }
 
-void OptimizedLinearFilter::build(const vector<Student> &students)
+void PrebuiltClassIndex::build(const vector<Student> &students)
 {
     classIndex.clear();
     classIndex.reserve(64);
@@ -18,7 +18,7 @@ void OptimizedLinearFilter::build(const vector<Student> &students)
     built = true;
 }
 
-ClassIndexViewResult OptimizedLinearFilter::filterView(const string &classId) const
+ClassIndexViewResult PrebuiltClassIndex::filterView(const string &classId) const
 {
     ClassIndexViewResult result;
     if (!built)
@@ -36,9 +36,9 @@ ClassIndexViewResult OptimizedLinearFilter::filterView(const string &classId) co
     return result;
 }
 
-OptimizedFilterResult OptimizedLinearFilter::filter(const string &classId) const
+PrebuiltClassIndexResult PrebuiltClassIndex::filter(const string &classId) const
 {
-    OptimizedFilterResult result;
+    PrebuiltClassIndexResult result;
     ClassIndexViewResult view = filterView(classId);
     result.comparisons = view.comparisons;
     if (view.indexes != nullptr)
@@ -50,12 +50,12 @@ OptimizedFilterResult OptimizedLinearFilter::filter(const string &classId) const
 
 // Legacy one-shot path: still scans linearly and stores indexes instead of
 // copying Student objects. Kept for older console flows and direct tests.
-OptimizedFilterResult OptimizedLinearFilter::filter(
+PrebuiltClassIndexResult PrebuiltClassIndex::filter(
     const vector<Student> &students,
     const string &classId)
 {
     // Tạo đối tượng lưu kết quả.
-    OptimizedFilterResult result;
+    PrebuiltClassIndexResult result;
     for (int i = 0; i < (int)students.size(); i++)
     {
         result.comparisons++;
@@ -66,3 +66,7 @@ OptimizedFilterResult OptimizedLinearFilter::filter(
     }
     return result;
 }
+
+
+
+

@@ -9,12 +9,14 @@ using namespace std;
 
 struct BenchmarkResult
 {
+    double buildTimeMs;    // Thời gian xây dựng cấu trúc phụ trợ (ms)
     double timeMs;         // Thời gian thực thi thuật toán (ms)
     long long comparisons; // Số lần so sánh classId
     int resultCount;       // Số sinh viên tìm được
     // Constructor:
     BenchmarkResult()
     {
+        buildTimeMs = 0.0;
         timeMs = 0.0;
         comparisons = 0;
         resultCount = 0;

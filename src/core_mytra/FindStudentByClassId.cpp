@@ -215,27 +215,40 @@ void FindStudentByClassId::filterBaseline()
 
     BenchmarkResult baselineBenchmark;
     baselineBenchmark.timeMs = baselineTime;
+    baselineBenchmark.buildTimeMs = 0.0;
     baselineBenchmark.comparisons = baselineResult.comparisons;
     baselineBenchmark.resultCount = baselineResult.students.size();
 
     // 3. CHẠY FINAL SOLUTION (Prebuilt Class Index)
-    OptimizedLinearFilter optimizedFilter;
-    optimizedFilter.build(*studentsPtr);
 
+    // Đo thời gian xây dựng Class Index
+    auto startBuild = high_resolution_clock::now();
+
+    PrebuiltClassIndex prebuiltIndex;
+    prebuiltIndex.build(*studentsPtr);
+
+    auto endBuild = high_resolution_clock::now();
+
+    double buildTime =
+        duration<double, milli>(
+            endBuild - startBuild)
+            .count();
+
+    // Đo riêng thời gian query
     auto startOptimized = high_resolution_clock::now();
 
     ClassIndexViewResult optimizedResult =
-        optimizedFilter.filterView(classId);
+        prebuiltIndex.filterView(classId);
 
     auto endOptimized = high_resolution_clock::now();
 
-    // Tính thời gian Final.
     double optimizedTime =
         duration<double, milli>(
             endOptimized - startOptimized)
             .count();
 
     BenchmarkResult optimizedBenchmark;
+    optimizedBenchmark.buildTimeMs = buildTime;
     optimizedBenchmark.timeMs = optimizedTime;
     optimizedBenchmark.comparisons = optimizedResult.comparisons;
     optimizedBenchmark.resultCount = optimizedResult.size();
@@ -273,9 +286,22 @@ void FindStudentByClassId::filterFinalSolution()
     clearScreen();
 
     // 2. CHẠY FINAL SOLUTION (Prebuilt Class Index)
-    OptimizedLinearFilter optimizedFilter;
+
+    PrebuiltClassIndex optimizedFilter;
+
+    // Đo thời gian build
+    auto startBuild = high_resolution_clock::now();
+
     optimizedFilter.build(*studentsPtr);
 
+    auto endBuild = high_resolution_clock::now();
+
+    double buildTime =
+        duration<double, milli>(
+            endBuild - startBuild)
+            .count();
+
+    // Đo thời gian query
     auto startOptimized = high_resolution_clock::now();
 
     ClassIndexViewResult optimizedResult =
@@ -294,7 +320,9 @@ void FindStudentByClassId::filterFinalSolution()
     cout << "=========================================================================================\n";
     cout << "  - Ma lop can loc        : " << classId << "\n";
     cout << "  - So sinh vien tim thay : " << optimizedResult.size() << " sinh vien\n";
-    cout << "  - Thoi gian thuc thi    : " << fixed << setprecision(4) << optimizedTime << " ms\n";
+    cout << "  - Thoi gian build       : " << fixed << setprecision(4) << buildTime << " ms\n";
+    cout << "  - Thoi gian query       : " << fixed << setprecision(4) << optimizedTime << " ms\n";
+    cout << "  - Tong thoi gian        : " << fixed << setprecision(4) << buildTime + optimizedTime << " ms\n";
     cout << "  - So phep so sanh       : " << optimizedResult.comparisons << " phep so sanh (O(1) average index lookup)\n";
     cout << "=========================================================================================\n";
 

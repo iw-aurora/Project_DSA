@@ -28,26 +28,55 @@ void Benchmark::printComparison(
           << setw(25) << "CLASS INDEX VIEW" << "\n";
      cout << "-----------------------------------------------------------------------------------------\n";
      cout << left << setw(32) << "Do phuc tap ly thuyet"
-          << right << setw(25) << "O(N)"
-          << setw(25) << "O(1) average" << "\n";
-     cout << left << setw(32) << "Thoi gian 1 lan loc"
-          << right << setw(20) << fixed << setprecision(4) << baseline.timeMs << " ms"
-          << setw(20) << fixed << setprecision(4) << optimized.timeMs << " ms" << "\n";
-     cout << left << setw(32) << "Tong thoi gian " + to_string(TEST_LOOPS) + " lan"
-          << right << setw(20) << fixed << setprecision(4) << (baseline.timeMs * TEST_LOOPS) << " ms"
-          << setw(20) << fixed << setprecision(4) << (optimized.timeMs * TEST_LOOPS) << " ms" << "\n";
-     cout << left << setw(32) << "So phep so sanh / 1 lan"
-          << right << setw(25) << baseline.comparisons
-          << setw(25) << optimized.comparisons << "\n";
-     cout << left << setw(32) << "Tong so sanh " + to_string(TEST_LOOPS) + " lan"
-          << right << setw(25) << (baseline.comparisons * TEST_LOOPS)
-          << setw(25) << (optimized.comparisons * TEST_LOOPS) << "\n";
-     cout << left << setw(32) << "Cap phat bo nho (Memory)"
-          << right << setw(25) << (to_string(baseline.resultCount) + " Student Objects")
-          << setw(25) << "Class index view" << "\n";
-     cout << left << setw(32) << "So luong ket qua tim thay"
-          << right << setw(25) << baseline.resultCount
-          << setw(25) << optimized.resultCount << "\n";
+     << right << setw(25) << "O(N)"
+     << setw(25) << "O(1) average" << "\n";
+
+cout << left << setw(32) << "Thoi gian build"
+     << right << setw(20) << fixed << setprecision(4)
+     << baseline.buildTimeMs << " ms"
+     << setw(20) << fixed << setprecision(4)
+     << optimized.buildTimeMs << " ms" << "\n";
+
+cout << left << setw(32) << "Thoi gian 1 lan loc"
+     << right << setw(20) << fixed << setprecision(4)
+     << baseline.timeMs << " ms"
+     << setw(20) << fixed << setprecision(4)
+     << optimized.timeMs << " ms" << "\n";
+
+cout << left << setw(32) << "Tong thoi gian "
+     + to_string(TEST_LOOPS) + " lan"
+     << right << setw(20) << fixed << setprecision(4)
+     << (baseline.timeMs * TEST_LOOPS)
+     << " ms"
+     << setw(20) << fixed << setprecision(4)
+     << (optimized.buildTimeMs +
+         optimized.timeMs * TEST_LOOPS)
+     << " ms" << "\n";
+
+cout << left << setw(32) << "So phep so sanh / 1 lan"
+     << right << setw(25)
+     << baseline.comparisons
+     << setw(25)
+     << optimized.comparisons << "\n";
+
+cout << left << setw(32) << "Tong so sanh "
+     + to_string(TEST_LOOPS) + " lan"
+     << right << setw(25)
+     << (baseline.comparisons * TEST_LOOPS)
+     << setw(25)
+     << (optimized.comparisons * TEST_LOOPS) << "\n";
+
+cout << left << setw(32) << "Cap phat bo nho (Memory)"
+     << right << setw(25)
+     << (to_string(baseline.resultCount) + " Student Objects")
+     << setw(25)
+     << "Class index view" << "\n";
+
+cout << left << setw(32) << "So luong ket qua tim thay"
+     << right << setw(25)
+     << baseline.resultCount
+     << setw(25)
+     << optimized.resultCount << "\n";
      cout << "=========================================================================================\n";
 }
 

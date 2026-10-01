@@ -4,7 +4,7 @@
 #include <vector>
 #include "../student.h"
 #include "LinearFilter.h"
-#include "OptimizedLinearFilter.h"
+#include "PrebuiltClassIndex.h"
 #include "Benchmark.h"
 using namespace std;
 class FindStudentByClassId
