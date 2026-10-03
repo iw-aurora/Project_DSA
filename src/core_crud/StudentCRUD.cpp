@@ -1,5 +1,5 @@
 // ============================================================================
-// MODULE: CÀI ĐẶT THAO TÁC THÊM - SỬA - XÓA SINH VIÊN (TÁC GIẢ: PHÁT)
+// MODULE: CÀI ĐẶT THAO TÁC THÊM - SỬA - XÓA SINH VIÊN
 // ============================================================================
 // [CHI TIẾT VÀ NGUYÊN LÝ HOẠT ĐỘNG]:
 // 1. TƯƠNG TÁC TRÊN BỘ NHỚ RAM:
@@ -713,7 +713,6 @@ void StudentCRUD::runCRUDMenu()
     {
         clearScreen();
         cout << "====================================================\n";
-        cout << "     CHUONG TRINH QUAN LY SINH VIEN (PHAT)          \n";
         cout << "         HE THONG QUAN LY SINH VIEN (CRUD)          \n";
         cout << "====================================================\n";
         cout << "1. Them sinh vien moi (Create - Auto MSSV)\n";

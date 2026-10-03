@@ -1,5 +1,5 @@
 // ============================================================================
-// MODULE: CÀI ĐẶT TÌM KIẾM SINH VIÊN THEO MSSV (TÁC GIẢ: TRANG)
+// MODULE: CÀI ĐẶT TÌM KIẾM SINH VIÊN THEO MSSV
 // ============================================================================
 
 #include "../../interface/core_hash/FindStudentById.h"
@@ -56,7 +56,7 @@ int FindStudentById::selectStudentInteractive() const
         int endIdx = min(startIdx + PAGE_SIZE, totalStudents);
 
         cout << "=========================================================================================\n";
-        cout << "           TIM KIEM SINH VIEN THEO MSSV - TRANG (Trang " << (currentPage + 1) << "/" << totalPages << ")\n";
+        cout << "           TIM KIEM SINH VIEN THEO MSSV (Trang " << (currentPage + 1) << "/" << totalPages << ")\n";
         cout << "=========================================================================================\n";
         cout << left << setw(6) << " CHON"
              << " | " << setw(5) << "STT"

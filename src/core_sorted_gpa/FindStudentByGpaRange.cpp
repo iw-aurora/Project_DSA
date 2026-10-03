@@ -1,5 +1,5 @@
 // ============================================================================
-// MODULE: LỌC SINH VIÊN THEO KHOẢNG GPA (TÁC GIẢ: MINH ANH)
+// MODULE: LỌC SINH VIÊN THEO KHOẢNG GPA
 // ============================================================================
 
 #include "../../interface/core_sorted_gpa/FindStudentByGpaRange.h"
@@ -73,7 +73,7 @@ void FindStudentByGpaRange::getGpaRangeFromUser(double &minGpa, double &maxGpa)
     {
         clearScreen();
         cout << "=========================================================================================\n";
-        cout << "                  LOC SINH VIEN THEO KHOANG GPA - MINH ANH                                \n";
+        cout << "                  LOC SINH VIEN THEO KHOANG GPA                                          \n";
         cout << "=========================================================================================\n";
         cout << "  - Ranh gioi CSDL thuc te: GPA Min = " << fixed << setprecision(2) << actualMin
              << " | GPA Max = " << actualMax << "\n";

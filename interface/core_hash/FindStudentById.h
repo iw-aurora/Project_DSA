@@ -1,5 +1,5 @@
 // ============================================================================
-// MODULE: TÌM KIẾM SINH VIÊN THEO MSSV (TÁC GIẢ: TRANG)
+// MODULE: TÌM KIẾM SINH VIÊN THEO MSSV
 // ============================================================================
 
 #ifndef FIND_STUDENT_BY_ID_H

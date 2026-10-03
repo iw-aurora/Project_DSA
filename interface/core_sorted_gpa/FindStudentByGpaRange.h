@@ -1,5 +1,5 @@
 // ============================================================================
-// MODULE: LỌC SINH VIÊN THEO KHOẢNG GPA (TÁC GIẢ: MINH ANH)
+// MODULE: LỌC SINH VIÊN THEO KHOẢNG GPA
 // ============================================================================
 // [NHẬN XÉT THIẾT KẾ VÀ CÁC THAY ĐỔI / NÂNG CẤP]:
 // 1. TÍNH ĐÓNG GÓI (Encapsulation):
