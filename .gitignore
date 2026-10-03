@@ -13,4 +13,15 @@ web_dsa/dist/
 .next/
 web_dsa/.next/
 *.tsbuildinfo
-bao_cao/
+# LaTeX build artifacts
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+bao_cao/preview_*.png
+bao_cao/texput.*

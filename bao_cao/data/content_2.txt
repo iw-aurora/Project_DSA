@@ -1,0 +1,628 @@
+Báo cáo D2 — Cấu trúc Dữ liệu và Giải thuật (DASA230179)
+Nhóm	
+Mã lớp học phần 	
+Lĩnh vực	
+Thành viên	
+Ngày	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MỤC LỤC
+1. Xác nhận lĩnh vực và bối cảnh bài toán	1
+2. Mô hình hóa bài toán	1
+2.1. Input	1
+2.1.1. Dữ liệu đầu vào (Input)	1
+2.1.2.Nguồn dữ liệu đầu vào	2
+2.2. Output	3
+2.2.1. Output của MC1	3
+2.2.2. Output của MC2 – Truy xuất sinh viên có GPA cao nhất	3
+2.2.3. Output của RQ1 – Truy xuất sinh viên theo lớp	3
+2.2.4. Output của RQ2	4
+2.3. Ràng buộc và edge cases	5
+2.3.1. Ràng buộc về quy mô dữ liệu:	5
+2.3.2. Ràng buộc MSSV	5
+2.3.3. Ràng buộc họ tên	6
+2.3.4. Ràng buộc mã lớp	6
+2.3.5. Ràng buộc GPA	6
+2.3.6. Dataset rỗng	7
+2.3.7. MSSV không tồn tại	7
+2.3.8. MSSV bị trùng	7
+2.3.9. Nhiều sinh viên cùng GPA cao nhất	7
+2.3.10. Lớp không có sinh viên	8
+2.3.11. Một lớp có rất nhiều sinh viên	8
+2.3.12. Khoảng GPA không hợp lệ	8
+2.3.13. Khoảng GPA nằm ngoài miền hợp lệ	8
+2.3.14. Không có sinh viên trong khoảng GPA	9
+2.3.15. minGPA và maxGPA	9
+2.3.16. Khoảng GPA toàn miền	9
+2.3.17. Nhiều sinh viên nằm trong cùng khoảng GPA	9
+2.3.18. File dữ liệu không tồn tại	10
+2.3.19. File JSON sai cú pháp	10
+2.3.20. Dữ liệu trong bộ nhớ	10
+2.3.21. Ràng buộc benchmark	10
+3. Hai yêu cầu bắt buộc chung	11
+3.1. MC1 — Tra cứu chính xác sinh viên theo MSSV	12
+3.2. MC2 — Truy xuất sinh viên có GPA cao nhất	13
+4. Các yêu cầu tự phát hiện của nhóm	14
+4.1. RQ1 — Truy xuất danh sách sinh viên theo lớp	15
+4.2. RQ2 — Truy xuất sinh viên theo khoảng GPA	16
+5. Xung đột yêu cầu và trade-off dự kiến	18
+5.1. Nguyên nhân xung đột	18
+5.2. Workload làm cơ sở cho trade-off	19
+5.3. Hướng giải quyết: Trade-off có chủ đích	20
+5.4. Chi phí của trade-off	20
+5.5. Điều kiện làm trade-off không còn phù hợp	21
+6. Tổng hợp yêu cầu và tiêu chí kiểm chứng	21
+6.1. Quy mô benchmark	22
+6.2. Các chỉ số benchmark	22
+7. Baseline thực nghiệm	23
+7.1. MC1	23
+7.2. MC2	23
+7.3. RQ1	23
+7.4. RQ2	24
+8. Giả định workload	24
+9. Phân công đóng góp	24
+10. Kết luận D2	25
+
+ 
+1. Xác nhận lĩnh vực và bối cảnh bài toán
+Lĩnh vực nhóm chọn: Hệ thống quản lí sinh viên
+Mô tả:
+Nhóm lựa chọn lĩnh vực Hệ thống quản lý sinh viên, tập trung vào việc quản lý và khai thác thông tin học tập của sinh viên trong môi trường đại học. Hệ thống lưu trữ tập hợp các hồ sơ sinh viên và các thông tin liên quan như mã sinh viên, họ tên, lớp, ngành học, khóa, kết quả học tập và trạng thái học tập.
+Trong quá trình sử dụng, dữ liệu sinh viên liên tục được bổ sung và cập nhật theo từng khóa tuyển sinh và từng học kỳ. Người dùng không chỉ cần lưu trữ thông tin mà còn thường xuyên thực hiện các thao tác trên tập dữ liệu lớn. Chẳng hạn như: Phòng đào tạo cần tra cứu nhanh thông tin của một sinh viên theo mã sinh viên; Giảng viên cần xem danh sách sinh viên thuộc một lớp hoặc học phần; Cố vấn học tập cần theo dõi kết quả học tập và xác định các sinh viên thuộc một nhóm điều kiện nhất định; Sinh viên cần tra cứu thông tin và kết quả học tập của bản thân.
+Ngoài việc tra cứu thông tin của một sinh viên, hệ thống còn cần hỗ trợ các nhu cầu như tìm sinh viên theo điều kiện, xem danh sách sinh viên thuộc một lớp, ngành hoặc khóa, tìm sinh viên có kết quả học tập trong một khoảng nhất định và cập nhật thông tin khi có thay đổi. 
+Vì số lượng sinh viên và thông tin học tập có thể tăng lên theo thời gian, hệ thống cần đảm bảo các thao tác tra cứu và cập nhật được thực hiện chính xác, thuận tiện và phù hợp với nhu cầu sử dụng thực tế. Trong phạm vi đồ án, nhóm tập trung vào các nghiệp vụ liên quan đến tra cứu, truy xuất và cập nhật thông tin sinh viên, làm cơ sở để xác định các yêu cầu cụ thể ở những phần tiếp theo.
+2. Mô hình hóa bài toán
+2.1. Input
+2.1.1. Dữ liệu đầu vào (Input)
+Hệ thống quản lý sinh viên sử dụng dữ liệu đầu vào được lưu trữ trong một file database.json. 
+Dữ liệu hồ sơ sinh viên: Mỗi sinh viên được mô hình hóa bằng một bản ghi gồm các thuộc tính sau:
+Thuộc tính	Kiểu dữ liệu	Ý Nghĩa
+id	string	Mã định danh một sinh viên (khóa chính). Mỗi sinh viên sẽ có một mã số duy nhất và không được phép trùng lặp.
+name	string	Họ và tên đầy đủ của sinh viên.
+classId	string	Mã lớp mà sinh viên đang theo học.
+gpa	float	Điểm trung bình tích lũy của sinh viên.
+2.1.2.Nguồn dữ liệu đầu vào
+Hệ thống sử dụng một luồng cung cấp dữ liệu đầu vào thông qua file JSON:
+Khi chương trình bắt đầu chạy, hệ thống đọc dữ liệu từ file database.json. Sau đó chuyển dữ liệu từ JSON thành các cấu trúc dữ liệu trong chương trình. Luồng xử lý: database.json => Đọc file => Phân tích dữ liệu JSON => Đưa vào struct. Cách này giúp nạp nhanh số lượng dữ liệu khổng lồ.
+a) Input của MC1 - Tra cứu sinh viên theo MSSV
+Mã số sinh viên (MSSV) do người dùng nhập (Ví dụ: 25110001)
+b) Input của MC2 - Truy xuất sinh viên có GPA cao nhất
+MC2 không bắt buộc nhận tham số tìm kiếm từ người dùng. Người dùng yêu cầu hệ thống xác định sinh viên hiện có GPA cao nhất trong tập dữ liệu. Hệ thống tự động quét và xác định sinh viên có GPA cao nhất dựa trên toàn bộ tập dữ liệu hồ sơ sinh viên hiện có. 
+c) Input của RQ1 - Truy xuất sinh viên theo lớp
+Người dùng nhập một mã lớp (Ví dụ: C01). Hệ thống cần trả về tất cả sinh viên có classId tương ứng.
+d) Input của RQ2 - Truy xuất sinh viên theo khoảng GPA
+Người dùng nhập hai giá trị số thực gồm điểm tối thiểu (min GPA) và điểm tối đa (max GPA) để xác định khoảng điểm cần tìm kiếm. Chẳng hạn, khi thiết lập khoảng giá trị từ 7.0 đến 8.5, hệ thống sẽ rà soát và trả về toàn bộ sinh viên có điểm trung bình tích lũy nằm trong phạm vi từ đó.
+2.2. Output
+2.2.1. Output của MC1
+Nếu MSSV tồn tại, hệ thống trả về chính xác hồ sơ tương ứng.
+Ví dụ:
+MSSV: 25151001
+Ho ten: Nguyen Van An
+Lop: C01
+GPA: 8.52
+Nếu MSSV không tồn tại:
+Student not found.
+Một MSSV không được trả về nhiều hồ sơ khác nhau. 
+2.2.2. Output của MC2 – Truy xuất sinh viên có GPA cao nhất
+Hệ thống trả về sinh viên có GPA cao nhất. 
+Ví dụ:
+MSSV: 25151008
+Ho ten: Tran Minh Khoa
+Lop: C03
+GPA: 9.82
+Nếu nhiều sinh viên có cùng GPA cao nhất, nhóm sử dụng MSSV làm tiêu chí phụ.
+Quy tắc:
+1.	GPA cao hơn được ưu tiên.
+2.	Nếu GPA bằng nhau, MSSV nhỏ hơn được ưu tiên.
+Quy tắc này giúp kết quả xác định và có thể kiểm thử tự động.
+2.2.3. Output của RQ1 – Truy xuất sinh viên theo lớp
+Người dùng nhập:
+Class ID: C01
+Hệ thống trả về: 
+Class: C01
+Number of students: 428
+kèm danh sách toàn bộ sinh viên thuộc lớp.
+Nếu không có sinh viên:
+No students found.
+Nếu số lượng kết quả lớn, tầng Presentation có thể sử dụng phân trang để hiển thị.
+Phân trang chỉ là chức năng trình bày và không được xem là cấu trúc dữ liệu trung tâm của hệ thống.
+2.2.4. Output của RQ2
+Ví dụ người dùng nhập:
+Minimum GPA: 7.0
+Maximum GPA: 8.5
+Hệ thống có thể trả về:
+GPA Range: [7.0, 8.5]
+1. 25151001 - Nguyen Van An - GPA: 8.52
+2. 25151015 - Tran Minh Anh - GPA: 7.80
+3. 25151028 - Le Gia Bao - GPA: 7.25
+Nếu không có sinh viên có GPA nằm trong khoảng:
+No students found in the specified GPA range. 
+RQ2 phải trả đúng toàn bộ sinh viên có: 
+minGPA <= gpa <= maxGPA
+2.3. Ràng buộc và edge cases
+2.3.1. Ràng buộc về quy mô dữ liệu:
+Hệ thống được thiết kế để làm việc với tập hồ sơ sinh viên có quy mô từ nhỏ đến lớn nhằm phục vụ cả kiểm thử chức năng và đánh giá hiệu năng.
+Nhóm dự kiến sử dụng ba mức dữ liệu chính:
+Mức kiểm thử	Số lượng sinh viên	Mục đích
+Base	1.000	Kiểm thử chức năng, kiểm tra tính đúng đắn và debug
+Target	10.000	Quy mô kiểm thử chính và benchmark
+Stress	100.000	Quan sát xu hướng hiệu năng khi kích thước dữ liệu tăng lớn
+Trong quá trình chạy hệ thống, dữ liệu sinh viên được nạp từ file database.json vào bộ nhớ RAM. Các thao tác tra cứu, truy xuất GPA cao nhất, lọc sinh viên theo lớp và quản lý danh sách sinh viên vừa xem được thực hiện trên dữ liệu trong bộ nhớ.
+File JSON chỉ đóng vai trò lưu trữ dữ liệu, không trực tiếp thực hiện các thao tác thuộc DSA Core.
+Hai mốc benchmark chính: 10.000 và 100.000 cách nhau một bậc độ lớn.
+Mục tiêu không phải đặt trước một thời gian tuyệt đối áp dụng cho mọi máy
+Nhóm tập trung vào:
+- Tính đúng đắn.
+- Số bước xử lý.
+- Xu hướng khi số lượng sinh viên của dữ liệu đầu vào tăng
+- Mối liên hệ giữa kết quả thực nghiệm và phân tích độ phức tạp.
+2.3.2. Ràng buộc MSSV
+Id phải: 
+- Không được rỗng
+- Là duy nhất
+- Không trùng với sinh viên khác.
+- Dự kiến gồm đúng 8 chữ số.
+Ví dụ: 25151001
+Nếu hai hồ sơ có cùng MSSV, dataset được xem là không hợp lệ.
+2.3.3. Ràng buộc họ tên
+Name phải:
+- Không được rỗng.
+- Có độ dài hợp lý.
+- Dự kiến từ 2 đến 50 ký tự.
+Khi thực hiện RQ2, nhóm cần xác định quy tắc so sánh chuỗi thống nhất.
+Trong phạm vi hiện tại, việc tìm kiếm prefix dự kiến không phân biệt chữ hoa/chữ thường sau khi input được chuẩn hóa.
+Ví dụ:
+	nguyen
+	Nguyen
+	NGUYEN
+được xem là cùng một prefix sau bước chuẩn hóa.
+2.3.4. Ràng buộc mã lớp
+classId phải:
+- Không được rỗng.
+- Được sử dụng nhất quán.
+Ví dụ: C01; C02; C03
+Trong phạm vi hiện tại, lớp không được quản lý như một entity độc lập. 
+classId chỉ là thuộc tính dùng để phân nhóm sinh viên phục vụ RQ1.
+2.3.5. Ràng buộc GPA
+GPA phải thỏa: 0.0 <= GPA <= 10.0
+Các giá trị như:-1, 10.5, 20 được xem là không hợp lệ.
+2.3.6. Dataset rỗng
+Khi: n = 0 hệ thống phải xử lý an toàn.
+MC1:
+GPA Range: [7.0, 8.5]
+MC2:
+No student data available.
+RQ1:
+No students found. 
+RQ2:
+No students found. 
+Hệ thống không được truy cập phần tử không tồn tại.
+2.3.7. MSSV không tồn tại
+Nếu người dùng nhập MSSV không tồn tại:
+No students found. 
+Hệ thống không được:
+- Trả về sinh viên khác.
+- Trả kết quả của truy vấn trước.
+- Trả một bản ghi ngẫu nhiên.
+- Gây lỗi hoặc dừng chương trình.
+2.3.8. MSSV bị trùng
+Ví dụ:
+Student A: 25151001
+Student B: 25151001
+Dataset vi phạm ràng buộc identifier.
+Hệ thống phải phát hiện trước khi sử dụng các hồ sơ này trong DSA Core.
+2.3.9. Nhiều sinh viên cùng GPA cao nhất
+Ví dụ:
+A: GPA=9.80, MSSV=25151001
+B: GPA=9.80, MSSV=25151008
+Theo tie-break: 25151001 < 25151008 nên sinh viên 25151001 được ưu tiên.
+2.3.10. Lớp không có sinh viên
+Nếu người dùng nhập: C99 
+nhưng không tồn tại sinh viên thuộc lớp này:
+No students found. 
+Đây là kết quả hợp lệ, không phải lỗi hệ thống.
+2.3.11. Một lớp có rất nhiều sinh viên
+RQ1 có thể trả về hàng trăm hoặc hàng nghìn hồ sơ.
+Hệ thống vẫn phải:
+- Trả đủ sinh viên.
+- Không bỏ sót.
+- Không trả sinh viên lớp khác.
+Presentation có thể phân trang: 20 records/page nhưng việc phân trang không thay đổi logic của DSA Core.
+2.3.12. Khoảng GPA không hợp lệ
+Nếu người dùng nhập:
+Minimum GPA: 8.5
+Maximum GPA: 7.0
+Thì: minGPA > maxGPA là input không hợp lệ.
+Hệ thống phải thông báo:
+Invalid GPA range. 
+và không thực hiện truy vấn.
+2.3.13. Khoảng GPA nằm ngoài miền hợp lệ
+Ví dụ:
+Minimum GPA: -1.0
+Maximum GPA: 8.0
+Hoặc:
+Minimum GPA: 7.0
+Maximum GPA: 11.0
+đều không hợp lệ vì GPA phải nằm trong: [0.0, 10.0].Hệ thống phải phát hiện và không thực hiện truy vấn.
+2.3.14. Không có sinh viên trong khoảng GPA
+Ví dụ:
+Minimum GPA: 9.9
+Maximum GPA: 10.0
+nhưng dataset không có sinh viên phù hợp.
+Hệ thống trả:
+No students found. 
+Đây là kết quả hợp lệ, không phải lỗi hệ thống.
+2.3.15. minGPA và maxGPA
+Ví dụ:
+Minimum GPA: 8.0
+Maximum GPA: 8.0
+Hệ thống cần trả về tất cả sinh viên có: gpa = 8.0. Trường hợp này được xem là một range query hợp lệ.
+2.3.16. Khoảng GPA toàn miền
+Nếu người dùng nhập:
+Minimum GPA: 0.0
+Maximum GPA: 10.0
+hệ thống phải trả về toàn bộ sinh viên hợp lệ trong dataset.
+2.3.17. Nhiều sinh viên nằm trong cùng khoảng GPA
+Ví dụ dataset:
+Student A: GPA = 7.2
+Student B: GPA = 7.8
+Student C: GPA = 8.1
+Student D: GPA=9.2
+Truy vấn: [7.0, 8.5] phải trả:
+Student A
+Student B
+Student C
+và không được trả Student D. 
+2.3.18. File dữ liệu không tồn tại
+Nếu database.json không tồn tại, hệ thống phải xử lý an toàn.
+Có thể:
+- Thông báo không tìm thấy file.
+- Hoặc khởi tạo dataset rỗng.
+Hệ thống không được crash không kiểm soát.
+2.3.19. File JSON sai cú pháp
+Nếu file JSON không parse được: database.json parse failed.
+Hệ thống:
+- Phải phát hiện lỗi.
+- Không sử dụng dữ liệu sai.
+- Không được crash không kiểm soát.
+2.3.20. Dữ liệu trong bộ nhớ
+Sau khi load thành công, MC1, MC2, RQ1 và RQ2 phải thực hiện trên dữ liệu trong RAM. Không được đọc lại database.json cho từng truy vấn.
+File chỉ dùng cho: Load, không dùng như công cụ truy vấn.
+2.3.21. Ràng buộc benchmark
+Các phương án được benchmark phải sử dụng:
+- Cùng dataset.
+- Cùng tập truy vấn.
+- Cùng môi trường.
+- Cùng compiler.
+- Cùng cấu hình build.
+- Cùng số lần thực thi.
+Ví dụ, nếu MC1 được benchmark với 10.000 truy vấn thì baseline và phương án cuối phải xử lý cùng 10.000 truy vấn đó. Không sử dụng tập input thuận lợi riêng cho từng phương án.
+3. Hai yêu cầu bắt buộc chung
+Mã	Yêu cầu	Mô tả cụ thể theo lĩnh vực	Tiêu chí kết quả
+MC1	Tra cứu chính xác ở quy mô lớn	Hệ thống phải hỗ trợ tra cứu chính xác một hồ sơ sinh viên theo mã sinh viên (Student ID). Student ID là định danh duy nhất của mỗi hồ sơ. Quy mô dữ liệu vận hành dự kiến khoảng 10.000 hồ sơ sinh viên. Hệ thống hỗ trợ cả linear search và binary search để thực hiện tra cứu, trong đó binary search được sử dụng làm giải pháp tra cứu hiệu quả trong phiên bản cuối.	Khi nhập một Student ID hợp lệ, hệ thống phải trả về đúng và duy nhất hồ sơ tương ứng. Nếu Student ID không tồn tại, hệ thống phải thông báo không tìm thấy. Với giải pháp cuối, tra cứu theo Student ID không được thực hiện bằng linear scan trên toàn bộ danh sách; binary search phải trả về kết quả chính xác trên danh sách đã được sắp xếp theo Student ID
+MC2	Truy xuất theo thứ tự / khoảng / mức ưu tiên	Hệ thống phải hỗ trợ truy xuất sinh viên theo thứ tự GPA, khoảng GPA và mức ưu tiên dựa trên GPA. Cụ thể, hệ thống có thể sắp xếp danh sách sinh viên theo GPA, lọc các sinh viên có GPA nằm trong một khoảng xác định (ví dụ từ 6.5 đến 8.0), và xác định nhóm sinh viên có GPA cao nhất khi cần ưu tiên các kết quả học tập tốt. Các thao tác này phục vụ việc theo dõi, lọc và đánh giá kết quả học tập của sinh viên.	Khi sắp xếp, danh sách phải được trả về đúng thứ tự GPA yêu cầu. Khi lọc theo khoảng, kết quả phải chứa đúng tất cả sinh viên có GPA nằm trong khoảng và không chứa sinh viên ngoài khoảng. Khi truy xuất theo mức ưu tiên, các sinh viên có GPA cao hơn phải được ưu tiên trước, và kết quả phải xác định đúng nhóm sinh viên có thành tích cao theo số lượng yêu cầu.
+3.1. MC1 — Tra cứu chính xác sinh viên theo MSSV
+a) Nhu cầu nghiệp vụ: 
+Trong quá trình quản lý hồ sơ, người dùng thường biết MSSV của sinh viên cần kiểm tra. Hệ thống cần trả đúng hồ sơ tương ứng. Dạng bài toán: identifier -> 0 hoặc 1 Student
+b) Đặc điểm truy cập
+MC1 là: Exact-key lookup theo identifier duy nhất
+- Không cần tìm gần đúng.
+- Không phải range query
+- Không trả nhiều sinh viên.
+- Không yêu cầu ordered traversal.
+c) Tần suất dự kiến
+MC1 được xem là thao tác thường xuyên nhất trong bốn yêu cầu. Người quản lý có thể thực hiện nhiều lần trong một phiên làm việc.Vì vậy chi phí tra cứu theo MSSV có ảnh hưởng lớn đến hiệu năng tổng thể.
+d) Ảnh hưởng quy mô
+Với dữ liệu nhỏ, quét tuyến tính có thể vẫn cho cảm giác nhanh.
+Khi: n=10.000; n=100.000
+số bước của phương án quét toàn bộ dữ liệu có thể tăng mạnh.
+Do đó giải pháp cuối phải được đánh giá so với baseline tuyến tính.
+e) Tiêu chí kiểm thử
+MC1 cần kiểm thử:
+- MSSV tồn tại.
+- MSSV không tồn tại.
+- Dataset rỗng.
+- MSSV đầu dataset.
+- MSSV giữa dataset.
+- MSSV cuối dataset.
+- Dataset 1.000.
+- Dataset 10.000.
+- Dataset 100.000.
+f) Bằng chứng hiệu năng dự kiến
+Baseline:
+Liner Search
+Giải pháp cuối sẽ được benchmark cùng dataset và cùng tập truy vấn.
+Ở D2, nhóm chưa lựa chọn cấu trúc dữ liệu cuối cùng.
+3.2. MC2 — Truy xuất sinh viên có GPA cao nhất
+a) Nhu cầu nghiệp vụ
+Người quản lý cần xác định sinh viên hiện có thành tích học tập cao nhất.
+Trong phạm vi hệ thống, GPA được sử dụng làm tiêu chí ưu tiên.
+b) Đặc điểm truy cập
+MC2 có dạng:
+Tập Student => Student có priority cao nhất
+Đây là thao tác truy xuất: Extreme / Highest-priority element.
+MC2 khác MC1:
+MC1:
+biết MSSV trước => tìm Student
+MC2:
+không biết Student trước => tìm dựa trên GPA
+c) Tần suất dự kiến
+MC2 được xem là thao tác thường xuyên nhưng thấp hơn MC1.
+Dataset có thể thay đổi GPA theo thời gian, vì vậy kết quả MC2 không được xem là một giá trị cố định có thể tính một lần cho toàn bộ vòng đời hệ thống.
+d) Quy tắc ưu tiên
+1.	GPA cao hơn được ưu tiên.
+2.	Nếu GPA bằng nhau, MSSV nhỏ hơn được ưu tiên.
+e) Tiêu chí kiểm thử
+- Dataset rỗng.
+- Một sinh viên.
+- GPA khác nhau.
+- Cùng GPA cao nhất.
+- Tất cả cùng GPA.
+- Sau khi GPA được cập nhật.
+- Dataset 1.000.
+- Dataset 10.000.
+- Dataset 100.000.
+f) Benchmark dự kiến
+Baseline:
+Duyệt toàn bộ dataset để tìm max GPA.
+Giải pháp cuối được so sánh với baseline trên cùng input.
+D2 chưa lựa chọn cấu trúc dữ liệu cho MC2.
+4. Các yêu cầu tự phát hiện của nhóm
+Nhóm xác định hai yêu cầu riêng:
+Mã	Yêu cầu	Lý do phát hiện	Tiêu chí thành công
+RQ1	Truy xuất danh sách sinh viên theo lớp	Người quản lý thường cần xem toàn bộ sinh viên của một lớp thay vì chỉ một sinh viên	Trả đúng và đủ sinh viên có classId yêu cầu
+RQ2	Truy xuất sinh viên theo khoảng GPA	Người quản lý có thể cần lấy danh sách sinh viên nằm trong một mức GPA nhất định để phục vụ theo dõi và quản lý	Trả đúng và đủ sinh viên có gpa nằm trong khoảng yêu cầu
+4.1. RQ1 — Truy xuất danh sách sinh viên theo lớp
+a) Nhu cầu nghiệp vụ
+Người quản lý cần thực hiện yêu cầu:
+Hiển thị tất cả sinh viên thuộc lớp C01. 
+Khác MC1, classId không duy nhất.
+Một lớp có thể có nhiều sinh viên.
+b) Đặc điểm truy cập
+RQ1 có dạng:
+classId => 0, 1 hoặc nhiều Student
+Đây là thao tác: Multi-result lookup theo thuộc tính không duy nhất.
+RQ1 và MC1 truy cập cùng tập Student nhưng dựa trên hai khóa khác nhau:
+MC1 => id
+RQ1 => classId
+c) Tần suất dự kiến
+RQ1 được xem là thao tác thỉnh thoảng.
+Người quản lý cần xem danh sách lớp nhưng không thường xuyên bằng việc tra cứu từng sinh viên theo MSSV.
+Giả định workload: MC1 > RQ1 về tần suất truy vấn.
+d) Tiêu chí kiểm thử
+- Lớp nhiều sinh viên.
+- Lớp một sinh viên.
+- Lớp không tồn tại.
+- Dataset rỗng.
+- Một lớp có rất nhiều sinh viên.
+- Sinh viên thay đổi lớp.
+- Sinh viên mới được thêm vào lớp.
+- Sinh viên bị xóa khỏi dataset.
+e) Tiêu chí thành công
+RQ1 đạt nếu:
+- Trả đầy đủ sinh viên đúng lớp.
+- Không trả sinh viên lớp khác.
+- Không bỏ sót.
+- Không crash khi không có kết quả.
+4.2. RQ2 — Truy xuất sinh viên theo khoảng GPA
+a) Nhu cầu nghiệp vụ
+Trong quá trình quản lý hồ sơ, người quản lý có thể cần truy xuất một nhóm sinh viên có GPA nằm trong một khoảng xác định.
+Ví dụ:
+GPA từ 7.0 đến 8.5
+Hệ thống cần trả về tất cả sinh viên thỏa:
+7.0 <= GPA <=8.5
+Yêu cầu này có thể phục vụ các nhu cầu như:
+- Xem nhóm sinh viên có kết quả học tập trong một mức nhất định.
+- Lập danh sách sinh viên cần theo dõi.
+- Phân loại hoặc thống kê sinh viên theo khoảng GPA.
+- Quan sát một nhóm sinh viên thay vì chỉ sinh viên có GPA cao nhất.
+b) Đặc điểm truy cập
+RQ2 có dạng:
+[minGPA, maxGPA] -> 0, 1 hoặc nhiều Student
+Đây là một: Range Query trên thuộc tính gpa.
+RQ2 khác MC2:
+MC2: toàn bộ dataset => một Student có GPA cao nhất
+RQ2: một khoảng GPA => nhiều Student nằm trong khoảng
+RQ2 cũng khác RQ1:
+RQ1: equality theo classId
+RQ2: range theo GPA
+Do đó RQ2 tạo ra một access pattern riêng biệt.
+c) Tần suất dự kiến
+RQ2 được xem là thao tác thỉnh thoảng.
+Nó không xảy ra thường xuyên bằng MC1 nhưng vẫn là thao tác có ý nghĩa khi người quản lý cần truy xuất một nhóm sinh viên dựa trên kết quả học tập.
+d) Input
+Người dùng nhập:
+Minimum GPA: 7.0
+Maximum GPA: 8.5
+Điều kiện: 0.0 <= minGPA <= maxGPA <= 10.0
+e) Output
+Ví dụ:
+GPA Range: [7.0, 8.5]
+1. 25151001 - Nguyen Van An - GPA: 8.52
+2. 25151015 - Tran Minh Anh - GPA: 7.80
+3. 25151028 - Le Gia Bao - GPA: 7.25
+Nếu không có kết quả:
+No students found. 
+f) Tiêu chí kiểm thử
+RQ2 cần kiểm thử:
+- Khoảng GPA hợp lệ.
+- Không có sinh viên trong khoảng.
+- Chỉ có một sinh viên trong khoảng.
+- Nhiều sinh viên trong khoảng.
+- minGPA = maxGPA.
+- Khoảng [0.0, 10.0].
+- minGPA > maxGPA.
+- GPA ngoài miền [0.0, 10.0].
+- Dataset rỗng.
+- Dataset lớn.
+- GPA sinh viên được cập nhật.
+- Sinh viên mới được thêm.
+- Sinh viên bị xóa.
+g) Tiêu chí thành công
+RQ2 đạt nếu:
+- Trả đầy đủ sinh viên có GPA nằm trong khoảng yêu cầu.
+- Không trả sinh viên nằm ngoài khoảng.
+- Không bỏ sót bản ghi hợp lệ.
+- Xử lý an toàn input không hợp lệ.
+- Kết quả vẫn chính xác sau khi GPA được cập nhật.
+5. Xung đột yêu cầu và trade-off dự kiến
+Nhóm xác định xung đột chính giữa:
+MC1 — Tra cứu chính xác sinh viên theo MSSV
+và:
+RQ1 — Truy xuất danh sách sinh viên theo lớp.
+5.1. Nguyên nhân xung đột
+MC1 và RQ1 cùng truy cập tập hồ sơ sinh viên nhưng dựa trên hai access pattern khác nhau.
+MC1 cần: id -> Student
+Trong đó id là identifier duy nhất.
+Trọng tâm của MC1 là tìm một hồ sơ cụ thể thật nhanh.
+Trong khi đó RQ1 cần: classId -> List<Student>
+Trong đó nhiều sinh viên có cùng classId.
+Trọng tâm của RQ1 là tìm toàn bộ một nhóm hồ sơ có cùng thuộc tính.
+Có thể biểu diễn:
+ 
+Một cách tổ chức dữ liệu được tối ưu chủ yếu cho việc truy cập bằng id không nhất thiết đồng thời tối ưu cho việc nhóm và truy xuất dữ liệu theo classId. Ngược lại, nếu dữ liệu được tổ chức chủ yếu để hỗ trợ truy xuất theo classId, việc tìm chính xác một MSSV bất kỳ có thể không đạt chi phí mong muốn của MC1. Do đó hai yêu cầu tạo ra một xung đột về cách tổ chức và truy cập dữ liệu.
+5.2. Workload làm cơ sở cho trade-off
+Nhóm giả định:
+MC1 xảy ra thường xuyên.
+RQ1 xảy ra thỉnh thoảng.
+Ví dụ trong một workload giả định gồm 100 thao tác:
+MC1: khoảng 60–70 truy vấn
+MC2: khoảng 10–15 truy vấn
+RQ1: khoảng 10–15 truy vấn
+RQ2: khoảng 10–15 truy vấn
+Các tỷ lệ trên chỉ là workload dự kiến và sẽ được điều chỉnh nếu nhóm có được cơ sở phù hợp hơn. Điểm quan trọng là: Frequency(MC1) > Frequency(RQ1). Do đó nhóm ưu tiên hiệu năng cho MC1.
+5.3. Hướng giải quyết: Trade-off có chủ đích
+Nhóm dự kiến sử dụng hướng: Trade-off trên một cấu trúc dữ liệu chính.
+Ưu tiên cấu trúc đáp ứng tốt MC1 - thao tác tra cứu theo MSSV xảy ra thường xuyên nhất và chấp nhận RQ1 có chi phí cao hơn nếu cần thiết.
+Có thể biểu diễn:
+ 
+Nhóm không cho rằng RQ1 không quan trọng. Trade-off chỉ có nghĩa rằng khi một cấu trúc không thể đồng thời tối ưu hoàn hảo cả hai access pattern, hệ thống ưu tiên thao tác có ảnh hưởng lớn hơn đến workload tổng thể.
+5.4. Chi phí của trade-off
+a) Lợi ích
+- MC1 có thể được tối ưu tốt.
+- Phù hợp workload khi tra cứu MSSV xảy ra thường xuyên.
+- Kiến trúc DSA Core đơn giản hơn so với duy trì nhiều cấu trúc đồng thời.
+- Giảm nguy cơ mất đồng bộ giữa nhiều index khi thêm, xóa hoặc cập nhật sinh viên.
+- Giảm chi phí bộ nhớ so với việc duy trì nhiều cấu trúc phụ.
+b) Chi phí chấp nhận
+RQ1 có thể phải thực hiện nhiều bước hơn khi tìm toàn bộ sinh viên của một lớp.
+Ví dụ, nếu cấu trúc chính không hỗ trợ trực tiếp việc nhóm theo classId, RQ1 có thể cần kiểm tra nhiều bản ghi để xác định sinh viên thuộc lớp cần tìm.
+Đây là chi phí nhóm chủ động chấp nhận, không phải hạn chế bị bỏ qua.
+5.5. Điều kiện làm trade-off không còn phù hợp
+Trade-off trên chỉ hợp lý khi: MC1 xảy ra thường xuyên hơn RQ1.
+Nếu workload thay đổi, ví dụ: RQ1 trở thành thao tác chính hoặc hệ thống liên tục phải truy vấn hàng nghìn lần theo classId thì quyết định ưu tiên MC1 có thể không còn phù hợp.
+Trong trường hợp đó, nhóm cần xem xét lại:
+- Cấu trúc được chọn.
+- Khả năng sử dụng cấu trúc phụ.
+- Khả năng composition nhiều cấu trúc.
+- Chi phí bộ nhớ.
+- Chi phí đồng bộ khi dữ liệu thay đổi.
+6. Tổng hợp yêu cầu và tiêu chí kiểm chứng
+Mã	Thao tác	Access pattern	Workload dự kiến	Cách kiểm chứng
+MC1	Tra cứu theo MSSV	Exact-key lookup	Rất thường xuyên	Unit test + benchmark với Linear Search
+MC2	Sinh viên GPA cao nhất	Extreme / priority	Thường xuyên	Unit test extreme/tie-break + benchmark
+RQ1	Sinh viên theo lớp	Multi-result equality lookup	Thỉnh thoảng	Kiểm tra đủ/đúng kết quả và trường hợp không có lớp
+RQ2	Sinh viên theo khoảng GPA	Range query	Thỉnh thoảng	Test range hợp lệ, không kết quả, nhiều kết quả và invalid range
+6.1. Quy mô benchmark
+Nhóm dự kiến sử dụng:
+Base    = 1.000
+Target  = 10.000
+Stress  = 100.000
+1.000 bản ghi
+Dùng chủ yếu cho: Functional test; Unit test; Debug; Kiểm tra edge cases.
+10.000 bản ghi
+Dùng làm mốc benchmark chính đầu tiên.
+100.000 bản ghi
+Dùng làm mốc benchmark thứ hai và stress test.
+Hai mốc: 10.000 -> 100.000 cho phép quan sát rõ xu hướng khi kích thước dữ liệu tăng một bậc độ lớn.
+6.2. Các chỉ số benchmark
+Nhóm dự kiến ghi nhận:
+- Kích thước dữ liệu n.
+- Số lượng truy vấn.
+- Thời gian thực thi.
+- Số bước hoặc phép kiểm tra phù hợp.
+- Kết quả đúng/sai.
+- Xu hướng thay đổi khi kích thước dữ liệu tăng.
+Không sử dụng một ngưỡng thời gian tuyệt đối chung cho mọi thiết bị.
+7. Baseline thực nghiệm
+7.1. MC1
+Baseline:
+Linear Search
+Mỗi truy vấn kiểm tra tuần tự các sinh viên cho đến khi tìm thấy MSSV tương ứng hoặc hết dataset.
+Giải pháp cuối được so sánh với baseline trên: 10.000 records vs 100.000 records
+Ở giai đoạn D2, nhóm chưa lựa chọn cấu trúc dữ liệu cuối cùng cho MC1.
+7.2. MC2
+Baseline:
+Duyệt toàn bộ dataset để tìm GPA cao nhất. 
+Pseudo-flow:
+maxStudent = sinh viên đầu tiên
+for mỗi Student:
+    nếu Student có priority cao hơn maxStudent
+        maxStudent = Student
+Giải pháp cuối được benchmark trên cùng dataset và workload. Ở D2, nhóm chưa lựa chọn cấu trúc dữ liệu cuối cùng cho MC2.
+7.3. RQ1
+Baseline:
+Duyệt toàn bộ dataset
+=> kiểm tra student.classId
+=> thêm sinh viên phù hợp vào kết quả
+RQ1 cũng là thao tác được sử dụng để đánh giá trade-off với MC1.
+Nếu phương án cuối ưu tiên MC1 khiến RQ1 vẫn cần duyệt nhiều phần tử, nhóm sẽ ghi nhận và trình bày đây là chi phí trade-off có chủ đích.
+Trong trường hợp trade-off được giữ nguyên sau D3, baseline của RQ1 có thể đồng thời trở thành final solution.
+7.4. RQ2
+Baseline:
+Duyệt toàn bộ dataset
+=> kiểm tra minGPA <= student.gpa <= maxGPA
+=> thêm sinh viên phù hợp vào kết quả
+Baseline có chi phí tuyến tính theo kích thước dataset.
+Việc lựa chọn cấu trúc dữ liệu cuối cùng để hỗ trợ range query sẽ được thực hiện ở D3 sau khi áp dụng Q1–Q4 và so sánh các phương án.
+8. Giả định workload
+Để có cơ sở đánh giá trade-off, nhóm đưa ra workload dự kiến:
+Requirement	Tần suất tương đối
+MC1	Rất cao
+MC2	Trung bình
+RQ1	Thấp hơn MC1
+RQ2	Thấp hơn MC1
+Workload này phản ánh giả định rằng thao tác phổ biến nhất của người quản lý hồ sơ là tìm một sinh viên cụ thể theo MSSV. MC2 được sử dụng khi cần xác định phần tử có mức ưu tiên GPA cao nhất. RQ1 và RQ2 chủ yếu được sử dụng khi người dùng cần truy xuất một nhóm sinh viên thay vì một hồ sơ duy nhất. 
+9. Phân công đóng góp
+	
+	
+	
+	
+	
+10. Kết luận D2
+Nhóm đã xác định bài toán thuộc lĩnh vực Hệ thống quản lý sinh viên với bốn access pattern chính:
+MC1:
+MSSV => một Student
+Exact-key lookup
+MC2:
+Student có GPA cao nhất
+Extreme / priority query
+RQ1:
+classId => nhiều Student
+Multi-result equality lookup
+
+RQ2:
+[minGPA, maxGPA] -> nhiều Student
+Range query
+Bốn yêu cầu đại diện cho các kiểu truy cập dữ liệu khác nhau:
+MC1 -> Exact Lookup
+MC2 -> Extreme / Priority
+RQ1 -> Equality Multi-result
+RQ2 -> Range Query
+Trong đó nhóm xác định conflict chính: MC1 <=> RQ1 vì hai yêu cầu truy cập cùng dataset dựa trên hai thuộc tính khác nhau: MC1 ưu tiên id; RQ1 ưu tiên classId
+Dựa trên workload dự kiến: Frequency(MC1) > Frequency(RQ1) nhóm lựa chọn hướng giải quyết dự kiến bằng trade-off có chủ đích: Ưu tiên hiệu năng cho MC1 và chấp nhận RQ1 có thể cần chi phí truy xuất cao hơn.
+

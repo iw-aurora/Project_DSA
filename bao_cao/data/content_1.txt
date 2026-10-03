@@ -1,0 +1,338 @@
+DSA Practice Hub
+Bài tập thực hành — Data Structures & Algorithms
+
+Chương 0: Chương
+1 bài
+BẢN CHÍNH THỨC
+review: review
+1 bài
+Chương 1: What Is an Algorithm?
+6 bài
+Chương 2: How Fast Is Fast?
+6 bài
+Chương 3: Big-O and the Language of Growth
+4 bài
+Chương 4: Abstract Data Types
+5 bài
+Chương 5: Arrays, Dynamic Arrays & Array Patterns
+6 bài
+Chương 6: Linked Lists
+5 bài
+Chương 7: Stacks and Queues
+5 bài
+Chương 8: Hash Tables
+5 bài
+Chương 9: Searching and Elementary Sorting
+6 bài
+YÊU CẦU ĐỒ ÁN NHÓM (GROUP PROJECT) — BẢN CHÍNH THỨC
+Học phần: Cấu trúc Dữ liệu và Giải thuật — Data Structures and Algorithms (DASA230179)
+Thông tin	Nội dung
+Trọng số	50% điểm học phần
+Số thành viên/nhóm	4–5 sinh viên
+Phạm vi kiến thức	Chương 1–16 của giáo trình.
+Giảng viên	Bao Vu Dinh (T-Bao)
+Ngày ban hành	27/08/2026
+Đây là văn bản yêu cầu chính thức cho Đồ án nhóm — nhiệm vụ đánh giá tích hợp (integrative performance task) quan trọng nhất của học phần. Hãy đọc kỹ toàn bộ tài liệu trước khi nhóm bắt đầu làm việc, đặc biệt là Mục 3 (chuẩn đầu ra), Mục 5–6 (yêu cầu kỹ thuật), Mục 11 (đánh giá cá nhân) và Mục 19 (checklist nộp bài).
+
+1. Mục đích của đồ án
+Trong suốt học phần, mỗi bài kiểm tra hay bài lab chỉ đánh giá một năng lực riêng lẻ: một quiz kiểm tra khả năng phân tích độ phức tạp, một lab kiểm tra một cách cài đặt cụ thể. Đồ án Nhóm làm điều ngược lại: đưa ra một bài toán chỉ có thể giải quyết được khi các em mô hình hóa nó, so sánh các lựa chọn thực sự khác nhau, cài đặt một giải pháp, đo lường hiệu năng của nó, và bảo vệ kết quả trước một người sẽ hỏi lại "tại sao không chọn cách khác?".
+
+Đây cũng chính là cấu trúc của CLO8 — chuẩn đầu ra "capstone" của học phần — và là lý do Đồ án Nhóm là minh chứng chính cho CLO8.
+
+Đồ án không phải là bài tập "hãy cài đặt cấu trúc dữ liệu X". Không có cấu trúc dữ liệu nào được nêu tên trong đề bài. Nhiệm vụ của các em là đọc một mô tả bài toán, tự phân tích access pattern, so sánh các cấu trúc đã học, và chọn cùng với việc giải thích và bảo vệ lựa chọn đó.
+
+2. Đề bài / Kịch bản
+2.1 Bối cảnh
+Nhóm của các em là đội kỹ thuật cho một tổ chức (giả định) cần một "records-and-decision engine": một phần mềm lưu trữ một tập hợp bản ghi ngày càng lớn, và trả lời một số câu hỏi vận hành cố định về tập hợp đó, thật nhanh, ngay cả khi dữ liệu liên tục thay đổi.
+
+Khách hàng không biết hash table hay binary search tree là gì, và cũng không cần biết. Họ chỉ mô tả hệ thống phải làm gì. Có 2 yêu cầu giống nhau cho mọi nhóm (Mục 5.1) để đảm bảo có một nền tảng chung có thể so sánh được. Phần còn lại, các em phải tự tìm ra bằng cách phân tích lĩnh vực (domain) mà nhóm chọn (Mục 5.2), nghĩa là hai nhóm cùng chọn một lĩnh vực trong danh sách gợi ý vẫn có thể đưa ra các yêu cầu khác nhau, nếu đọc đề bài theo cách khác nhau.
+
+Không có cấu trúc dữ liệu nào được nêu tên trong đề bài. Nêu tên một cấu trúc trước khi hoàn thành phân tích ở Mục 5–6 sẽ bị coi là đi tắt (shortcut), không phải là giải pháp (xem Mục 18).
+
+2.2 Danh sách lĩnh vực (domain menu)
+Mỗi nhóm chọn một lĩnh vực dưới đây, hoặc đề xuất lĩnh vực riêng (Mục 2.3).
+
+Lĩnh vực	Mô tả ngắn
+Hệ thống thư viện / mượn tài liệu	Thành viên mượn/trả tài liệu; nhân viên cần tra cứu nhanh, duyệt theo phạm vi, cơ chế đặt trước/xếp hàng chờ (hold/waitlist), khái niệm "gần đây" hoặc "đang được quan tâm".
+Hệ thống đăng ký học phần & waitlist	Sinh viên tìm kiếm và đăng ký lớp; phòng đào tạo cần tra cứu, duyệt theo mã ngành/khoa, danh sách chờ, và lịch sử thêm/hủy môn.
+Hệ thống hàng đợi & hồ sơ bệnh nhân phòng khám	Phòng khám theo dõi bệnh nhân và lượt khám; nhân viên cần tra cứu, duyệt lịch hẹn theo khoảng thời gian, cơ chế ưu tiên theo mức độ khẩn cấp (triage), và danh sách "vừa được khám".
+Hệ thống quản lý kho & xử lý đơn hàng thương mại điện tử	Cửa hàng online quản lý danh mục sản phẩm và đơn hàng; nhân viên cần tra cứu, duyệt sản phẩm, cơ chế ưu tiên xử lý đơn gấp, và danh sách "vừa xem/vừa nhập kho".
+Hệ thống đặt vé sự kiện / địa điểm	Nền tảng bán vé quản lý các lượt đặt chỗ; nhân viên cần tra cứu, duyệt theo khoảng (suất chiếu/ghế), danh sách chờ (standby), và lịch sử giao dịch gần đây.
+Hệ thống quản lý ticket hỗ trợ khách hàng	Bộ phận hỗ trợ quản lý các ticket; nhân viên cần tra cứu, duyệt theo ngày/mức SLA, cơ chế leo thang ưu tiên (escalation), và danh sách "ticket vừa xử lý" khi chuyển đổi qua lại giữa các ticket.
+2.3 Đề xuất lĩnh vực riêng
+Nhóm có thể đề xuất lĩnh vực khác, giảng viên duyệt đề xuất trước khi nhóm bước vào giai đoạn Design.
+
+3. Chuẩn đầu ra liên quan (CLO Alignment)
+Đồ án là minh chứng chính (primary) cho các CLO sau:
+
+CLO	Nội dung (tóm tắt)
+CLO1	Mô hình hóa bài toán qua input/output/ràng buộc; lập luận đúng đắn (correctness); xác định phản ví dụ (counterexample).
+CLO3	Cài đặt, kiểm thử, debug các cấu trúc dữ liệu cốt lõi; kết nối cài đặt với chi phí đã phân tích; chịu trách nhiệm cá nhân về tính đúng đắn.
+CLO7	Cài đặt và phân tích các cấu trúc dữ liệu phân cấp (hierarchical); đánh giá điều kiện suy giảm hiệu năng (degradation).
+CLO8 (capstone)	Đánh giá một bài toán mới; xác định access pattern và dominant operation; chọn và bảo vệ cấu trúc dữ liệu đã chọn — cả cá nhân lẫn theo nhóm.
+Đồ án củng cố (reinforce), nhưng không phải là minh chứng chính, cho:
+
+CLO	Vì sao
+CLO4 (tìm kiếm & sắp xếp cơ bản)	Chỉ xuất hiện nếu lĩnh vực của nhóm thực sự cần nạp dữ liệu số lượng lớn (bulk load) và sắp xếp — không bị ép buộc vào mọi nhóm. Minh chứng chính cho CLO4 nằm ở Continuous Assessment.
+CLO6 (divide-and-conquer)	Tương tự — chỉ xuất hiện nơi thiết kế của nhóm thực sự cần đến.
+CLO2 (ký hiệu tiệm cận) và CLO5 (đệ quy, recurrence) không được đánh giá qua đồ án này — hai CLO này đã có minh chứng chính từ Continuous Assessment, nơi có thể kiểm tra dưới điều kiện cá nhân, có kiểm soát.
+
+4. Nhiệm vụ bắt buộc
+Chọn hoặc đề xuất một lĩnh vực (Mục 2).
+Mỗi thành viên tự viết bài đọc-hiểu đề bài của riêng mình, trước khi cả nhóm thảo luận chung.
+Phân tích lĩnh vực để đáp ứng 2 yêu cầu bắt buộc chung (Mục 5.1) và tự phát hiện 2–3 yêu cầu riêng của lĩnh vực (Mục 5.2) — không được sao chép từ lĩnh vực của nhóm khác, kể cả khi tương tự.
+Xác định ít nhất một xung đột yêu cầu thực sự (Mục 5.4) và giải quyết nó — bằng cách kết hợp 2 cấu trúc, hoặc bằng một đánh đổi (trade-off) có chủ đích trên một cấu trúc duy nhất.
+Xây dựng bảng so sánh và áp dụng quy trình Q1–Q4 (Mục 6.1) cho mọi yêu cầu, cả bắt buộc lẫn tự phát hiện.
+Thiết kế kiến trúc 3 tầng (Mục 7): presentation, DSA core, persistence.
+Cài đặt giải pháp, bao gồm ít nhất 2 cấu trúc dữ liệu tự cài đặt từ đầu (from scratch), thực sự trung tâm trong các quyết định thiết kế của nhóm (Mục 6.2).
+Cung cấp bằng chứng hiệu năng phù hợp với quy mô của lĩnh vực (Mục 5.3).
+Kiểm thử, debug, và viết tài liệu cho hệ thống.
+Quyết định mức độ đầu tư cho web visualization (Mục 8) — nếu làm rất ít hoặc không làm, phải giải thích ngắn gọn vì sao.
+Trình bày và bảo vệ cá nhân kết quả (Mục 14).
+5. Yêu cầu chức năng và kỹ thuật
+5.1 Hai yêu cầu bắt buộc chung (giống nhau cho mọi nhóm)
+Mã	Yêu cầu	Vì sao bắt buộc chung
+MC1 — Tra cứu chính xác ở quy mô lớn	Truy xuất một bản ghi duy nhất, tin cậy, theo định danh (identifier) của nó, ở quy mô dữ liệu mà việc quét tuyến tính (linear scan) rõ ràng chậm.	Mọi hệ thống quản lý dữ liệu đều cần điều này; không ép sẵn một cấu trúc cụ thể — hash table hay một chỉ mục dạng cây đều có thể là câu trả lời đúng, tùy vào các yêu cầu khác.
+MC2 — Truy xuất theo thứ tự / khoảng / mức ưu tiên	Lĩnh vực phải có ít nhất một thao tác thường xuyên cần đến thứ tự: kết quả có sắp xếp, một khoảng giá trị (range), hoặc lấy ra phần tử cực trị (ưu tiên cao nhất/sớm nhất) một cách lặp lại.	Đây là loại yêu cầu mà hash table không thể trả lời — biến câu hỏi Q1 của Chương 16 ("có cần thứ tự không?") thành một quyết định thực sự, không phải hình thức.
+5.2 Yêu cầu do nhóm tự phát hiện (2–3 yêu cầu)
+Trong giai đoạn hình thành ý tưởng, mỗi nhóm phải tự xác định 2–3 thao tác bổ sung riêng của lĩnh vực mình — thông qua phân tích yêu cầu của chính nhóm, không lấy từ danh sách có sẵn. Một yêu cầu tự phát hiện chỉ hợp lệ khi: là thao tác thật sự mà người dùng hệ thống cần, được diễn đạt mà không nêu tên cấu trúc, và đủ khác biệt để không chỉ là MC1/MC2 diễn đạt lại.
+
+Một số ví dụ về dạng yêu cầu phù hợp (không phải danh sách để chọn): hoàn tác (undo) hành động gần nhất; xử lý theo nguyên tắc đến trước-phục vụ trước; tìm kiếm theo tiền tố (prefix/autocomplete); một danh sách "vừa được thao tác" luôn phải cập nhật; một bộ nhớ đệm (cache) có giới hạn dung lượng; một báo cáo tạo một lần và chỉ đọc nhiều lần sau đó.
+
+Vì đây là yêu cầu do từng nhóm tự khám phá, hai nhóm cùng lĩnh vực hoàn toàn có thể có các yêu cầu tự phát hiện khác nhau — và do đó chọn cấu trúc dữ liệu khác nhau. Đây là điều có chủ đích, không phải là sự thiếu nhất quán khi chấm điểm.
+
+5.3 Bằng chứng hiệu năng (điều chỉnh theo quy mô lĩnh vực)
+Mỗi nhóm phải cung cấp bằng chứng thực nghiệm cho thấy giải pháp cho MC1/MC2 hoạt động đúng như phân tích độ phức tạp dự đoán, ở quy mô đủ lớn để thấy rõ khác biệt so với cách tiếp cận tuyến tính (naive). Vì các lĩnh vực khác nhau có quy mô dữ liệu thực tế khác nhau (một hệ thống ticket hỗ trợ và một danh mục học phần của trường không cùng bậc độ lớn), nhóm tự đề xuất một mục tiêu quy mô hợp lý. Nếu chưa có cơ sở tốt hơn: tối thiểu 10.000 bản ghi giả lập, đo tại ít nhất 2 mốc quy mô cách nhau ít nhất một bậc độ lớn (order of magnitude).
+
+Nơi hợp lý nhất để lấy bằng chứng này là bước nạp dữ liệu ban đầu (bulk load) của tầng persistence (Mục 7.3) — không cần tạo thêm một bài tập riêng.
+
+5.4 Yêu cầu xung đột (bắt buộc, không quy định cơ chế giải quyết)
+Ít nhất một cặp yêu cầu trong thiết kế của nhóm — hai yêu cầu tự phát hiện, hoặc một yêu cầu tự phát hiện với một yêu cầu bắt buộc chung — phải thực sự xung đột với nhau: không có cấu trúc dữ liệu nào đã học đáp ứng tốt cả hai. Nhóm phải trình bày cách giải quyết, chọn một trong hai hướng:
+
+Kết hợp cấu trúc (composition) — kết hợp 2 cấu trúc, mỗi cấu trúc đảm nhận phần mà cấu trúc kia không làm được, và giữ đồng bộ (mô hình mà Chương 16 dùng cho LRU cache); hoặc
+Đánh đổi có chủ đích trên một cấu trúc (trade-off) — chọn một cấu trúc duy nhất, và nêu rõ thao tác nào bị hy sinh, vì sao sự đánh đổi đó chấp nhận được với lĩnh vực này.
+Chương 16 nêu rõ: kết hợp cấu trúc chỉ là một trong các cách giải quyết hợp lý, không phải cách duy nhất — phần được đánh giá là lập luận, không phải cơ chế cụ thể được chọn.
+
+6. Kiến thức DSA bắt buộc sử dụng
+6.1 Khung lựa chọn Chương 16 (phương pháp bắt buộc)
+7 tiêu chí so sánh (find-by-key, find-by-position, chi phí insert/delete, ordered traversal, range/neighbour query, extremes, worst-case vs. average-case) và quy trình quyết định Q1–Q4 (thứ tự → loại key/workload → chấp nhận worst-case hay không → các yếu tố phi tiệm cận) phải được áp dụng, thể hiện rõ ràng, cho mọi yêu cầu ở Mục 5 — cả bắt buộc lẫn tự phát hiện. Mỗi quyết định chọn cấu trúc phải nêu rõ đánh đổi (trade-off) đã chấp nhận và điều kiện sẽ làm lựa chọn đó không còn đúng.
+
+6.2 Cấu trúc dữ liệu trong phạm vi và yêu cầu tự cài đặt
+Các cấu trúc có thể dùng: dynamic array, sorted array, singly/doubly linked list, stack/queue/deque, hash table, balanced BST (chỉ cần hiểu khái niệm tự cân bằng, không bắt buộc tự cài đặt logic xoay AVL/red-black), binary heap/priority queue, trie và Union-Find (chỉ khi một yêu cầu tự phát hiện thực sự cần tìm kiếm theo tiền tố hoặc câu hỏi "cùng nhóm hay không").
+
+Ít nhất 2 cấu trúc dữ liệu quan trọng, thực sự trung tâm trong quyết định thiết kế của nhóm, phải được tự cài đặt từ đầu. Đây phải là các cấu trúc mà nhóm thực sự đã chọn thông qua lập luận Q1–Q4 ở Mục 6.1 — không phải hai cấu trúc dễ, trùng lặp chức năng, chỉ để "cho đủ số lượng".
+
+6.3 Giải thuật — thường cần, nhưng không ép buộc
+Một giải thuật divide-and-conquer (merge sort hoặc quicksort) là cách tự nhiên nhất để chuẩn bị dữ liệu nạp hàng loạt (Mục 5.3, 7.3) cho MC1/MC2, và binary search (hoặc cơ chế tra cứu tương đương) là cách tự nhiên để truy vấn dữ liệu đó.
+
+Nếu lĩnh vực và các yêu cầu cụ thể của nhóm thực sự không cần sắp xếp hàng loạt hay chia-để-trị ở bất kỳ đâu, nhóm không bắt buộc phải "gán" thêm một chỗ để dùng — nhưng báo cáo phải nói rõ điều này và giải thích vì sao. Việc nhận ra khi nào một kỹ thuật không áp dụng cũng là một phần của CLO8, không kém việc áp dụng nó.
+
+6.4 Ngoài phạm vi
+Biểu diễn và duyệt đồ thị (graph, BFS/DFS), thuật toán đường đi ngắn nhất/cây khung nhỏ nhất, thiết kế greedy, dynamic programming, backtracking, và lập luận P/NP/intractability — không nằm trong phạm vi đồ án. Nếu lĩnh vực của nhóm có xu hướng cần các nội dung này (ví dụ: "định tuyến tối ưu", "đường đi ngắn nhất"), phải điều chỉnh lại đề bài — được kiểm tra khi duyệt đề xuất (Mục 2.3) và tại checkpoint Ngày 12.
+
+7. Kiến trúc hệ thống: Presentation / DSA Core / Persistence
+Hệ thống phải được tổ chức thành 3 tầng rõ ràng. Báo cáo Design phải có một đoạn ngắn (hoặc sơ đồ đơn giản) chỉ rõ logic của từng yêu cầu nằm ở tầng nào.
+
+7.1 Tầng Presentation (giao diện) — Command-line, script demo, giao diện web tối giản (Mục 8), hoặc kết hợp. Tầng này chỉ nhận input và hiển thị output — không được chứa logic cấu trúc dữ liệu.
+
+7.2 Tầng DSA Core / logic ứng dụng (tầng được đánh giá chính) — Chứa các cấu trúc dữ liệu đã chọn và biện minh ở Mục 6, và là nơi mọi thao tác ở Mục 5 (MC1, MC2, các yêu cầu tự phát hiện) thực sự được thực thi.
+
+7.3 Tầng Persistence (lưu trữ bền vững)
+
+Tối thiểu: file CSV hoặc JSON — nạp vào cấu trúc trong bộ nhớ khi khởi động, ghi ra khi lưu/tắt chương trình.
+Nâng cao (tùy chọn): SQLite hoặc một cơ sở dữ liệu nhẹ khác.
+Nhiệm vụ của tầng persistence là lưu trữ bền vững, không phải truy vấn. MC1, MC2, và mọi yêu cầu tự phát hiện phải được thực thi trên cấu trúc dữ liệu trong bộ nhớ của nhóm — không thông qua WHERE, ORDER BY, hay index xây sẵn trong SQLite. Nạp bảng dữ liệu rồi dùng SQL để trả lời trực tiếp yêu cầu mà đồ án đang đánh giá sẽ bị coi là lỗi thiết kế (Mục 15, tiêu chí Architecture), không được tính là một cách làm sáng tạo.
+
+Không yêu cầu và không kỳ vọng: chuẩn hóa (normalization), quản lý transaction, kiến trúc ORM, cơ sở dữ liệu phân tán, hay bất kỳ chiến lược indexing đặc thù của database. Nếu dùng SQLite, một bảng phẳng (flat table) phản ánh cấu trúc bản ghi trong bộ nhớ là đủ.
+
+8. Web-based Visualization
+Mức yêu cầu: khuyến khích mạnh, không bắt buộc.
+
+Phát triển web không phải là một CLO của học phần này.
+Visualization có giá trị thực sự (nhưng thứ yếu) trong việc hỗ trợ CLO8 — một hình minh họa cho cấu trúc heap hay biểu đồ benchmark có thể giúp câu trả lời trong buổi bảo vệ rõ ràng và nhanh hơn.
+Một giao diện đơn giản (in cây ra console, một trang HTML cơ bản hiển thị trạng thái cấu trúc, một biểu đồ benchmark) là hoàn toàn đủ — độ tinh xảo giao diện không được chấm điểm riêng (Mục 15).
+Nhóm không làm visualization phải nêu rõ lý do ngắn gọn trong báo cáo Design, và không bị trừ điểm vì điều đó, miễn là phần demo (Mục 14) vẫn thể hiện rõ hành vi bắt buộc bằng cách khác (console output có chú thích, trace table, video ngắn).
+Chất lượng visualization chỉ ảnh hưởng đến tiêu chí Communication (Mục 15) khi nó thực sự giúp giải thích hành vi DSA rõ hơn — một giao diện đẹp trên nền lập luận yếu không được cộng điểm.
+9. Sản phẩm bàn giao (Deliverables)
+#	Sản phẩm	Cấp độ	Hạn nộp
+D1	Bài đọc-hiểu đề bài cá nhân (≤1 trang)	Cá nhân	Conceive
+D2	Tài liệu Yêu cầu & Bài toán — lĩnh vực, xác nhận MC1/MC2, 2–3 yêu cầu tự phát hiện kèm lý do phát hiện	Nhóm	Conceive
+D3	Báo cáo Thiết kế & Biện minh Lựa chọn — bảng so sánh, quy trình Q1–Q4, giải pháp cho yêu cầu xung đột (Mục 5.4), phương án bị loại, sơ đồ kiến trúc (Mục 7)	Nhóm, với phần biện minh của từng cá nhân được ghi rõ	Design
+D4	Mã nguồn (3 tầng, ≥2 cấu trúc tự cài đặt, có test), lịch sử commit gắn với từng thành viên	Nhóm, có thể truy vết cá nhân	Implement
+D5	Bộ test tự động + nhật ký debug + bằng chứng hiệu năng (Mục 5.3)	Nhóm, có phần do từng cá nhân viết	Implement
+D6	Peer technical review — mỗi thành viên review một thành phần của một bạn cùng nhóm (≤nửa trang)	Cá nhân	Implement
+D7	Nhật ký sử dụng AI & bài phản tư (reflection) cá nhân	Cá nhân	Operate
+D8	Demo nhóm + bảo vệ cá nhân	Cá nhân + Nhóm	Defense
+D9	Gói nộp bài cuối cùng (tổng hợp toàn bộ)	Nhóm	Defense
+10. Vai trò nhóm và hợp tác
+Việc phân vai trò trong nhóm 4–5 người nhằm tổ chức quy trình làm việc, không phải để miễn trừ ai khỏi trách nhiệm kỹ thuật.
+
+Mỗi thành viên bắt buộc phải sở hữu ít nhất một đóng góp kỹ thuật thực chất (một thành phần đã cài đặt) và một đóng góp về lập luận/thiết kế (một yêu cầu đã phân tích và biện minh theo Mục 6.1). Một thành viên chỉ đóng góp tài liệu hoặc thuyết trình cuối cùng thì không đạt yêu cầu này.
+Dù đảm nhận vai trò nào, mỗi thành viên phải có khả năng giải thích thiết kế tổng thể của hệ thống trong buổi bảo vệ (Mục 14), không chỉ phần của riêng mình.
+Các buổi họp nhóm định kỳ (ghi chép ngắn gọn) cùng với lịch sử version control là bằng chứng đóng góp.
+11. Cơ chế đánh giá cá nhân (Individual Accountability)
+Vì một sản phẩm nhóm chung không thể tự nó chứng minh rằng từng thành viên đã đạt được các CLO ở Mục 3, các cơ chế sau đây tạo ra bằng chứng gắn với từng cá nhân:
+
+Cơ chế	Minh chứng cho
+Bài đọc-hiểu cá nhân (D1)	Khả năng mô hình hóa bài toán độc lập, trước khi thảo luận nhóm
+Phần biện minh thiết kế do cá nhân viết (D3)	Áp dụng cá nhân khung Chương 16
+Quyền sở hữu thành phần (component ownership)	Trách nhiệm cài đặt cá nhân — dựa trên version control và tuyên bố sở hữu yêu cầu trong D3, không chỉ dựa vào số lượng commit
+Peer technical review (D6)	Kỹ năng giao tiếp, lập luận dựa trên bằng chứng, cởi mở với phản hồi
+Bài phản tư cá nhân (phần của D7)	Sự kiên trì (persistence), trách nhiệm
+Nhật ký sử dụng AI (phần của D7)	Sử dụng AI có trách nhiệm, liêm chính học thuật
+Đánh giá đóng góp chéo (peer rating), bảo mật	Cơ chế điều chỉnh chống "ăn theo" — chỉ điều chỉnh, không thay thế các minh chứng khác
+Bảo vệ cá nhân, gồm 1 câu hỏi về thành phần của bạn cùng nhóm (Mục 14)	Khả năng bảo vệ phần việc của chính mình, hiểu toàn bộ hệ thống
+Nếu một thành viên không thể giải thích, trace, hoặc chỉnh sửa đoạn code được ghi nhận là của mình trong buổi bảo vệ, phần điểm cá nhân tương ứng sẽ bị ảnh hưởng trực tiếp — hệ thống hoạt động tốt của cả nhóm không thể thay thế cho điều này.
+
+12. Quy định sử dụng AI
+12.1 Tầng Presentation / Web — cho phép sử dụng rộng rãi
+Sinh viên có thể dùng AI nhiều cho HTML/CSS, framework frontend, UI component, biểu đồ, hiệu ứng, code visualization, boilerplate, và tích hợp API giữa tầng presentation và tầng DSA core. Vì tầng này không được đánh giá năng lực DSA, chỉ cần ghi chú ngắn gọn trong nhật ký sử dụng AI.
+
+12.2 Tầng DSA core / logic ứng dụng — có trách nhiệm giải trình
+AI có thể dùng để khám phá ý tưởng, viết bản nháp đầu tiên, hoặc kiểm tra lại lập luận, nhưng với mọi thứ thuộc tầng core, sinh viên phải: hiểu, kiểm chứng, kiểm thử, có thể chỉnh sửa, và giải thích được trong buổi bảo vệ. Mỗi nhóm phải có ít nhất một AI-audit đã ghi lại: một gợi ý thiết kế hoặc đoạn code do AI tạo ra mà nhóm đã kiểm tra, lỗi hoặc giả định ẩn phát hiện được (hoặc xác nhận không có, kèm lý do), và những gì đã thay đổi.
+
+12.3 Công bố và buổi bảo vệ
+Mỗi sinh viên duy trì nhật ký sử dụng AI cá nhân (một phần của D7): công cụ dùng, mục đích, phần công việc bị ảnh hưởng, và cách đã kiểm chứng. Buổi bảo vệ cá nhân diễn ra không có quyền truy cập AI, không dùng tài liệu ngoài những gì nhóm đã nộp, và không được bạn cùng nhóm hỗ trợ trong lượt trả lời của mình. Sử dụng sản phẩm AI mà không công bố, trình bày như là của riêng mình, bị coi là vi phạm liêm chính học thuật.
+
+13. Mốc thời gian / quy trình làm việc
+Ngày (theo lịch học)	Giai đoạn	Mốc
+Ngày 3	Conceive bắt đầu	Nhóm được thành lập; chọn hoặc đề xuất lĩnh vực và được duyệt (Mục 2).
+Ngày 5	Conceive kết thúc	Nộp D1 và D2 — bao gồm 2–3 yêu cầu tự phát hiện kèm lý do.
+Ngày 5 → Ngày 12	Design (liên tục)	Đưa ra lựa chọn cấu trúc ban đầu, có lập luận, khi từng chương liên quan được học.
+Ngày 7	Implement (giai đoạn đầu)	MC1/MC2 hoạt động được; khung tầng persistence đã có.
+Ngày 12	Implement (giai đoạn cuối) + xác nhận quy mô	Cài đặt cơ bản hoàn tất, bao gồm giải pháp cho yêu cầu xung đột (Mục 5.4); nhóm xác nhận mục tiêu quy mô bằng chứng hiệu năng (Mục 5.3) với giảng viên.
+Ngày 13	Design (chính thức)	Nộp bản nháp Báo cáo Thiết kế & Biện minh Lựa chọn, áp dụng đầy đủ khung Chương 16 (đã học xong toàn bộ).
+Ngày 14–15	Operate / Evaluate / Defense	Demo nhóm, trình bày bằng chứng hiệu năng, bảo vệ cá nhân, nộp bài cuối cùng (D9).
+14. Yêu cầu trình bày / bảo vệ (vấn đáp)
+Cấu trúc cho mỗi nhóm (Ngày 14–15):
+
+Demo nhóm (≈3 phút): hệ thống đáp ứng MC1, MC2, và các yêu cầu tự phát hiện, kèm bằng chứng hiệu năng.
+Lượt bảo vệ cá nhân (≈2,5 phút/thành viên): từng thành viên, không có gợi ý từ bạn cùng nhóm:
+giải thích/trace/chỉnh sửa một đoạn code được ghi nhận là của mình;
+bảo vệ một quyết định thiết kế (đánh đổi + điều kiện làm nó không còn đúng);
+trả lời một câu hỏi giả định "nếu yêu cầu này thay đổi thì sao";
+trả lời một câu hỏi về thành phần của một bạn cùng nhóm;
+trả lời một câu hỏi từ nhật ký sử dụng AI của mình.
+Câu hỏi của hội đồng cho cả nhóm (≈2 phút): về phương án bị loại, cách giải quyết yêu cầu xung đột, hoặc một tình huống giả định trực tiếp.
+Buổi bảo vệ diễn ra không có AI, không có ghi chú ngoài tài liệu nhóm đã nộp, và không có sự hỗ trợ từ bạn cùng nhóm trong lượt trả lời của từng cá nhân.
+
+15. Tiêu chí đánh giá và Rubric
+Trọng số các thành phần, trong phạm vi 50% của đồ án:
+
+Thành phần	Trọng số	Cấp độ
+A. Conceive & Phân tích lĩnh vực (D1, D2)	15%	Cá nhân + Nhóm
+B. Thiết kế & Biện minh Lựa chọn (D3)	20%	Nhóm, có phần cá nhân
+C. Cài đặt, Kiến trúc & Kiểm thử (D4, D5)	30%	Cá nhân + Nhóm
+D. Bảo vệ cá nhân (D8, lượt cá nhân)	25%	Cá nhân
+E. Demo nhóm & Giao tiếp (D8, lượt nhóm)	10%	Nhóm
+15.1 Mức đánh giá
+4 mức: Xuất sắc (4) / Đạt tốt (3) / Cần cải thiện (2) / Chưa đạt (1).
+
+A. Conceive & Phân tích lĩnh vực (15%)
+
+Tiêu chí	Xuất sắc	Đạt tốt	Cần cải thiện	Chưa đạt
+Mô hình hóa bài toán (D1+D2)	Input/output/ràng buộc chính xác; edge case được tìm ra trước khi bàn đến bất kỳ cấu trúc nào	Khá chính xác; thiếu vài chi tiết nhỏ	Diễn đạt theo hướng "cấu trúc trước"; thiếu nhiều yêu cầu	Sao chép mô tả lĩnh vực, không có phân tích riêng
+Phát hiện yêu cầu riêng của lĩnh vực	2–3 thao tác thực sự, khác biệt rõ, có lý do phát hiện thuyết phục	Có yêu cầu nhưng lý do còn mỏng	Yêu cầu gần như lặp lại MC1/MC2	Không có yêu cầu tự phát hiện thực sự
+B. Thiết kế & Biện minh Lựa chọn (20%)
+
+Tiêu chí	Xuất sắc	Đạt tốt	Cần cải thiện	Chưa đạt
+Bảng so sánh & quy trình Q1–Q4	Đúng, đầy đủ, cụ thể theo lĩnh vực cho mọi yêu cầu	Đúng cho hầu hết; sai sót nhỏ	Chung chung hoặc chưa đầy đủ	Chỉ có khẳng định, không có lập luận
+Giải quyết yêu cầu xung đột (Mục 5.4)	Xung đột thật sự, giải quyết hợp lý (kết hợp hoặc đánh đổi), lập luận rõ ràng	Giải quyết đúng; lập luận còn mỏng	Xung đột gượng ép hoặc giải quyết hời hợt	Không có xung đột thực sự
+Phương án bị loại	Lý do cụ thể, chính xác	Lý do đúng một phần	Lý do hời hợt ("vì nó chậm hơn")	Không đề cập
+C. Cài đặt, Kiến trúc & Kiểm thử (30%)
+
+Tiêu chí	Xuất sắc	Đạt tốt	Cần cải thiện	Chưa đạt
+Tính đúng đắn của MC1/MC2 + yêu cầu tự phát hiện	Mọi thao tác đúng, kể cả edge case	Đúng với trường hợp thông thường; vài lỗi edge case	Thao tác cơ bản hoạt động, nhiều edge case lỗi	Không đáp ứng được yêu cầu do chính nhóm đề ra
+Cấu trúc tự cài đặt (Mục 6.2)	≥2 cấu trúc, trung tâm cho quyết định thật, được test tốt, gắn với chi phí đã phân tích	≥2 cấu trúc, có test; liên kết chi phí còn mỏng	Chỉ 1, hoặc cấu trúc tầm thường/trùng lặp để đối phó	Không có
+Kiểm thử & debug	Test tự động phủ mọi yêu cầu; nhật ký debug cho thấy quá trình lặp thật sự	Phủ hầu hết; nhật ký còn sơ sài	Test thủ công, ít bằng chứng debug	Không có bộ test có ý nghĩa
+Kiến trúc & tách tầng persistence (Mục 7)	Tách 3 tầng rõ ràng; persistence chỉ load/save	Khá rõ ràng; một lỗi nhỏ để lộ logic sang persistence	Persistence thực hiện một phần thao tác chính (vd. ORDER BY thay cho MC2)	Persistence gần như thay thế hoàn toàn tầng DSA core
+Bằng chứng hiệu năng (Mục 5.3)	Minh chứng thực nghiệm rõ ràng, ở quy mô đã xác nhận, diễn giải đúng	Có, diễn giải đúng một phần	Có nhưng không gắn với lập luận độ phức tạp	Không có, hoặc số liệu không đáng tin
+D. Bảo vệ cá nhân (25%)
+
+Tiêu chí	Xuất sắc	Đạt tốt	Cần cải thiện	Chưa đạt
+Giải thích/trace code của chính mình	Trôi chảy, không cần gợi ý, chính xác	Đúng, cần gợi ý nhỏ	Khó giải thích nếu không được gợi ý nhiều	Không thể giải thích được code của mình
+Bảo vệ quyết định thiết kế	Nêu chính xác đánh đổi + điều kiện thay đổi; xử lý đúng câu hỏi giả định	Đúng; thiếu sót nhỏ	Lập luận chung chung; trả lời sai câu hỏi giả định	Không bảo vệ được quyết định
+Hiểu toàn bộ hệ thống / thành phần bạn cùng nhóm	Giải thích đúng về mặt khái niệm	Có sai sót nhỏ	Chỉ hiểu sơ sài	Không hiểu gì ngoài phần của mình
+Trách nhiệm giải trình về AI	Công bố chính xác; giải thích rõ đã kiểm chứng gì và vì sao	Có công bố; phần kiểm chứng còn mỏng	Công bố mơ hồ	Không công bố, hoặc trình bày sản phẩm AI như của mình
+E. Demo nhóm & Giao tiếp (10%)
+
+Tiêu chí	Xuất sắc	Đạt tốt	Cần cải thiện	Chưa đạt
+Sự rõ ràng & đầy đủ của demo	Mọi yêu cầu được minh họa rõ; bằng chứng hiệu năng trình bày và diễn giải đúng	Có minh họa; diễn giải còn mỏng	Demo một phần; yêu cầu chưa rõ	Không cho thấy hệ thống đáp ứng đúng yêu cầu đã đề ra
+Giao tiếp (visualization chỉ được cộng ở đây, có giới hạn)	Giải thích rõ ràng, có hỗ trợ tốt — visualization (nếu có) chỉ được tính khi thực sự làm rõ hành vi DSA	Giải thích rõ; visualization (nếu có) chỉ là hỗ trợ nhỏ	Giải thích còn lộn xộn dù có hỗ trợ hình ảnh	Dựa vào hình thức đẹp thay cho lập luận thực chất
+16. Bảng ánh xạ CLO — minh chứng đánh giá
+CLO	Vai trò	Thành phần cung cấp minh chứng	Nhóm / Cá nhân
+CLO1	Chính	A (mô hình hóa); C (đúng đắn/edge case); D (bảo vệ)	D1/D2, bảo vệ = Cá nhân; kiểm thử = Nhóm
+CLO3	Chính	C (cấu trúc tự cài đặt, test); D (giải thích code của mình)	Sở hữu thành phần + bảo vệ = Cá nhân; hệ thống = Nhóm
+CLO4	Củng cố	C (bằng chứng hiệu năng, nếu bulk load của lĩnh vực cần sắp xếp)	Nhóm, giải thích cá nhân khi xuất hiện
+CLO6	Củng cố	B/C (lựa chọn sort-and-search, nếu có)	Nhóm, giải thích cá nhân khi xuất hiện
+CLO7	Chính	C (cài đặt cấu trúc phân cấp, xử lý suy giảm hiệu năng); D (bảo vệ về điều kiện suy giảm)	Cài đặt = Nhóm có sở hữu cá nhân; bảo vệ = Cá nhân
+CLO8	Chính (capstone)	B (quy trình Q1–Q4, giải quyết xung đột, phương án bị loại); D (bảo vệ quyết định thiết kế, hiểu toàn hệ thống); E (demo nhóm)	B = Nhóm có phần cá nhân; D = Cá nhân; E = Nhóm
+CLO2 và CLO5 không xuất hiện trong bảng: đồ án không phải là nguồn minh chứng cho hai CLO này (Mục 3).
+
+17. Bảng minh chứng Kiến thức – Kỹ năng – Thái độ
+Kiến thức (qua các CLO đánh dấu "Chính" ở trên)
+Thể hiện qua: phân tích yêu cầu (D2), bảng so sánh và quy trình Q1–Q4 (D3), cài đặt và kết nối với chi phí đã phân tích (D4/D5), và câu trả lời trong buổi bảo vệ (D8).
+
+Kỹ năng
+Kỹ năng kỹ thuật / lập trình
+
+Cài đặt từ một đặc tả do chính nhóm xây dựng (D4).
+Debug và kiểm thử có hệ thống (D5).
+Phân tích độ phức tạp gắn với hành vi đo được thực tế (D5, Mục 5.3).
+Tách biệt kiến trúc — presentation, logic, persistence (Mục 7) — và phát triển theo thành phần, có version control.
+Kỹ năng chuyên môn / mềm
+
+Làm việc nhóm và hợp tác (Mục 10).
+Giao tiếp kỹ thuật (báo cáo D3, demo và bảo vệ D8).
+Giải thích và bảo vệ quyết định kỹ thuật khi bị chất vấn (D8) — cơ chế trung tâm cho CLO liên quan đến giao tiếp kỹ thuật.
+Peer technical review (D6) — đưa ra và tiếp nhận phản hồi cụ thể, thực chất về phần việc của bạn cùng nhóm.
+Tự học độc lập — tìm hiểu cách một thư viện cài đặt cấu trúc dữ liệu, một phương pháp kiểm thử, hay (với nhóm làm visualization) một kỹ thuật chưa được dạy trực tiếp trên lớp.
+Thái độ (chỉ dựa trên bằng chứng quan sát được)
+Thái độ	Bằng chứng quan sát được trong đồ án
+Chính xác (Precision)	Thuật ngữ/ký hiệu đúng trong D3; code làm đúng những gì interface công bố.
+Lập luận dựa trên bằng chứng (Evidence-based reasoning)	Bảng so sánh được hoàn thành với lập luận cụ thể theo lĩnh vực; bằng chứng hiệu năng (Mục 5.3) được trích dẫn để hỗ trợ lựa chọn.
+Trách nhiệm với phần việc của mình	Tuyên bố sở hữu yêu cầu trong D3 cùng lịch sử version control; khả năng giải thích/chỉnh sửa code của mình không cần gợi ý trong buổi bảo vệ.
+Kiên trì giải quyết vấn đề	Nhật ký debug cho thấy một điểm bế tắc thực sự và cách vượt qua; bài phản tư cá nhân (D7) nêu rõ một khó khăn cụ thể.
+Cởi mở với giải pháp khác	Phần phương án bị loại trong D3, được bảo vệ cụ thể trong D8; peer technical review (D6) đòi hỏi tiếp cận cách làm khác của bạn cùng nhóm.
+Liêm chính học thuật	Trích dẫn code bên ngoài hoặc sản phẩm AI; quyền tác giả có thể kiểm chứng qua tuyên bố sở hữu yêu cầu; đề xuất lĩnh vực không sao chép nguyên văn.
+Sử dụng AI có trách nhiệm	Nhật ký sử dụng AI (D7); AI-audit (Mục 12.2); giải thích những gì đã kiểm chứng hoặc thay đổi; bảo vệ không có AI.
+18. Những sai lầm / lối tắt thường gặp, không được chấp nhận
+Nêu tên cấu trúc trước khi hoàn thành phân tích — cách trực tiếp nhất làm mất ý nghĩa của đồ án; bị trừ điểm ở Thành phần B bất kể code cuối cùng chạy tốt đến đâu.
+Yêu cầu tự phát hiện chỉ là MC1/MC2 diễn đạt lại bằng từ khác — phần khám phá phải thực sự mang lại điều mới.
+Logic persistence làm luôn công việc của tầng DSA core — dùng SELECT ... ORDER BY hay index của SQLite thay cho quyết định cấu trúc dữ liệu. Đây là lỗi kiến trúc (Thành phần C), không phải một cách làm khôn khéo.
+Hai cấu trúc "tự cài đặt" tầm thường hoặc trùng lặp chức năng, chỉ để đối phó với yêu cầu ở Mục 6.2, thay vì các cấu trúc mà phân tích của nhóm thực sự dẫn tới.
+Yêu cầu xung đột gượng ép hoặc giả tạo, chỉ để có cho đủ Mục 5.4.
+Số liệu benchmark giả hoặc chưa từng chạy thật cho Mục 5.3.
+Web visualization thay thế cho lập luận DSA yếu — một giao diện đẹp được trình bày như thể đó là bằng chứng của phân tích bên dưới; rubric (Mục 15, Thành phần E) được thiết kế riêng để phát hiện điều này.
+Đóng góp không đồng đều mà không có minh chứng cá nhân — được kiểm tra qua các cơ chế mở rộng ở Mục 11, không chỉ dựa vào lịch sử Git.
+Biện minh thiết kế do AI tạo ra, trình bày mà không thực sự hiểu — báo cáo đọc có vẻ đúng nhưng tác giả không thể bảo vệ, kiểm chứng, hay biến đổi nó khi bị hỏi trong D8.
+Sao chép nguyên văn ví dụ LRU cache ở Chương 16 làm giải pháp cho yêu cầu xung đột, mà không điều chỉnh theo lĩnh vực và lập luận riêng của nhóm.
+Chọn hoặc trôi dần vào một yêu cầu mang tính đồ thị (graph) ("đường đi ngắn nhất", "thứ tự giao hàng tối ưu") — nằm ngoài phạm vi Chương 1–16; sẽ bị phát hiện khi duyệt đề xuất hoặc tại checkpoint Ngày 12.
+19. Checklist nộp bài cho sinh viên
+Đến Ngày 5 (Conceive kết thúc):
+
+ D1 — bài đọc-hiểu đề bài cá nhân, nộp trước buổi thảo luận thiết kế đầu tiên của nhóm
+ D2 — tài liệu yêu cầu & bài toán: xác nhận lĩnh vực, đáp ứng MC1/MC2, 2–3 yêu cầu tự phát hiện kèm lý do
+Đến Ngày 12 (Implement — checkpoint cuối):
+
+ Cài đặt hoạt động cho MC1, MC2, và mọi yêu cầu tự phát hiện
+ Ít nhất 2 cấu trúc tự cài đặt, trung tâm cho quyết định thiết kế thật, có unit test
+ Kiến trúc 3 tầng đã có, persistence chỉ giới hạn ở load/save
+ Đã cài đặt giải pháp cho yêu cầu xung đột (Mục 5.4)
+ Đã xác nhận với giảng viên mục tiêu quy mô cho bằng chứng hiệu năng
+ Bộ test tự động và nhật ký debug
+ Đóng góp cá nhân của tôi thể hiện rõ trong version control
+Đến Ngày 13 (Design — biện minh chính thức theo Chương 16):
+
+ D3 — bảng so sánh và quy trình Q1–Q4 cho mọi yêu cầu, giải pháp cho yêu cầu xung đột, phương án bị loại, sơ đồ kiến trúc
+ Phần biện minh do chính tôi viết trong D3
+Đến Ngày 14–15 (Operate / Evaluate / Defense):
+
+ Bằng chứng hiệu năng (Mục 5.3), kèm diễn giải bằng văn bản
+ D6 — peer technical review của tôi cho một bạn cùng nhóm
+ D7 — nhật ký sử dụng AI và bài phản tư cá nhân của tôi
+ Đã nộp đánh giá đóng góp chéo (bảo mật)
+ Tôi có thể giải thích, trace, và chỉnh sửa bất kỳ đoạn code nào được ghi nhận là của mình, không cần xem tài liệu
+ Tôi có thể giải thích, ở mức khái niệm, ít nhất một thành phần của một bạn cùng nhóm
+ D9 — gói nộp bài cuối cùng đã hoàn chỉnh
+Tài liệu này là yêu cầu chính thức của Đồ án Nhóm cho học phần Cấu trúc Dữ liệu và Giải thuật (DASA230179). Mọi thắc mắc, liên hệ giảng viên phụ trách.
