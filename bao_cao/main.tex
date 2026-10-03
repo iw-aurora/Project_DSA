@@ -3,20 +3,20 @@
 % ==============================================================================
 % 1. CẤU HÌNH GÓI VÀ BẢNG MÃ TIẾNG VIỆT
 % ==============================================================================
-\usepackage[utf8]{inputenc}
-\usepackage[vietnamese]{babel}
-\usepackage[T5]{fontenc}
-
-% ==============================================================================
-% 2. CẤU HÌNH FONT TIMES NEW ROMAN VÀ CỠ CHỮ 14PT (TUYỆT ĐỐI KHÔNG CÓ NGOẠI LỆ)
-% ==============================================================================
-\usepackage{amsmath}
-\usepackage{txfonts}
-
-% Ép toàn bộ các họ font (Roman, Sans-Serif, Monospace) sang Times New Roman
-\renewcommand{\rmdefault}{ptm}
-\renewcommand{\sfdefault}{ptm}
-\renewcommand{\ttdefault}{ptm}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[vietnamese]{babel}
+  \usepackage[T5]{fontenc}
+  \usepackage{amsmath}
+  \usepackage{mathptmx}
+\else
+  \usepackage{amsmath}
+  \usepackage{fontspec}
+  \setmainfont{Times New Roman}
+  \setsansfont{Times New Roman}
+  \setmonofont{Times New Roman}
+\fi
 
 % Ép tất cả các lệnh điều chỉnh kích thước font về đúng 14pt (normalsize)
 % Đảm bảo 100% toàn bộ tài liệu không có bất kỳ ngoại lệ nào về cỡ chữ
