@@ -8,8 +8,9 @@
 #include <iostream>
 #include <iomanip>
 #include <chrono>
-#include <cmath>
 #include <algorithm>
+#include <cstdlib>
+#include <vector>
 
 #ifdef _WIN32
 #include <conio.h>
