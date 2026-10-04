@@ -13,11 +13,10 @@ if errorlevel 1 (
 )
 
 echo [2/3] Khoi chay Backend API Server (Port 5000)...
-start "DSA Backend API (Port 5000)" cmd /k "node server.js"
+start "DSA Backend API (Port 5000)" cmd /k "cd web_dsa && npm run server"
 
 echo [3/3] Khoi chay Frontend React App (Port 3000)...
-cd web_dsa
-start "DSA Frontend React (Port 3000)" cmd /k "npm run dev"
+start "DSA Frontend React (Port 3000)" cmd /k "cd web_dsa && npm run dev"
 
 echo.
 echo ====================================================================
@@ -25,4 +24,3 @@ echo   He thong dang khoi chay!
 echo   Frontend: http://localhost:3000
 echo   Backend : http://localhost:5000
 echo ====================================================================
-

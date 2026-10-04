@@ -1,12 +1,19 @@
 import random
 import sys
+import os
 
-def generate_database(num_records=500000, output_path="data/database.json"):
+def generate_database(num_records=500000, output_path=None):
+    if output_path is None:
+        # Default to data/database.json in repository root
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        output_path = os.path.join(base_dir, "data", "database.json")
+
     last_names = ['Nguyen', 'Tran', 'Le', 'Pham', 'Hoang', 'Huynh', 'Phan', 'Vu', 'Vo', 'Dang', 'Bui', 'Do', 'Ho', 'Ngo', 'Duong', 'Ly']
     middle_names = ['Van', 'Thi', 'Hoang', 'Minh', 'Gia', 'Quoc', 'Thanh', 'Duc', 'Ngoc', 'Dinh', 'Xuan', 'My', 'Huu', 'Kim']
     first_names = ['An', 'Binh', 'Nam', 'Anh', 'Bao', 'Ngoc', 'Huy', 'Tam', 'Long', 'Quan', 'Phuong', 'Kiet', 'Khang', 'Tien', 'Linh', 'Chau', 'Trang', 'Dung', 'Khoa', 'Phat']
 
     print(f"Dang tao {num_records:,} ban ghi vao {output_path}...")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write('{\n    "students": [\n')
@@ -25,5 +32,4 @@ def generate_database(num_records=500000, output_path="data/database.json"):
     print(f"[Thanh cong] Hoan tat tao {num_records:,} ban ghi sinh vien vao {output_path}!")
 
 if __name__ == "__main__":
-    generate_database(500000, "data/database.json")
-
+    generate_database(500000)

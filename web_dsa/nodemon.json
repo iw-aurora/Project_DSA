@@ -2,17 +2,13 @@
   "watch": ["server.js"],
   "ext": "js,json",
   "ignore": [
-    "data/*",
-    "web_dsa/*",
+    "../data/*",
+    "../src/*",
+    "../build/*",
+    "../bao_cao/*",
     "src/*",
-    "*.cpp",
-    "*.h",
-    "*.hpp",
-    "*.exe",
-    "*.o",
-    "*.log",
+    ".next/*",
     "node_modules/*"
   ],
   "delay": "1000"
 }
-

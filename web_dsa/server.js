@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const BRIDGE_EXE = path.join(__dirname, 'dsa_bridge.exe');
-const DB_PATH = path.join(__dirname, 'data', 'database.json');
+const BRIDGE_EXE = path.resolve(__dirname, '..', 'dsa_bridge.exe');
+const DB_PATH = path.resolve(__dirname, '..', 'data', 'database.json');
 
 // -------------------------------------------------------------
 // PERSISTENT C++ CORE PROCESS (IN-MEMORY RESIDENT)
@@ -23,7 +23,9 @@ const requestQueue = [];
 
 function startCppDaemon() {
     console.log('[C++ Engine] Khởi động và nạp trước 500,000 sinh viên vào RAM...');
-    cppProcess = spawn(BRIDGE_EXE, [], {
+    const rootDir = path.resolve(__dirname, '..');
+    cppProcess = spawn(BRIDGE_EXE, [DB_PATH], {
+        cwd: rootDir,
         stdio: ['pipe', 'pipe', 'inherit'],
         windowsHide: true,
     });

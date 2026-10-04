@@ -83,6 +83,10 @@ int main(int argc, char *argv[])
     cin.tie(NULL);
 
     string dbPath = "data/database.json";
+    if (argc > 1)
+    {
+        dbPath = argv[1];
+    }
     vector<Student> students;
 
     try
