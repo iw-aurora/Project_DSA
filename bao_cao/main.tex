@@ -1302,51 +1302,6 @@ Tổng footprint lý thuyết phần thân các cấu trúc chính xấp xỉ $2
 
 Trong mô hình kiến trúc module hóa, các chỉ mục đọc nhiều ưu tiên mảng phẳng liên tục để tối ưu tính định vị không gian (Spatial Locality). Điểm cần lưu ý là footprint lý thuyết tính từ \texttt{sizeof} có thể cao hơn hoặc khác Working Set quan sát thực tế vì còn phụ thuộc vào allocation riêng của chuỗi, overhead container và việc các module có được giữ đồng thời ở dung lượng tối đa hay không. Sau tối ưu RQ1 và RQ2, \texttt{classIndex} chỉ lưu các chỉ số \texttt{int} theo lớp, còn \texttt{sortedStudents} chỉ còn là mảng con trỏ; vì vậy các truy vấn nhiều kết quả không còn tạo bản sao lớn của \texttt{Student} trong pha query.
 
-\subsection*{2.9. Nhật ký gỡ lỗi (Debug Log) và tối ưu hóa giải thuật}
-\phantomsection
-\addcontentsline{toc}{subsection}{2.9. Nhật ký gỡ lỗi (Debug Log) và tối ưu hóa giải thuật}
-
-\subsubsection*{2.9.1. Ghi nhận lỗi phát sinh khi xử lý điều kiện dừng tìm kiếm trên Bảng băm}
-\phantomsection
-\addcontentsline{toc}{subsubsection}{2.9.1. Ghi nhận lỗi phát sinh khi xử lý điều kiện dừng tìm kiếm trên Bảng băm}
-
-Trong quá trình thực nghiệm ban đầu với Bảng băm đóng, nhóm phát hiện khi tra cứu một khóa MSSV không tồn tại trong hệ thống, nếu không giới hạn số bước dò tối đa thì trong trường hợp bảng đầy hoặc vòng lặp chỉ số có sai lệch, hàm có thể lặp quá mức cần thiết. Nhóm đã hoàn thiện giải thuật: vòng dò dừng ngay lập tức khi bắt gặp ô chưa chiếm (\texttt{!table[index].occupied}) đầu tiên, đồng thời giới hạn số lần duyệt tối đa không vượt quá kích thước bảng $M$, đảm bảo thao tác tìm kiếm thất bại luôn kết thúc nhanh chóng và an toàn.
-
-\subsubsection*{2.9.2. Tối ưu hóa cấp phát bộ nhớ và bảo toàn con trỏ trong Bulk Load}
-\phantomsection
-\addcontentsline{toc}{subsubsection}{2.9.2. Tối ưu hóa cấp phát bộ nhớ và bảo toàn con trỏ trong Bulk Load}
-
-Trong quá trình nạp dữ liệu quy mô lớn, việc \texttt{std::vector} tự động mở rộng dung lượng nhiều lần sẽ phát sinh chi phí sao chép dữ liệu và có thể làm thay đổi địa chỉ bộ nhớ của các phần tử \texttt{Student}. Lệnh \texttt{reserve()} giúp giảm số lần tái cấp phát và giữ ổn định vùng dữ liệu gốc trước khi xây dựng các chỉ mục lưu con trỏ như \texttt{HashTable} và \texttt{SortedGpaFilter}. Riêng MaxHeap không phụ thuộc vào con trỏ về vùng gốc vì chủ động xây dựng bản sao \texttt{Student} nội bộ. Đánh đổi của cách cấp phát trước là có thể giữ capacity lớn hơn nhu cầu tức thời nếu tập dữ liệu thực nghiệm nhỏ hơn mốc thiết kế.
-
-\subsection*{2.10. Tuyên bố Trách nhiệm Giải trình về Sử dụng AI và Liêm chính Học thuật (AI-Audit Log)}
-\phantomsection
-\addcontentsline{toc}{subsection}{2.10. Tuyên bố Trách nhiệm Giải trình về Sử dụng AI và Liêm chính Học thuật (AI-Audit Log)}
-
-Nhằm tuân thủ quy định về Liêm chính học thuật và Chuẩn mực nghiên cứu khoa học của Trường Đại học Công nghệ Kỹ thuật TP. Hồ Chí Minh, nhóm tác giả công khai nhật ký sử dụng các công cụ Trí tuệ Nhân tạo tạo sinh (GenAI / LLMs) trong quá trình thực hiện đề tài:
-
-\begin{table}[H]
-\centering
-\begingroup
-\small
-\begin{singlespace}
-\setlength{\tabcolsep}{3.5pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{3.8cm}|>{\raggedright\arraybackslash}X|}
-\hline
-\textbf{Hạng mục} & \textbf{Mức độ \& Công cụ AI} & \textbf{Trách nhiệm và Đóng góp của Nhóm Sinh viên} \\ \hline
-Thiết kế CTDL & Gợi ý cú pháp C++20 và mẫu biểu diễn struct. & Nhóm trực tiếp thiết kế Closed Hash Table, Floyd Max-Heap, kiến trúc 3 tầng và mảng dữ liệu sắp xếp. \\ \hline
-Cài đặt Thuật toán & Hỗ trợ rà soát cú pháp và tối ưu vòng lặp. & Tự cài đặt FNV-1a, Linear Probing, Floyd Build-Heap, iterative heapifyDown và Binary Search 2 đầu biên; triển khai Class Index View cho RQ1 bằng \texttt{std::unordered\_map<string, vector<int>>}; sử dụng \texttt{std::sort} dựng mảng GPA ban đầu. \\ \hline
-Thực nghiệm Benchmark & Hỗ trợ sinh mã kịch bản đo thời gian \texttt{std::chrono}. & Nhóm trực tiếp thực thi đo đạc trên máy tính cá nhân với tập dữ liệu hiện tại $10.000.000$ sinh viên, dùng $5$ lượt warm-up và $9$ mẫu đo để ghi nhận số liệu thực tế. \\ \hline
-Giao diện Web/API & Hỗ trợ khung thành phần giao diện React/Next.js. & Nhóm trực tiếp xây dựng API Bridge C++, binding dữ liệu và kiểm thử trải nghiệm người dùng. \\ \hline
-Báo cáo LaTeX & Hỗ trợ căn chỉnh bảng biểu, phản biện tính nhất quán và định dạng. & Nhóm trực tiếp biên soạn nội dung học thuật, phân tích kết quả và kiểm duyệt toàn bộ báo cáo. \\ \hline
-\end{tabularx}
-\end{singlespace}
-\endgroup
-\caption{Nhật ký giải trình minh bạch việc sử dụng công cụ AI (AI-Audit Log)}
-\label{tab:ai_audit_log}
-\end{table}
-
-Cam kết liêm chính học thuật: Toàn bộ thành viên trong nhóm khẳng định các cấu trúc dữ liệu, thuật toán và giải pháp kiến trúc trong báo cáo đều do nhóm trực tiếp nghiên cứu, lập trình và kiểm nghiệm thực tế. Công cụ AI được sử dụng để hỗ trợ rà soát cú pháp, phản biện tính nhất quán kỹ thuật và chuẩn hóa định dạng LaTeX. Nhóm sinh viên trực tiếp quyết định thiết kế, kiểm tra mã nguồn, thực thi benchmark và chịu trách nhiệm trước Hội đồng chấm thi về tính xác thực của công trình.
 
 % ==============================================================================
 % KẾT LUẬN VÀ BÀI HỌC KINH NGHIỆM
