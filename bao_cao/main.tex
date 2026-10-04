@@ -187,51 +187,6 @@
 \pagestyle{empty}
 \thispagestyle{empty}
 
-% ==============================================================================
-% 1. TRANG BÌA CHÍNH (BÌA NGOÀI)
-% ==============================================================================
-\begin{titlepage}
-    \begin{tikzpicture}[remember picture, overlay]
-        \draw[line width=1.5pt] 
-            ($(current page.north west) + (2.0cm,-1.8cm)$) 
-            rectangle 
-            ($(current page.south east) + (-1.5cm,1.8cm)$);
-        \draw[line width=0.5pt] 
-            ($(current page.north west) + (2.12cm,-1.92cm)$) 
-            rectangle 
-            ($(current page.south east) + (-1.62cm,1.92cm)$);
-    \end{tikzpicture}
-    \centering
-    \fontsize{14pt}{17pt}\selectfont
-    \textbf{TRƯỜNG ĐẠI HỌC CÔNG NGHỆ KỸ THUẬT TP. HỒ CHÍ MINH}\\
-    \textbf{KHOA CÔNG NGHỆ THÔNG TIN}\\[0.5cm]
-
-    \includegraphics[width=3.2cm]{logo_hcmute.png}\\[0.5cm]
-
-    \textbf{TIỂU LUẬN HỌC PHẦN CẤU TRÚC DỮ LIỆU VÀ GIẢI THUẬT}\\[0.6cm]
-
-    \fontsize{14pt}{18pt}\selectfont
-    \textbf{HỆ THỐNG QUẢN LÝ HỒ SƠ SINH VIÊN VÀ ENGINE ĐỐI SÁNH HIỆU NĂNG THUẬT TOÁN (DSA) -- RECORDS-AND-DECISION ENGINE}\\[1.0cm]
-
-    \fontsize{14pt}{17pt}\selectfont
-    \begin{flushleft}
-        \hspace{1.5cm}\textbf{Giảng viên hướng dẫn:} ThS. Bảo Vũ Đình (T-Bao)\\[0.2cm]
-        \hspace{1.5cm}\textbf{Mã lớp học phần:} DASA230179\_03\\[0.2cm]
-        \hspace{1.5cm}\textbf{Nhóm thực hiện:} Nhóm 12\\[0.2cm]
-        \hspace{1.5cm}\textbf{Sinh viên thực hiện:}\\[0.15cm]
-        \hspace{2.0cm}\begin{tabular}{ll}
-            \textbf{Họ và tên} & \textbf{MSSV} \\
-            Bùi Tấn Phát (Nhóm trưởng) & 25110289 \\
-            Nguyễn Phan Thành Tiến & 25110361 \\
-            Ngô Đức Thành & 25110335 \\
-            Đặng Đoàn Minh Khang & 25110227 \\
-        \end{tabular}
-    \end{flushleft}
-
-    \vfill
-    \fontsize{14pt}{17pt}\selectfont
-    \textit{TP. Hồ Chí Minh, tháng 09 năm 2026}
-\end{titlepage}
 
 % ==============================================================================
 % 2. TRANG BÌA PHỤ (BÌA LÓT TRONG KHOA HỌC)
