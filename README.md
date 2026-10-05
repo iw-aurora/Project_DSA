@@ -102,7 +102,7 @@ code_dsa/
 
 ## 🧪 Hướng Dẫn Chạy Bộ Test Tự Động (Automated Test Suite)
 
-Bộ kiểm thử tự động được viết **100% bằng C++** tại [test/automated_test.cpp](file:///c:/Users/Admin/Documents/Workspace/DSA_15/code_dsa/test/automated_test.cpp), kiểm tra tính đúng đắn logic của cả **6 nhóm chức năng (28 Test Cases)** với đối soát Ground Truth và các trường hợp biên:
+Bộ kiểm thử tự động được viết **100% bằng C++** tại [test/automated_test.cpp](test/automated_test.cpp), kiểm tra tính đúng đắn logic của cả **6 nhóm chức năng (28 Test Cases)** với đối soát Ground Truth và các trường hợp biên:
 
 ### 1. Danh Sách 6 Test Suites
 - **Suite 1 (MC1 — Closed Hash Table):** Kiểm tra tra cứu đầu/giữa/cuối dải, tìm khóa không tồn tại trả về `nullptr`, xử lý chuỗi rỗng và kiểm soát va chạm (Linear Probing).
@@ -114,7 +114,7 @@ Bộ kiểm thử tự động được viết **100% bằng C++** tại [test/a
 
 ### 2. Cách Chạy Test
 
-#### Cách A: 1-Click bằng Batch Script (Nhanh nhất)
+#### Cách A: 1-Click bằng Batch Script (Khuyên dùng trên Windows)
 Nhấp đúp chuột vào file **`test\run_tests.bat`** (hoặc chạy từ terminal):
 ```cmd
 cd test
@@ -189,11 +189,11 @@ g++ -O2 -std=c++17 -I. test/automated_test.cpp src/core_sorted_gpa/*.cpp src/cor
 
 ## ⚡ Hướng Dẫn Chạy Đo Lường Hiệu Năng (Benchmark Engine)
 
-Công cụ đo lường độc lập [benchmark/bench_core.cpp](file:///c:/Users/Admin/Documents/Workspace/DSA_15/code_dsa/benchmark/bench_core.cpp) được tối ưu hóa tối đa với cờ `-O3 -flto` để đánh giá đối sánh hiệu năng thực tế trên tập dữ liệu lên đến **10,000,000 sinh viên**.
+Công cụ đo lường độc lập [benchmark/bench_core.cpp](benchmark/bench_core.cpp) được tối ưu hóa tối đa với cờ `-O3 -flto` để đánh giá đối sánh hiệu năng thực tế trên tập dữ liệu lên đến **10,000,000 sinh viên**.
 
 ### 1. Cách Chạy Benchmark
 
-#### Cách A: 1-Click bằng Batch Script
+#### Cách A: 1-Click bằng Batch Script (Khuyên dùng trên Windows)
 Nhấp đúp chuột vào file **`benchmark\run_benchmark.bat`** (hoặc chạy từ terminal):
 ```cmd
 cd benchmark
@@ -208,8 +208,8 @@ g++ -O3 -march=native -funroll-loops -flto -DNDEBUG -std=c++17 -I. benchmark/ben
 ```
 
 ### 2. Các Tệp Kết Quả Benchmark Đã Đo Đạc
-- [benchmark/bench_10m_fast.txt](file:///c:/Users/Admin/Documents/Workspace/DSA_15/code_dsa/benchmark/bench_10m_fast.txt): Kết quả đo nhanh 100 queries trên tập 10 triệu bản ghi.
-- [benchmark/bench_10m_strict.txt](file:///c:/Users/Admin/Documents/Workspace/DSA_15/code_dsa/benchmark/bench_10m_strict.txt): Kết quả đo chuẩn mực (1,000 queries, 5 lần warm-up, 9 lần lấy mẫu thống kê `min`/`median`/`mean`/`max`).
+- [benchmark/bench_10m_fast.txt](benchmark/bench_10m_fast.txt): Kết quả đo nhanh 100 queries trên tập 10 triệu bản ghi.
+- [benchmark/bench_10m_strict.txt](benchmark/bench_10m_strict.txt): Kết quả đo chuẩn mực (1,000 queries, 5 lần warm-up, 9 lần lấy mẫu thống kê `min`/`median`/`mean`/`max`).
 
 ### 3. Bảng Số Liệu Đối Sánh Chi Tiết ($N = 10,000,000$ Sinh Viên)
 
@@ -222,34 +222,135 @@ g++ -O3 -march=native -funroll-loops -flto -DNDEBUG -std=c++17 -I. benchmark/ben
 
 ---
 
-## 🌐 Hướng Dẫn Khởi Chạy Web Dashboard & Console CLI
+## 🚀 Hướng Dẫn Khởi Chạy Toàn Bộ Dự Án (Quick Start & Launch Guide)
 
-### 1. Chạy Giao Diện Web Dashboard (Next.js 16 + Express API + C++ Resident Daemon)
-Giao diện trực quan, biểu đồ benchmark thời gian thực, chế độ nạp tức thì 500.000 đến 10.000.000 bản ghi vào RAM với độ trễ phản hồi **~0.00 ms**.
+Dự án cung cấp 2 phương thức vận hành hoàn chỉnh: **Ứng dụng Console CLI C++** (Tương tác dòng lệnh mượt mà) và **Ứng dụng Web Dashboard Fullstack** (Giao diện trực quan hiện đại).
 
-* **Cài đặt dependencies (lần đầu)**:
+```text
+                                 KIẾN TRÚC VẬN HÀNH DỰ ÁN
+    ┌─────────────────────────────────────────────────────────────────────────────────┐
+    │                                                                                 │
+    │  [CÁCH 1] CONSOLE CLI C++               [CÁCH 2] WEB DASHBOARD FULLSTACK        │
+    │  ┌───────────────────────┐              ┌────────────────────────────────────┐  │
+    │  │ main.cpp              │              │ Web App Frontend (Next.js / React) │  │
+    │  │ (Direct C++ In-Memory)│              │ Port: 3000                         │  │
+    │  │ 4 Modes Điều Khiển    │              └─────────────────┬──────────────────┘  │
+    │  └───────────────────────┘                                │ HTTP / JSON         │
+    │                                         ┌─────────────────▼──────────────────┐  │
+    │                                         │ Backend API Server (Express.js)    │  │
+    │                                         │ Port: 5000                         │  │
+    │                                         └─────────────────┬──────────────────┘  │
+    │                                                           │ IPC (Stdin/Stdout)  │
+    │                                         ┌─────────────────▼──────────────────┐  │
+    │                                         │ Resident C++ Engine (dsa_bridge)   │  │
+    │                                         │ 0ms Latency - In-Memory Daemon     │  │
+    │                                         └────────────────────────────────────┘  │
+    └─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 💻 1. Khởi Chạy Ứng Dụng Console CLI C++ (`main.cpp`)
+
+Ứng dụng Console CLI hỗ trợ điều hướng tương tác menu chuyên nghiệp bằng bàn phím (Phím mũi tên `↑` `↓`, `Enter` để chọn, `Esc` để quay lại/hủy bỏ, hoặc bấm trực tiếp phím số `1`, `2`, `3`, `4`, `0`).
+
+#### 🔹 Cách A: Khởi chạy 1-Click (Khuyên dùng)
+Nhấp đúp chuột vào file **`scripts\run_cli.bat`** (hoặc chạy lệnh từ terminal):
+```cmd
+.\scripts\run_cli.bat
+```
+
+#### 🔹 Cách B: Biên dịch và chạy thủ công qua Terminal
+Từ thư mục gốc dự án:
+```bash
+# 1. Biên dịch toàn bộ mã nguồn C++ với tối ưu O2
+g++ -O2 -std=c++17 -I. main.cpp src/*.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp -o main.exe
+
+# 2. Khởi chạy chương trình
+.\main.exe
+```
+
+#### 🎮 Các Chế Độ Hoạt Động (4 Modes trong CLI Menu):
+1. **`[ 1 ] MODE 1: GIAI THUAT TOI UU (FINAL SOLUTION / PRODUCTION)`**
+   - Vận hành trực tiếp các cấu trúc dữ liệu tối ưu trên RAM:
+     - Lọc khoảng GPA qua Sorted Pointer Array + Binary Search $\mathcal{O}(\log N)$.
+     - Lọc Mã Lớp qua Class Index View $\mathcal{O}(1)$.
+     - Tra cứu sinh viên theo MSSV qua Closed Hash Table $\mathcal{O}(1)$.
+     - Truy xuất sinh viên điểm GPA cao nhất qua Custom Binary Max-Heap $\mathcal{O}(1)$.
+2. **`[ 2 ] MODE 2: HE THONG QUAN LY SINH VIEN (CRUD)`**
+   - Thêm sinh viên mới (Tự động cấp phát MSSV tăng dần, không trùng lặp).
+   - Sửa thông tin sinh viên (Chọn tương tác bằng phím mũi tên `↑` `↓`, `Enter`, hủy bỏ bằng `Esc`).
+   - Xóa hồ sơ sinh viên với hộp thoại xác nhận an toàn.
+   - Hiển thị danh sách và đồng bộ dữ liệu vào file `data/database.json`.
+3. **`[ 3 ] MODE 3: SO SANH THUAT TOAN TUNG MODULE (BENCHMARK SUITE)`**
+   - Menu đối sánh độc lập từng bài toán: Module 1 (GPA), Module 2 (Lớp), Module 4 (MSSV), Module 5 (Max GPA).
+   - In bảng phân tích so sánh trực quan giữa **Baseline tuyến tính** và **Cấu trúc tối ưu**.
+4. **`[ 4 ] MODE 4: BENCHMARK TOAN DIEN & XUAT FILE (AUTO BENCHMARK & EXPORT TXT)`**
+   - **Chọn nguồn dữ liệu:** Database mặc định ($500\text{K}$ SV), Tự động sinh $100\text{K}$, $500\text{K}$, $1\text{M}$, $10\text{M}$ hoặc số lượng tùy chỉnh $N$.
+   - **Tự động đo đạc 1-click** toàn bộ 4 module (Xây dựng cấu trúc dữ liệu, chạy thử nghiệm nhiều mẫu, tính toán Speedup $\times$ lần).
+   - **Tự động xuất báo cáo ra file `.txt`** được đánh dấu thời gian thực trong thư mục `benchmark/` theo định dạng `benchmark/bench_report_YYYYMMDD_HHMMSS.txt`.
+0. **`[ 0 ] Thoat chuong trinh`**
+
+---
+
+### 🌐 2. Khởi Chạy Ứng Dụng Web Dashboard Fullstack (`web_dsa`)
+
+Giao diện Web Dashboard hiện đại được xây dựng bằng **Next.js 16 (App Router) + React 19 + Tailwind CSS + Ant Design**, kết nối với **Express.js API Server** (Port 5000) và **C++ Resident Core Engine Daemon** (`dsa_bridge.exe`) thông qua giao thức IPC siêu tốc (Độ trễ xử lý $\approx 0\text{ms}$).
+
+#### 🔹 Bước 1: Cài đặt Dependencies (Chỉ thực hiện lần đầu tiên)
+Mở terminal tại thư mục gốc và chạy:
+```bash
+cd web_dsa
+npm install
+cd ..
+```
+
+#### 🔹 Bước 2: Khởi chạy Ứng dụng Web
+
+##### Cách A: Khởi chạy 1-Click bằng Batch Script (Khuyên dùng)
+Nhấp đúp chuột vào file **`web_dsa\start_web.bat`** (hoặc chạy từ terminal):
+```cmd
+.\web_dsa\start_web.bat
+```
+> **Cơ chế tự động của `start_web.bat`:**
+> 1. Tự động kiểm tra và biên dịch `dsa_bridge.cpp` thành `dsa_bridge.exe`.
+> 2. Khởi động Backend Express API Server tại `http://localhost:5000` và nạp sẵn dữ liệu sinh viên vào RAM.
+> 3. Khởi động Frontend Next.js Dev Server tại `http://localhost:3000`.
+
+##### Cách B: Khởi chạy thủ công từng phần bằng Terminal
+
+* **Cửa sổ Terminal 1 (Biên dịch C++ Engine & Khởi động Backend API):**
+  ```bash
+  # 1. Biên dịch C++ Bridge Engine
+  g++ -O2 -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp
+
+  # 2. Khởi chạy Backend API Server
+  cd web_dsa
+  npm run server
+  ```
+
+* **Cửa sổ Terminal 2 (Khởi động Frontend Next.js):**
   ```bash
   cd web_dsa
-  npm install
-  cd ..
+  npm run dev
   ```
-* **Khởi chạy 1-Click**:
-  Nhấp đúp chuột vào file **`web_dsa\start_web.bat`** (hoặc chạy lệnh `.\web_dsa\start_web.bat`).
-* **Truy cập ứng dụng**:
-  * **Frontend Web**: [http://localhost:3000](http://localhost:3000)
-  * **Backend API**: [http://localhost:5000](http://localhost:5000)
 
-### 2. Chạy Ứng Dụng Console CLI (C++)
-Chương trình giao diện dòng lệnh tương tác Menu trực quan bằng bàn phím (Phím mũi tên, Enter, Esc):
-* **Khởi chạy 1-Click**: Nhấp đúp chuột vào file **`scripts\run_cli.bat`** (hoặc chạy lệnh `.\scripts\run_cli.bat`).
-* **Các chế độ hoạt động (4 Modes)**:
-  * **[1] MODE 1 (Final Solution)**: Vận hành trực tiếp các thuật toán tối ưu ($\mathcal{O}(1), \mathcal{O}(\log N)$).
-  * **[2] MODE 2 (CRUD Management)**: Thêm, sửa, xóa, tìm kiếm và lưu hồ sơ sinh viên đồng bộ RAM & JSON.
-  * **[3] MODE 3 (Interactive Benchmark)**: Đối sánh trực tiếp từng cặp thuật toán cho từng module riêng lẻ.
-  * **[4] MODE 4 (Auto Benchmark & Export TXT)**: Chọn tập dữ liệu ($100\text{K} \to 10\text{M}$ sinh viên), tự động đo đạc toàn bộ 4 module và xuất báo cáo kết quả ra file `benchmark/bench_report_YYYYMMDD_HHMMSS.txt`.
+#### 🔹 Bước 3: Truy cập và Sử dụng Web Dashboard
+Mở trình duyệt web bất kỳ và truy cập vào:
+- 🌐 **Frontend Web Dashboard**: [http://localhost:3000](http://localhost:3000)
+- 🔌 **Backend RESTful API**: [http://localhost:5000](http://localhost:5000)
 
-### 3. Sinh Dữ Liệu Tự Động (Data Generator)
-Để sinh ngẫu nhiên file dữ liệu sinh viên mẫu `data/database.json`:
+#### 🌟 Các Tính Năng Nổi Bật Trên Web Dashboard:
+- **Tab Benchmark Suite:** Biểu đồ đối sánh hiệu năng trực quan, theo dõi thời gian thực thi (Latency $\text{ms}$) và số phép toán thu nhỏ giữa Baseline và Thuật toán tối ưu.
+- **Tab Final Solution:** Tra cứu hồ sơ theo MSSV tức thì, tìm sinh viên GPA cao nhất, lọc danh sách theo lớp và khoảng điểm GPA với phân trang mượt mà.
+- **Tab Quản lý Hồ sơ (CRUD):** Thêm mới, chỉnh sửa và xóa hồ sơ sinh viên trực tiếp với thông báo thành công tức thì và đồng bộ bộ nhớ.
+- **In-Memory Scale Generator:** Thanh điều khiển sinh dữ liệu tức thì từ **500,000 đến 10,000,000+ sinh viên** nạp thẳng vào RAM chỉ mất vài trăm mili-giây.
+
+---
+
+### 🐍 3. Sinh Dữ Liệu Tự Động (Python Data Generator)
+
+Để tạo mới hoặc khôi phục file cơ sở dữ liệu mẫu `data/database.json` ($500,000$ bản ghi sinh viên chuẩn):
 ```bash
 python scripts/generate_data.py
 ```
@@ -257,9 +358,11 @@ python scripts/generate_data.py
 ---
 
 ## 📄 Tài Liệu Báo Cáo Học Phần
-Bản báo cáo học thuật định dạng LaTeX chuẩn chỉ, không công thức rườm rà, bố cục hình ảnh và bảng biểu cân đối:
-* **Mã nguồn LaTeX:** [bao_cao/main.tex](file:///c:/Users/Admin/Documents/Workspace/DSA_15/code_dsa/bao_cao/main.tex)
-* **Bản PDF xuất bản:** [bao_cao/main.pdf](file:///c:/Users/Admin/Documents/Workspace/DSA_15/code_dsa/bao_cao/main.pdf)
+
+Bản báo cáo học thuật định dạng LaTeX chuẩn chỉ, bố cục hình ảnh và bảng biểu cân đối:
+* **Mã nguồn LaTeX:** [bao_cao/main.tex](bao_cao/main.tex)
+* **Bản PDF xuất bản:** [bao_cao/main.pdf](bao_cao/main.pdf)
 
 ---
 *© 2026 - Nhóm 12 | Đồ án Môn học Cấu Trúc Dữ Liệu và Giải Thuật (HCMUTE)*
+
