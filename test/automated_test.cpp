@@ -4,13 +4,6 @@
 // Covers: MC1 (Hash), MC2 (Heap), RQ1 (Class), RQ2 (GPA Range), CRUD & Edge Cases
 // ============================================================================
 
-#include "interface/student.h"
-#include "interface/core_hash/HashTable.h"
-#include "interface/core_heap/CustomMaxHeapGpaFinder.h"
-#include "interface/core_class_filter/OptimizedLinearFilter.h"
-#include "interface/core_sorted_gpa/SortedGpaFilter.h"
-#include "interface/core_crud/StudentCRUD.h"
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -18,6 +11,13 @@
 #include <iomanip>
 #include <cmath>
 #include <algorithm>
+
+#include "interface/student.h"
+#include "interface/core_hash/HashTable.h"
+#include "interface/core_heap/CustomMaxHeapGpaFinder.h"
+#include "interface/core_class_filter/OptimizedLinearFilter.h"
+#include "interface/core_sorted_gpa/SortedGpaFilter.h"
+#include "interface/core_crud/StudentCRUD.h"
 
 using namespace std;
 

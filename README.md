@@ -240,12 +240,13 @@ Giao diện trực quan, biểu đồ benchmark thời gian thực, chế độ 
   * **Backend API**: [http://localhost:5000](http://localhost:5000)
 
 ### 2. Chạy Ứng Dụng Console CLI (C++)
-Chương trình giao diện dòng lệnh tương tác Menu trực quan bằng bàn phím:
-* **Khởi chạy 1-Click**: Nhấp đúp chuột vào file **`scripts\run_cli.bat`**.
-* **Khởi chạy từ terminal**:
-  ```bash
-  .\scripts\run_cli.bat
-  ```
+Chương trình giao diện dòng lệnh tương tác Menu trực quan bằng bàn phím (Phím mũi tên, Enter, Esc):
+* **Khởi chạy 1-Click**: Nhấp đúp chuột vào file **`scripts\run_cli.bat`** (hoặc chạy lệnh `.\scripts\run_cli.bat`).
+* **Các chế độ hoạt động (4 Modes)**:
+  * **[1] MODE 1 (Final Solution)**: Vận hành trực tiếp các thuật toán tối ưu ($\mathcal{O}(1), \mathcal{O}(\log N)$).
+  * **[2] MODE 2 (CRUD Management)**: Thêm, sửa, xóa, tìm kiếm và lưu hồ sơ sinh viên đồng bộ RAM & JSON.
+  * **[3] MODE 3 (Interactive Benchmark)**: Đối sánh trực tiếp từng cặp thuật toán cho từng module riêng lẻ.
+  * **[4] MODE 4 (Auto Benchmark & Export TXT)**: Chọn tập dữ liệu ($100\text{K} \to 10\text{M}$ sinh viên), tự động đo đạc toàn bộ 4 module và xuất báo cáo kết quả ra file `benchmark/bench_report_YYYYMMDD_HHMMSS.txt`.
 
 ### 3. Sinh Dữ Liệu Tự Động (Data Generator)
 Để sinh ngẫu nhiên file dữ liệu sinh viên mẫu `data/database.json`:

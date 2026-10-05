@@ -2,14 +2,6 @@
 // C++ DSA RESIDENT SERVER FOR WEB API (ZERO LATENCY - IN-MEMORY DAEMON)
 // ============================================================================
 
-#include "interface/core_sorted_gpa/FindStudentByGpaRange.h"
-#include "interface/core_class_filter/FindStudentByClassId.h"
-#include "interface/core_crud/StudentCRUD.h"
-#include "interface/core_hash/FindStudentById.h"
-#include "interface/core_heap/FindStudentByMaxGpa.h"
-#include "interface/student.h"
-#include "nlohmann/json.hpp"
-
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -19,6 +11,14 @@
 #include <cmath>
 #include <algorithm>
 #include <random>
+
+#include "interface/student.h"
+#include "interface/core_sorted_gpa/FindStudentByGpaRange.h"
+#include "interface/core_class_filter/FindStudentByClassId.h"
+#include "interface/core_crud/StudentCRUD.h"
+#include "interface/core_hash/FindStudentById.h"
+#include "interface/core_heap/FindStudentByMaxGpa.h"
+#include "nlohmann/json.hpp"
 
 using namespace std;
 using json = nlohmann::json;

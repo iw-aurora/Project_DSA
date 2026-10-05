@@ -1,14 +1,3 @@
-#include "interface/student.h"
-#include "interface/core_sorted_gpa/LinearGpaFilter.h"
-#include "interface/core_sorted_gpa/SortedGpaFilter.h"
-#include "interface/core_class_filter/LinearFilter.h"
-#include "interface/core_class_filter/OptimizedLinearFilter.h"
-#include "interface/core_heap/CustomMaxHeapGpaFinder.h"
-#include "interface/core_heap/LinearMaxScanGpaFinder.h"
-#include "interface/core_hash/HashTable.h"
-#include "interface/core_hash/LinearSearch.h"
-#include "nlohmann/json.hpp"
-
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -20,6 +9,17 @@
 #include <random>
 #include <string>
 #include <vector>
+
+#include "interface/student.h"
+#include "interface/core_sorted_gpa/LinearGpaFilter.h"
+#include "interface/core_sorted_gpa/SortedGpaFilter.h"
+#include "interface/core_class_filter/LinearFilter.h"
+#include "interface/core_class_filter/OptimizedLinearFilter.h"
+#include "interface/core_heap/CustomMaxHeapGpaFinder.h"
+#include "interface/core_heap/LinearMaxScanGpaFinder.h"
+#include "interface/core_hash/HashTable.h"
+#include "interface/core_hash/LinearSearch.h"
+#include "nlohmann/json.hpp"
 
 using namespace std;
 using namespace chrono;

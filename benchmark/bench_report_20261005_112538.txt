@@ -1,0 +1,52 @@
+=========================================================================================
+       BAO CAO KET QUA BENCHMARK HE THONG THUAT TOAN DSA (DASA230179)
+=========================================================================================
+  Thoi gian thuc hien    : 2026-10-05 11:25:38
+  Tap du lieu (Dataset)  : Database JSON (data/database.json)
+  Quy mo tap du lieu (N) : 500000 sinh vien
+  Thoi gian nap/sinh     : 17.455 ms
+  So lan khoi dong Warmup: 3 runs
+  So lan do mau (Samples): 10 samples
+  Truy van MC1 (MSSV)    : 1000 queries
+  Lap lai MC2 (Max GPA)  : 1000 times
+  Ma lop test RQ1        : C01
+  Khoang GPA test RQ2    : [8.000 - 10.000]
+-----------------------------------------------------------------------------------------
+ 1. THOI GIAN XAY DUNG CAU TRUC DU LIEU (BUILD PHASE - ONE TIME)
+-----------------------------------------------------------------------------------------
+  Cau truc du lieu                    Min (ms)   Median (ms)     Mean (ms)      Max (ms)
+  ---------------------------------------------------------------------------------------
+  Build Closed HashTable               14.2224       14.8066       14.8306       15.4383
+  Build Binary Max-Heap                39.4549       39.9038       40.3002       42.3706
+  Build Sorted GPA Array              121.2159      125.3546      125.6497      132.2419
+  Build Class Index Map                 6.4481        6.8360        6.9287        7.9253
+-----------------------------------------------------------------------------------------
+ 2. DOI SANH HIEU NANG TRUY VAN & DOI SOANH GIAI THUAT (EXECUTION PHASE)
+-----------------------------------------------------------------------------------------
+  MC1 Linear Search (1000q)          1312.1844     1330.9223     1330.6431     1353.4605
+  MC1 Closed Hash Table (1000q)         0.0220        0.0226        0.0230        0.0256
+  --> TANG TOC MC1 (Hash Table vs Linear): 58760.4x lan
+      + Phep so sanh Linear: 260717750 | Probes Hash: 1696
+
+  MC2 Linear Max Scan (1000q)        1613.0090     1635.0458     1642.6586     1709.8873
+  MC2 Custom Max Heap (1000q)           0.0860        0.0860        0.0929        0.1546
+  --> TANG TOC MC2 (Max Heap vs Linear): 19012.2x lan
+      + Phep so sanh Linear: 499999000 | Heap Peek: O(1)
+
+  RQ1 Linear Class Filter               4.4447        4.7490        4.7312        5.0746
+  RQ1 Class Index View                  0.0000        0.0000        0.0000        0.0001
+  --> TANG TOC RQ1 (Index View vs Linear): 0.0x lan
+      + Phep so sanh Linear: 500000 | Index Filter: 1
+
+  RQ2 Linear GPA Filter                16.5163       16.8181       17.1229       18.4662
+  RQ2 Sorted Binary Range               0.0001        0.0001        0.0001        0.0002
+  --> TANG TOC RQ2 (Sorted Range vs Linear): 168181.0x lan
+      + Phep so sanh Linear: 667775 | Binary Range: 37
+=========================================================================================
+ 3. TONG KET KET QUA & KET LUAN
+=========================================================================================
+  [MC1 Tra cuu MSSV]   : Hash Table dat O(1) trung binh, giam >99.9% thoi gian truy van.
+  [MC2 Tim Max GPA]    : Max Heap tra ve O(1) tuc thi thay vi quet tuyen tinh O(N).
+  [RQ1 Loc theo Lop]   : Index View khong copy du lieu, tang toc vuot troi tren tap lon.
+  [RQ2 Loc khoang GPA] : Binary Search O(log N) giam thieu toi da so phep so sanh.
+=========================================================================================
