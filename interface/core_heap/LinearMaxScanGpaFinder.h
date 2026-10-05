@@ -4,6 +4,8 @@
 #include "../student.h"
 #include <vector>
 
+using namespace std;
+
 // Định nghĩa cấu trúc kết quả nếu chưa có trong tệp chung
 struct MC2Result {
   Student student;
@@ -14,10 +16,10 @@ struct MC2Result {
 
 class LinearMaxScanGpaFinder {
 private:
-  const std::vector<Student> *studentsPtr;
+  const vector<Student> *studentsPtr;
 
 public:
-  explicit LinearMaxScanGpaFinder(const std::vector<Student> &students);
+  explicit LinearMaxScanGpaFinder(const vector<Student> &students);
 
   // Thuật toán quét tuyến tính thuần túy để tìm GPA cao nhất kèm theo đếm số
   // phép so sánh (Nếu hàm trả về kiểu kết quả tùy chỉnh của bạn, hãy giữ nguyên

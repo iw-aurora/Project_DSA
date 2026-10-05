@@ -3,7 +3,7 @@
 #include <chrono>
 
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 
 // SortedGPA index:
 // - Build stores pointers to the original Student vector, then sorts those

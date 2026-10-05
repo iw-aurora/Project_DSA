@@ -5,10 +5,12 @@
 #include "LinearMaxScanGpaFinder.h"
 #include <vector>
 
+using namespace std;
+
 class CustomMaxHeapGpaFinder {
 private:
-  const std::vector<Student> *studentsPtr;
-  std::vector<Student> maxHeap;
+  const vector<Student> *studentsPtr;
+  vector<Student> maxHeap;
   bool isInitialized;
 
   bool higherPriority(const Student &a, const Student &b) const;
@@ -16,7 +18,7 @@ private:
   void heapifyDown(int index);
 
 public:
-  explicit CustomMaxHeapGpaFinder(const std::vector<Student> &students);
+  explicit CustomMaxHeapGpaFinder(const vector<Student> &students);
   void buildStructure();
   MC2Result findMaxGPA() const;
   void updateOrInsert(const Student &student);

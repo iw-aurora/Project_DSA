@@ -1,13 +1,14 @@
 #include "../../interface/core_heap/CustomMaxHeapGpaFinder.h"
 #include <chrono>
 
-using namespace std::chrono;
+using namespace std;
+using namespace chrono;
 
 // ============================================================
 // CONSTRUCTOR
 // ============================================================
 CustomMaxHeapGpaFinder::CustomMaxHeapGpaFinder(
-    const std::vector<Student> &students) {
+    const vector<Student> &students) {
   this->studentsPtr = &students;
   this->isInitialized = false;
   // Xây dựng Max Heap ngay khi khởi tạo đối tượng (Độ phức tạp O(n))
@@ -36,7 +37,7 @@ void CustomMaxHeapGpaFinder::heapifyUp(int index) {
     if (!higherPriority(maxHeap[index], maxHeap[parent])) {
       break;
     }
-    std::swap(maxHeap[index], maxHeap[parent]);
+    swap(maxHeap[index], maxHeap[parent]);
     index = parent;
   }
 }
@@ -62,7 +63,7 @@ void CustomMaxHeapGpaFinder::heapifyDown(int index) {
       break;
     }
 
-    std::swap(maxHeap[index], maxHeap[highest]);
+    swap(maxHeap[index], maxHeap[highest]);
     index = highest;
   }
 }
@@ -111,7 +112,7 @@ MC2Result CustomMaxHeapGpaFinder::findMaxGPA() const {
 
   // Kết thúc đo thời gian
   auto end = high_resolution_clock::now();
-  result.queryTimeMs = duration<double, std::milli>(end - start).count();
+  result.queryTimeMs = duration<double, milli>(end - start).count();
 
   return result;
 }

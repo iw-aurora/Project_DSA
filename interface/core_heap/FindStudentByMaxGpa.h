@@ -8,18 +8,20 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class FindStudentByMaxGpa
 {
 private:
-  std::vector<Student> studentsData;
-  std::string currentMode;
+  vector<Student> studentsData;
+  string currentMode;
 
 public:
   // Khởi tạo controller với tập dữ liệu truyền vào từ tầng Repository/RAM
-  explicit FindStudentByMaxGpa(const std::vector<Student> &students);
+  explicit FindStudentByMaxGpa(const vector<Student> &students);
 
   // Thiết lập chế độ chạy cho hệ thống
-  void setExecutionMode(const std::string &mode);
+  void setExecutionMode(const string &mode);
 
   // Điều hướng thực thi nghiệp vụ dựa trên chế độ đã chọn
   void executeQuery() const;

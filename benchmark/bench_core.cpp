@@ -21,12 +21,14 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+using namespace chrono;
 using json = nlohmann::json;
-using Clock = std::chrono::steady_clock;
+using Clock = chrono::steady_clock;
 
 namespace {
 
-volatile std::size_t sinkSize = 0;
+volatile size_t sinkSize = 0;
 volatile double sinkGpa = 0.0;
 
 struct Stats {
@@ -38,7 +40,7 @@ struct Stats {
 
 struct TimedResult {
     double ms{};
-    std::size_t resultCount{};
+    size_t resultCount{};
     long long comparisons{};
 };
 
@@ -47,12 +49,12 @@ double measureMs(Func &&func) {
     auto start = Clock::now();
     func();
     auto end = Clock::now();
-    return std::chrono::duration<double, std::milli>(end - start).count();
+    return chrono::duration<double, milli>(end - start).count();
 }
 
-Stats summarize(std::vector<double> values) {
-    std::sort(values.begin(), values.end());
-    double sum = std::accumulate(values.begin(), values.end(), 0.0);
+Stats summarize(vector<double> values) {
+    sort(values.begin(), values.end());
+    double sum = accumulate(values.begin(), values.end(), 0.0);
     Stats stats;
     stats.minMs = values.front();
     stats.maxMs = values.back();
@@ -65,16 +67,16 @@ Stats summarize(std::vector<double> values) {
     return stats;
 }
 
-std::vector<Student> loadStudents(const std::string &path) {
-    std::ifstream in(path);
+vector<Student> loadStudents(const string &path) {
+    ifstream in(path);
     if (!in) {
-        throw std::runtime_error("Cannot open " + path);
+        throw runtime_error("Cannot open " + path);
     }
 
     json data;
     in >> data;
 
-    std::vector<Student> students;
+    vector<Student> students;
     const auto &items = data.at("students");
     students.reserve(items.size());
     for (const auto &item : items) {
@@ -88,41 +90,41 @@ std::vector<Student> loadStudents(const std::string &path) {
     return students;
 }
 
-std::vector<Student> generateFastStudents(std::size_t count, std::size_t startId = 25150000) {
-    static const std::vector<std::string> firstNames = {"Nguyen", "Tran", "Le", "Pham", "Hoang", "Phan", "Vu", "Dang", "Bui", "Do"};
-    static const std::vector<std::string> middleNames = {"Van", "Thi", "Duc", "Minh", "Huu", "Quoc", "Thanh", "Dinh", "Xuan", "Ngoc"};
-    static const std::vector<std::string> lastNames = {"An", "Binh", "Chau", "Dung", "Em", "Giang", "Hai", "Hung", "Khoa", "Linh", "Minh", "Nam", "Phat", "Quan", "Sang", "Trang", "Tra", "Tung", "Vinh", "Yen"};
-    static const std::vector<std::string> classPrefixes = {"23DTH", "24DTH", "25DTH", "23KTP", "24KTP", "25KTP", "23ATTT", "24ATTT", "25ATTT"};
+vector<Student> generateFastStudents(size_t count, size_t startId = 25150000) {
+    static const vector<string> firstNames = {"Nguyen", "Tran", "Le", "Pham", "Hoang", "Phan", "Vu", "Dang", "Bui", "Do"};
+    static const vector<string> middleNames = {"Van", "Thi", "Duc", "Minh", "Huu", "Quoc", "Thanh", "Dinh", "Xuan", "Ngoc"};
+    static const vector<string> lastNames = {"An", "Binh", "Chau", "Dung", "Em", "Giang", "Hai", "Hung", "Khoa", "Linh", "Minh", "Nam", "Phat", "Quan", "Sang", "Trang", "Tra", "Tung", "Vinh", "Yen"};
+    static const vector<string> classPrefixes = {"23DTH", "24DTH", "25DTH", "23KTP", "24KTP", "25KTP", "23ATTT", "24ATTT", "25ATTT"};
 
-    std::vector<Student> students;
+    vector<Student> students;
     students.reserve(count);
 
-    std::mt19937 rng(1337);
-    std::uniform_int_distribution<int> fnDist(0, static_cast<int>(firstNames.size()) - 1);
-    std::uniform_int_distribution<int> mnDist(0, static_cast<int>(middleNames.size()) - 1);
-    std::uniform_int_distribution<int> lnDist(0, static_cast<int>(lastNames.size()) - 1);
-    std::uniform_int_distribution<int> cpDist(0, static_cast<int>(classPrefixes.size()) - 1);
-    std::uniform_int_distribution<int> classNumDist(1, 20);
-    std::uniform_int_distribution<int> gpaIntDist(400, 1000);
+    mt19937 rng(1337);
+    uniform_int_distribution<int> fnDist(0, static_cast<int>(firstNames.size()) - 1);
+    uniform_int_distribution<int> mnDist(0, static_cast<int>(middleNames.size()) - 1);
+    uniform_int_distribution<int> lnDist(0, static_cast<int>(lastNames.size()) - 1);
+    uniform_int_distribution<int> cpDist(0, static_cast<int>(classPrefixes.size()) - 1);
+    uniform_int_distribution<int> classNumDist(1, 20);
+    uniform_int_distribution<int> gpaIntDist(400, 1000);
 
-    for (std::size_t i = 0; i < count; ++i) {
+    for (size_t i = 0; i < count; ++i) {
         const int classNum = classNumDist(rng);
         students.push_back({
-            std::to_string(startId + i + 1),
+            to_string(startId + i + 1),
             firstNames[fnDist(rng)] + " " + middleNames[mnDist(rng)] + " " + lastNames[lnDist(rng)],
-            classPrefixes[cpDist(rng)] + (classNum < 10 ? "0" : "") + std::to_string(classNum),
+            classPrefixes[cpDist(rng)] + (classNum < 10 ? "0" : "") + to_string(classNum),
             gpaIntDist(rng) / 100.0,
         });
     }
     return students;
 }
 
-std::vector<std::string> makeIdQueries(const std::vector<Student> &students, std::size_t queryCount) {
-    std::vector<std::string> queries;
+vector<string> makeIdQueries(const vector<Student> &students, size_t queryCount) {
+    vector<string> queries;
     queries.reserve(queryCount);
-    for (std::size_t i = 0; i < queryCount; ++i) {
+    for (size_t i = 0; i < queryCount; ++i) {
         if (i % 20 == 19) {
-            queries.push_back("NOT_FOUND_" + std::to_string(i));
+            queries.push_back("NOT_FOUND_" + to_string(i));
         } else {
             queries.push_back(students[(i * 9973ULL + 17ULL) % students.size()].id);
         }
@@ -130,22 +132,22 @@ std::vector<std::string> makeIdQueries(const std::vector<Student> &students, std
     return queries;
 }
 
-std::string pickDenseClassId(const std::vector<Student> &students) {
+string pickDenseClassId(const vector<Student> &students) {
     if (students.empty()) {
         return "";
     }
     // Sample a small deterministic subset and choose the most frequent class in it.
-    std::vector<std::string> sample;
-    const std::size_t limit = std::min<std::size_t>(students.size(), 200000);
+    vector<string> sample;
+    const size_t limit = min<size_t>(students.size(), 200000);
     sample.reserve(limit);
-    for (std::size_t i = 0; i < limit; ++i) {
+    for (size_t i = 0; i < limit; ++i) {
         sample.push_back(students[(i * 7919ULL) % students.size()].classId);
     }
-    std::sort(sample.begin(), sample.end());
-    std::string best = sample.front();
-    std::size_t bestCount = 1;
-    for (std::size_t i = 0; i < sample.size();) {
-        std::size_t j = i + 1;
+    sort(sample.begin(), sample.end());
+    string best = sample.front();
+    size_t bestCount = 1;
+    for (size_t i = 0; i < sample.size();) {
+        size_t j = i + 1;
         while (j < sample.size() && sample[j] == sample[i]) {
             ++j;
         }
@@ -159,23 +161,23 @@ std::string pickDenseClassId(const std::vector<Student> &students) {
 }
 
 template <typename Func>
-std::vector<TimedResult> runTimedSamples(int warmupRuns, int samples, Func &&func) {
+vector<TimedResult> runTimedSamples(int warmupRuns, int samples, Func &&func) {
     for (int i = 0; i < warmupRuns; ++i) {
         auto warm = func();
-        sinkSize += warm.resultCount + static_cast<std::size_t>(std::max<long long>(0, warm.comparisons));
+        sinkSize += warm.resultCount + static_cast<size_t>(max<long long>(0, warm.comparisons));
     }
 
-    std::vector<TimedResult> results;
+    vector<TimedResult> results;
     results.reserve(samples);
     for (int i = 0; i < samples; ++i) {
         results.push_back(func());
-        sinkSize += results.back().resultCount + static_cast<std::size_t>(std::max<long long>(0, results.back().comparisons));
+        sinkSize += results.back().resultCount + static_cast<size_t>(max<long long>(0, results.back().comparisons));
     }
     return results;
 }
 
-Stats statsOf(const std::vector<TimedResult> &samples) {
-    std::vector<double> values;
+Stats statsOf(const vector<TimedResult> &samples) {
+    vector<double> values;
     values.reserve(samples.size());
     for (const auto &sample : samples) {
         values.push_back(sample.ms);
@@ -183,44 +185,44 @@ Stats statsOf(const std::vector<TimedResult> &samples) {
     return summarize(values);
 }
 
-long long medianComparisons(std::vector<TimedResult> samples) {
-    std::sort(samples.begin(), samples.end(), [](const TimedResult &a, const TimedResult &b) {
+long long medianComparisons(vector<TimedResult> samples) {
+    sort(samples.begin(), samples.end(), [](const TimedResult &a, const TimedResult &b) {
         return a.comparisons < b.comparisons;
     });
     return samples[samples.size() / 2].comparisons;
 }
 
-std::size_t medianResultCount(std::vector<TimedResult> samples) {
-    std::sort(samples.begin(), samples.end(), [](const TimedResult &a, const TimedResult &b) {
+size_t medianResultCount(vector<TimedResult> samples) {
+    sort(samples.begin(), samples.end(), [](const TimedResult &a, const TimedResult &b) {
         return a.resultCount < b.resultCount;
     });
     return samples[samples.size() / 2].resultCount;
 }
 
-void printStats(const std::string &label, const Stats &stats) {
-    std::cout << std::left << std::setw(34) << label
-              << std::right << std::fixed << std::setprecision(6)
-              << std::setw(14) << stats.minMs
-              << std::setw(14) << stats.medianMs
-              << std::setw(14) << stats.meanMs
-              << std::setw(14) << stats.maxMs << '\n';
+void printStats(const string &label, const Stats &stats) {
+    cout << left << setw(34) << label
+              << right << fixed << setprecision(6)
+              << setw(14) << stats.minMs
+              << setw(14) << stats.medianMs
+              << setw(14) << stats.meanMs
+              << setw(14) << stats.maxMs << '\n';
 }
 
 } // namespace
 
 int main(int argc, char **argv) {
     try {
-        std::string path = "data/database.json";
-        std::size_t generateCount = 0;
-        std::size_t bulkTarget = 0;
+        string path = "data/database.json";
+        size_t generateCount = 0;
+        size_t bulkTarget = 0;
         int argOffset = 1;
 
-        if (argc > 1 && std::string(argv[1]) == "--generate") {
-            generateCount = argc > 2 ? static_cast<std::size_t>(std::stoull(argv[2])) : 10000000ULL;
+        if (argc > 1 && string(argv[1]) == "--generate") {
+            generateCount = argc > 2 ? static_cast<size_t>(stoull(argv[2])) : 10000000ULL;
             argOffset = 3;
             path = "generated";
-        } else if (argc > 1 && std::string(argv[1]) == "--bulk-to") {
-            bulkTarget = argc > 2 ? static_cast<std::size_t>(std::stoull(argv[2])) : 10000000ULL;
+        } else if (argc > 1 && string(argv[1]) == "--bulk-to") {
+            bulkTarget = argc > 2 ? static_cast<size_t>(stoull(argv[2])) : 10000000ULL;
             path = argc > 3 ? argv[3] : "data/database.json";
             argOffset = 4;
         } else if (argc > 1) {
@@ -228,16 +230,16 @@ int main(int argc, char **argv) {
             argOffset = 2;
         }
 
-        const int warmupRuns = argc > argOffset ? std::stoi(argv[argOffset]) : 5;
-        const int samples = argc > argOffset + 1 ? std::stoi(argv[argOffset + 1]) : 15;
-        const std::size_t idQueryCount = argc > argOffset + 2 ? static_cast<std::size_t>(std::stoull(argv[argOffset + 2])) : 1000;
-        const int repeatedQueries = argc > argOffset + 3 ? std::stoi(argv[argOffset + 3]) : 1000;
+        const int warmupRuns = argc > argOffset ? stoi(argv[argOffset]) : 5;
+        const int samples = argc > argOffset + 1 ? stoi(argv[argOffset + 1]) : 15;
+        const size_t idQueryCount = argc > argOffset + 2 ? static_cast<size_t>(stoull(argv[argOffset + 2])) : 1000;
+        const int repeatedQueries = argc > argOffset + 3 ? stoi(argv[argOffset + 3]) : 1000;
 
         auto loadMs = measureMs([&]() {
             sinkSize = 0;
         });
         auto loadStart = Clock::now();
-        std::vector<Student> students;
+        vector<Student> students;
         if (generateCount > 0) {
             students = generateFastStudents(generateCount, 25150000);
         } else {
@@ -246,15 +248,15 @@ int main(int argc, char **argv) {
                 auto added = generateFastStudents(bulkTarget - students.size(), 25150000 + students.size());
                 students.reserve(bulkTarget);
                 students.insert(students.end(),
-                                std::make_move_iterator(added.begin()),
-                                std::make_move_iterator(added.end()));
+                                make_move_iterator(added.begin()),
+                                make_move_iterator(added.end()));
             }
         }
         auto loadEnd = Clock::now();
-        loadMs = std::chrono::duration<double, std::milli>(loadEnd - loadStart).count();
+        loadMs = chrono::duration<double, milli>(loadEnd - loadStart).count();
 
         const auto idQueries = makeIdQueries(students, idQueryCount);
-        const std::string classId = pickDenseClassId(students);
+        const string classId = pickDenseClassId(students);
         const double minGpa = 8.0;
         const double maxGpa = 10.0;
 
@@ -295,7 +297,7 @@ int main(int argc, char **argv) {
 
         auto mc1Linear = runTimedSamples(warmupRuns, samples, [&]() {
             long long comparisons = 0;
-            std::size_t found = 0;
+            size_t found = 0;
             double ms = measureMs([&]() {
                 for (const auto &query : idQueries) {
                     const Student *student = linearSearch.search(students, query);
@@ -311,7 +313,7 @@ int main(int argc, char **argv) {
 
         auto mc1Hash = runTimedSamples(warmupRuns, samples, [&]() {
             long long probes = 0;
-            std::size_t found = 0;
+            size_t found = 0;
             double ms = measureMs([&]() {
                 for (const auto &query : idQueries) {
                     const Student *student = hashTable.search(query);
@@ -379,64 +381,64 @@ int main(int argc, char **argv) {
             return TimedResult{ms, result.size(), result.comparisons};
         });
 
-        std::cout << "CORE_BENCHMARK_REPORT\n";
-        std::cout << "dataset_path=" << path << '\n';
+        cout << "CORE_BENCHMARK_REPORT\n";
+        cout << "dataset_path=" << path << '\n';
         if (generateCount > 0) {
-            std::cout << "dataset_mode=generate\n";
+            cout << "dataset_mode=generate\n";
         } else if (bulkTarget > 0) {
-            std::cout << "dataset_mode=bulk_to_" << bulkTarget << '\n';
+            cout << "dataset_mode=bulk_to_" << bulkTarget << '\n';
         } else {
-            std::cout << "dataset_mode=json\n";
+            cout << "dataset_mode=json\n";
         }
-        std::cout << "dataset_size=" << students.size() << '\n';
-        std::cout << "load_ms=" << std::fixed << std::setprecision(3) << loadMs << '\n';
-        std::cout << "warmup_runs=" << warmupRuns << '\n';
-        std::cout << "samples=" << samples << '\n';
-        std::cout << "id_query_count=" << idQueryCount << '\n';
-        std::cout << "repeated_queries=" << repeatedQueries << '\n';
-        std::cout << "class_id=" << classId << '\n';
-        std::cout << "gpa_range=[" << minGpa << "," << maxGpa << "]\n";
-        std::cout << "hash_build_median_ms=" << statsOf(hashBuildSamples).medianMs << '\n';
-        std::cout << "hash_collisions=" << hashTable.getCollisions() << '\n';
-        std::cout << "heap_build_median_ms=" << statsOf(heapBuildSamples).medianMs << '\n';
-        std::cout << "sorted_gpa_build_median_ms=" << statsOf(sortedBuildSamples).medianMs << '\n';
-        std::cout << "class_index_build_median_ms=" << statsOf(classIndexBuildSamples).medianMs << '\n';
-        std::cout << '\n';
-        std::cout << std::left << std::setw(34) << "metric"
-                  << std::right << std::setw(14) << "min_ms"
-                  << std::setw(14) << "median_ms"
-                  << std::setw(14) << "mean_ms"
-                  << std::setw(14) << "max_ms" << '\n';
+        cout << "dataset_size=" << students.size() << '\n';
+        cout << "load_ms=" << fixed << setprecision(3) << loadMs << '\n';
+        cout << "warmup_runs=" << warmupRuns << '\n';
+        cout << "samples=" << samples << '\n';
+        cout << "id_query_count=" << idQueryCount << '\n';
+        cout << "repeated_queries=" << repeatedQueries << '\n';
+        cout << "class_id=" << classId << '\n';
+        cout << "gpa_range=[" << minGpa << "," << maxGpa << "]\n";
+        cout << "hash_build_median_ms=" << statsOf(hashBuildSamples).medianMs << '\n';
+        cout << "hash_collisions=" << hashTable.getCollisions() << '\n';
+        cout << "heap_build_median_ms=" << statsOf(heapBuildSamples).medianMs << '\n';
+        cout << "sorted_gpa_build_median_ms=" << statsOf(sortedBuildSamples).medianMs << '\n';
+        cout << "class_index_build_median_ms=" << statsOf(classIndexBuildSamples).medianMs << '\n';
+        cout << '\n';
+        cout << left << setw(34) << "metric"
+                  << right << setw(14) << "min_ms"
+                  << setw(14) << "median_ms"
+                  << setw(14) << "mean_ms"
+                  << setw(14) << "max_ms" << '\n';
         printStats("Build HashTable", statsOf(hashBuildSamples));
         printStats("Build MaxHeap", statsOf(heapBuildSamples));
         printStats("Build SortedGPA", statsOf(sortedBuildSamples));
         printStats("Build ClassIndex", statsOf(classIndexBuildSamples));
-        printStats("MC1 Linear Search " + std::to_string(idQueryCount) + "q", statsOf(mc1Linear));
-        printStats("MC1 Hash Search " + std::to_string(idQueryCount) + "q", statsOf(mc1Hash));
-        printStats("MC2 Linear Max " + std::to_string(repeatedQueries) + "q", statsOf(mc2Linear));
-        printStats("MC2 Heap Max " + std::to_string(repeatedQueries) + "q", statsOf(mc2Heap));
+        printStats("MC1 Linear Search " + to_string(idQueryCount) + "q", statsOf(mc1Linear));
+        printStats("MC1 Hash Search " + to_string(idQueryCount) + "q", statsOf(mc1Hash));
+        printStats("MC2 Linear Max " + to_string(repeatedQueries) + "q", statsOf(mc2Linear));
+        printStats("MC2 Heap Max " + to_string(repeatedQueries) + "q", statsOf(mc2Heap));
         printStats("RQ1 Linear Class", statsOf(rq1Linear));
         printStats("RQ1 ClassIndex View", statsOf(rq1Optimized));
         printStats("RQ2 Linear GPA", statsOf(rq2Linear));
         printStats("RQ2 Sorted GPA", statsOf(rq2Sorted));
-        std::cout << '\n';
-        std::cout << "median_counts_and_work\n";
-        std::cout << "MC1_linear_found=" << medianResultCount(mc1Linear)
+        cout << '\n';
+        cout << "median_counts_and_work\n";
+        cout << "MC1_linear_found=" << medianResultCount(mc1Linear)
                   << ", comparisons=" << medianComparisons(mc1Linear) << '\n';
-        std::cout << "MC1_hash_found=" << medianResultCount(mc1Hash)
+        cout << "MC1_hash_found=" << medianResultCount(mc1Hash)
                   << ", probes=" << medianComparisons(mc1Hash) << '\n';
-        std::cout << "MC2_linear_comparisons=" << medianComparisons(mc2Linear) << '\n';
-        std::cout << "RQ1_linear_matches=" << medianResultCount(rq1Linear)
+        cout << "MC2_linear_comparisons=" << medianComparisons(mc2Linear) << '\n';
+        cout << "RQ1_linear_matches=" << medianResultCount(rq1Linear)
                   << ", comparisons=" << medianComparisons(rq1Linear) << '\n';
-        std::cout << "RQ1_index_matches=" << medianResultCount(rq1Optimized)
+        cout << "RQ1_index_matches=" << medianResultCount(rq1Optimized)
                   << ", comparisons=" << medianComparisons(rq1Optimized) << '\n';
-        std::cout << "RQ2_linear_matches=" << medianResultCount(rq2Linear)
+        cout << "RQ2_linear_matches=" << medianResultCount(rq2Linear)
                   << ", comparisons=" << medianComparisons(rq2Linear) << '\n';
-        std::cout << "RQ2_sorted_matches=" << medianResultCount(rq2Sorted)
+        cout << "RQ2_sorted_matches=" << medianResultCount(rq2Sorted)
                   << ", comparisons=" << medianComparisons(rq2Sorted) << '\n';
-        std::cout << "sink=" << sinkSize << "," << sinkGpa << '\n';
-    } catch (const std::exception &ex) {
-        std::cerr << "Benchmark failed: " << ex.what() << '\n';
+        cout << "sink=" << sinkSize << "," << sinkGpa << '\n';
+    } catch (const exception &ex) {
+        cerr << "Benchmark failed: " << ex.what() << '\n';
         return 1;
     }
 

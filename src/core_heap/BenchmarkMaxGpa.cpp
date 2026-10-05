@@ -6,15 +6,15 @@
 #include <chrono>
 
 using namespace std;
-using namespace std::chrono;
+using namespace chrono;
 
-BenchmarkMaxGpa::BenchmarkMaxGpa(const std::vector<Student> &students) {
+BenchmarkMaxGpa::BenchmarkMaxGpa(const vector<Student> &students) {
   this->studentsPtr = &students;
 }
 
 void BenchmarkMaxGpa::runComparison(int numIterations) const {
   if (studentsPtr == nullptr || studentsPtr->empty()) {
-    std::cout << "\n[Thong bao] Khong co du lieu de thuc hien benchmark.\n";
+    cout << "\n[Thong bao] Khong co du lieu de thuc hien benchmark.\n";
     return;
   }
 
@@ -23,14 +23,12 @@ void BenchmarkMaxGpa::runComparison(int numIterations) const {
   }
 
   // 1. Khởi tạo Linear Scan (Baseline không tốn thời gian build)
-  // 1. Khởi tạo các bộ tìm kiếm
   LinearMaxScanGpaFinder linear(*studentsPtr);
 
   auto buildStart = high_resolution_clock::now();
   CustomMaxHeapGpaFinder heap(*studentsPtr);
   auto buildEnd = high_resolution_clock::now();
 
-  // 3. Chạy 1 lần thực thi đơn lẻ (Single query)
   // 2. Chạy 1 lần thực thi đơn lẻ (Single query)
   MC2Result singleLinear = linear.findMaxGPA();
   MC2Result singleHeap = heap.findMaxGPA();

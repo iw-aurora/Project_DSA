@@ -7,12 +7,14 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 class BenchmarkMaxGpa {
 private:
-  const std::vector<Student> *studentsPtr;
+  const vector<Student> *studentsPtr;
 
 public:
-  explicit BenchmarkMaxGpa(const std::vector<Student> &students);
+  explicit BenchmarkMaxGpa(const vector<Student> &students);
 
   // Chạy thực nghiệm so sánh chi tiết giữa Linear và Custom Max Heap ở các mức
   // dữ liệu

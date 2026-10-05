@@ -7,12 +7,12 @@
 
 using namespace std;
 
-FindStudentByMaxGpa::FindStudentByMaxGpa(const std::vector<Student> &students) {
+FindStudentByMaxGpa::FindStudentByMaxGpa(const vector<Student> &students) {
   this->studentsData = students;
   this->currentMode = "BENCHMARK";
 }
 
-void FindStudentByMaxGpa::setExecutionMode(const std::string &mode) {
+void FindStudentByMaxGpa::setExecutionMode(const string &mode) {
   this->currentMode = mode;
 }
 

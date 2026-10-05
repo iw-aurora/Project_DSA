@@ -24,7 +24,7 @@ vector<string> MC1::Benchmark::createQueries(
 
     // 50 truy vấn không có trong dữ liệu.
     for (size_t i = 0; i < 50; ++i)
-        queries.push_back("NOT_FOUND_" + std::to_string(i));
+        queries.push_back("NOT_FOUND_" + to_string(i));
 
     return queries;
 }

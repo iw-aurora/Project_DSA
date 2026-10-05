@@ -12,7 +12,7 @@ HashTable::HashTable()
     : collisions(0), probes(0) {}
 
 // FNV-1a: chuyển MSSV -> giá trị hash -> index trong bảng
-size_t HashTable::hash(const std::string& key) const{
+size_t HashTable::hash(const string& key) const{
     size_t value = 1469598103934665603ULL;
     for (unsigned char c : key){
         value ^= c;
@@ -23,7 +23,7 @@ size_t HashTable::hash(const std::string& key) const{
 
 // Xây dựng Hash Table
 // Dùng Open Addressing + Linear Probing
-void HashTable::build(const std::vector<Student>& students){
+void HashTable::build(const vector<Student>& students){
     // Capacity ≈ 2n + 1 để giảm collision
     const size_t capacity =
         students.empty() ? 1 : students.size() * 2 + 1;
@@ -41,7 +41,7 @@ void HashTable::build(const std::vector<Student>& students){
     }
 }
 
-const Student* HashTable::search(const std::string& targetId){
+const Student* HashTable::search(const string& targetId){
     probes = 0;
     if (table.empty())
         return nullptr;

@@ -1,10 +1,11 @@
 #include "../../interface/core_heap/LinearMaxScanGpaFinder.h"
 #include <chrono>
 
-using namespace std::chrono;
+using namespace std;
+using namespace chrono;
 
 LinearMaxScanGpaFinder::LinearMaxScanGpaFinder(
-    const std::vector<Student> &students) {
+    const vector<Student> &students) {
   this->studentsPtr = &students;
 }
 

@@ -3,11 +3,14 @@
 
 #include "../student.h"
 #include "FindStudentByGpaRange.h"
+#include <vector>
+
+using namespace std;
 
 class LinearGpaFilter
 {
 public:
-    static FilterGpaResult filter(const std::vector<Student> &students,  double minGpa, double maxGpa);
+    static FilterGpaResult filter(const vector<Student> &students, double minGpa, double maxGpa);
 };
 
 #endif
