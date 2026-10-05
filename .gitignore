@@ -25,3 +25,7 @@ web_dsa/.next/
 *.synctex.gz
 bao_cao/preview_*.png
 bao_cao/texput.*
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
