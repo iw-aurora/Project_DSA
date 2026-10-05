@@ -1,9 +1,10 @@
 @echo off
+chcp 65001 > nul
 echo ====================================================
-echo        DANG BIEN DICH VA CHAY PROJECT_DSA
+echo        DANG BIEN DICH VA CHAY PROJECT_DSA (CLI)
 echo ====================================================
 
-g++ main.cpp src/*.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp -o main.exe
+g++ -O2 -std=c++17 -I. main.cpp src/*.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp -o main.exe
 
 if %errorlevel% neq 0 (
     echo [LOI] Bien dich THAT BAI! Vui long kiem tra lai trinh bien dich g++.
