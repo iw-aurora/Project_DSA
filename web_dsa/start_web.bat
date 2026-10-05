@@ -4,6 +4,7 @@ echo ====================================================================
 echo        KHOI DONG HE THONG WEB DSA (NEXT.JS + ANTD + C++ CORE)
 echo ====================================================================
 
+cd /d "%~dp0.."
 echo [1/3] Kiem tra va bien dich C++ DSA Bridge...
 g++ -O2 -std=c++17 -I. -o dsa_bridge.exe dsa_bridge.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp
 if errorlevel 1 (

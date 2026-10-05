@@ -4,6 +4,7 @@ echo ====================================================
 echo        DANG BIEN DICH VA CHAY PROJECT_DSA (CLI)
 echo ====================================================
 
+cd /d "%~dp0.."
 g++ -O2 -std=c++17 -I. main.cpp src/*.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp -o main.exe
 
 if %errorlevel% neq 0 (

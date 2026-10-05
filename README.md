@@ -58,7 +58,7 @@ code_dsa/
 │
 ├── test/                             # 🧪 BỘ TEST TỰ ĐỘNG (AUTOMATED TEST SUITE)
 │   ├── automated_test.cpp            # Mã nguồn kiểm thử C++ 28 Test Cases (100% PASS)
-│   └── run_test.bat                  # Script chạy test tiện lợi trong thư mục test
+│   └── run_tests.bat                 # Script chạy toàn bộ test tự động
 │
 ├── benchmark/                        # ⚡ CÔNG CỤ BENCHMARK & KẾT QUẢ ĐO ĐẠC
 │   ├── bench_core.cpp                # Engine đo đạc hiệu năng C++ độc lập
@@ -71,11 +71,13 @@ code_dsa/
 │   │   ├── app/                      # App Router (page.tsx, layout.tsx)
 │   │   └── components/               # BenchmarkTab, FinalSolutionTab, CrudTab, v.v.
 │   ├── server.js                     # Backend API Express.js giao tiếp Resident C++ Engine (Port 5000)
+│   ├── start_web.bat                 # Script khởi chạy toàn bộ Web Dashboard (Backend + Frontend)
 │   ├── test_speed.js                 # Script kiểm thử API Latency
 │   ├── nodemon.json                  # Cấu hình hot-reload cho Backend
 │   └── package.json                  # Hợp nhất toàn bộ dependencies của ứng dụng Web
 │
-├── scripts/                          # 🐍 CÁC SCRIPT PYTHON PHỤ TRỢ
+├── scripts/                          # 🐍 CÁC SCRIPT TIỆN ÍCH & RUNNERS
+│   ├── run_cli.bat                   # Script khởi chạy ứng dụng Console CLI C++
 │   └── generate_data.py              # Script tự động sinh N bản ghi sinh viên vào data/database.json
 │
 ├── bao_cao/                          # 📄 BÁO CÁO HỌC PHẦN (LATEX & PDF)
@@ -85,9 +87,6 @@ code_dsa/
 │
 ├── dsa_bridge.cpp                    # Resident C++ Core Engine kết nối Web qua IPC Stdin/Stdout
 ├── main.cpp                          # Ứng dụng Console CLI tương tác C++ chính
-├── start_web.bat                     # 🚀 1-Click khởi chạy toàn bộ Web App (Backend + Frontend)
-├── run.bat                           # 🚀 1-Click biên dịch & chạy Console CLI C++
-├── run_tests.bat                     # 🚀 1-Click chạy toàn bộ 28 Ca Test Tự Động
 └── README.md                         # Tài liệu hướng dẫn sử dụng chi tiết
 ```
 
@@ -113,10 +112,10 @@ Giao diện trực quan, biểu đồ benchmark thời gian thực, chế độ 
   cd ..
   ```
 * **Bước 2: Khởi chạy 1-Click**:
-  * **Cách A**: Nhấp đúp chuột vào file **`start_web.bat`**.
+  * **Cách A**: Nhấp đúp chuột vào file **`web_dsa\start_web.bat`**.
   * **Cách B**: Chạy từ terminal:
     ```bash
-    .\start_web.bat
+    .\web_dsa\start_web.bat
     ```
 * **Truy cập ứng dụng**:
   * **Frontend Web**: [http://localhost:3000](http://localhost:3000)
@@ -127,10 +126,10 @@ Giao diện trực quan, biểu đồ benchmark thời gian thực, chế độ 
 ### 2. Chạy Ứng Dụng Console CLI (C++)
 Chương trình giao diện dòng lệnh tương tác Menu trực quan bằng bàn phím (phím mũi tên, Enter, Esc).
 
-* **Cách A (1-Click)**: Nhấp đúp chuột vào file **`run.bat`**.
+* **Cách A (1-Click)**: Nhấp đúp chuột vào file **`scripts\run_cli.bat`**.
 * **Cách B (Terminal)**:
   ```bash
-  .\run.bat
+  .\scripts\run_cli.bat
   ```
 * **Cách C (Biên dịch thủ công bằng `g++`)**:
   ```bash
@@ -143,16 +142,12 @@ Chương trình giao diện dòng lệnh tương tác Menu trực quan bằng b�
 ### 3. Chạy Bộ Test Tự Động (Automated Test Suite)
 Bộ kiểm thử tự động toàn diện kiểm tra tính đúng đắn logic của cả 6 thành phần hệ thống với 28 test cases độc lập:
 
-* **Cách A (1-Click từ thư mục gốc)**:
-  ```bash
-  .\run_tests.bat
-  ```
-* **Cách B (Từ thư mục `test/`)**:
+* **Cách A (1-Click từ thư mục `test/`)**:
   ```bash
   cd test
-  .\run_test.bat
+  .\run_tests.bat
   ```
-* **Cách C (Biên dịch trực tiếp bằng `g++`)**:
+* **Cách B (Biên dịch trực tiếp bằng `g++`)**:
   ```bash
   g++ -O2 -std=c++17 -I. test/automated_test.cpp src/core_sorted_gpa/*.cpp src/core_class_filter/*.cpp src/core_crud/*.cpp src/core_hash/*.cpp src/core_heap/*.cpp -o test/automated_test.exe
   .\test\automated_test.exe
@@ -165,7 +160,7 @@ Bộ kiểm thử tự động toàn diện kiểm tra tính đúng đắn logic
 ### 4. Chạy Đo Lường Hiệu Năng (Benchmark Engine)
 Công cụ đo lường chuyên sâu đối sánh Baseline vs Final Solution trên tập dữ liệu lên đến **10,000,000 sinh viên**:
 
-* **Cách A (1-Click)**:
+* **Cách A (1-Click từ thư mục `benchmark/`)**:
   ```bash
   cd benchmark
   .\run_benchmark.bat
